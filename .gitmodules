@@ -1,0 +1,6 @@
+[submodule "src/ros_gamepad_teleop"]
+	path = src/ros_gamepad_teleop
+	url = git@gitlab.aau.at:aau-nav/development/ros-nodes/ros_gamepad_teleop.git
+[submodule "src/mavros"]
+	path = src/mavros
+	url = https://github.com/mavlink/mavros.git

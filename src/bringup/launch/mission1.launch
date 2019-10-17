@@ -1,0 +1,28 @@
+<!--  mission 1 -->
+<launch>
+
+  <!-- Arguments  -->
+  <arg name="node_1_name"      default="node1"/>
+
+  <!-- launch the example_node directly -->
+  <node name="$(arg node_1_name)" type="example_node_node" pkg="example_node" output="screen">
+    <param name="node_spinning_rate"          value="100" />
+    <param name="node_warn_time"              value="1" />
+  </node>
+
+  <!-- directly modify a parmeter on the parameter server -->
+  <param name="$(arg node_1_name)/strExample_text"       value="mission1.launch: loaded parameter" />
+
+   <!-- launch the example_node from a predefined launch file -->
+   <include file="$(find example_node)/launch/default.launch">
+     <arg name="node_name"               value="node2"/>
+     <arg name="image1_i"                value="/camera1/image_raw" />
+     <arg name="image2_i"                value="/camera2/image_raw" />
+     <arg name="image3_i"                value="/camera3/image_raw" />
+     <!-- <arg name="launch_prefix"           value=""/> -->
+   </include>
+
+   <!-- directly modify dynmic reconfigure parameter -->
+   <param name="node2/int_param"              value="100" />
+
+</launch>
