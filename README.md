@@ -44,9 +44,25 @@ roslaunch ros_gamepad_teleop twist2pose.launch
 ## Findings
 
 1. FCU: ArduCopter V3.6.9
-1.
+1. This starts mavproxy so that the serial link to the companion computer (on /dev/ttyUSB0) is available to a companion computer and external GCSs via UDP
+```
+ mavproxy.py --master /dev/ttyUSB0 --baud 921600 --out udpin:localhost:9000 --out udpbcast:192.168.42.255:14550
+ ```
+1. [Ardupilot-GCS_Mavlink](https://github.com/tridge/ardupilot/blob/master/ArduCopter/GCS_Mavlink.cpp)
+
+
 
 ## Links
+
+1. [MAVProxy](https://github.com/ArduPilot/MAVProxy) This is a MAVLink ground station written in python.
+1. [PyMAVLink](https://github.com/ArduPilot/pymavlink) python MAVLink interface and utilities
+1. [Ardupilot Source](https://github.com/ArduPilot/ardupilot) ArduPlane, ArduCopter, ArduRover source: http://ardupilot.org/
+1. [Mavlink Source](https://github.com/mavlink/mavlink) Marshalling / communication library for drones. https://mavlink.io/en/
+1. [MAVROS](https://github.com/mavlink/mavros)
+1. [Mavlink - c_uart_interface_example](https://github.com/mavlink/c_uart_interface_example)
+1. [QGroundControl Source](https://github.com/mavlink/qgroundcontrol) Cross-platform ground control station for drones (Android, iOS, Mac OS, Linux, Windows) http://qgroundcontrol.io
+1. [PX4 Source](https://github.com/PX4/Firmware)
+
 
 ### Indoor Fligths
 
