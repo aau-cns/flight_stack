@@ -83,3 +83,12 @@ ssh pi@10.5.1.190 sudo date -s @`( date -u +"%s" )`
 ## Architecture
 
 Get an overview of the possible [architectures](doc/architectures.md).
+
+## Possible Packages:
+
+1. [ros_mavros_wp_mission](https://github.com/jungr-ait/ros_mavros_wp_mission)
+1. [offboard](https://github.com/jungr-ait/offboard)
+
+## Simulation / Testing
+
+1. [PX4-simulation](http://dev.px4.io/master/en/simulation/)
