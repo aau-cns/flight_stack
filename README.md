@@ -62,7 +62,7 @@ roslaunch ros_gamepad_teleop twist2pose.launch
 1. [Mavlink - c_uart_interface_example](https://github.com/mavlink/c_uart_interface_example)
 1. [QGroundControl Source](https://github.com/mavlink/qgroundcontrol) Cross-platform ground control station for drones (Android, iOS, Mac OS, Linux, Windows) http://qgroundcontrol.io
 1. [PX4 Source](https://github.com/PX4/Firmware)
-
+1. [PX4 Dev Guide](http://dev.px4.io/master/en/)
 
 ### Indoor Fligths
 
@@ -79,3 +79,7 @@ Specify the date-time on a remote machine that has no access to Internet:
 ```
 ssh pi@10.5.1.190 sudo date -s @`( date -u +"%s" )`
 ```
+
+## Architecture
+
+Get an overview of the possible [architectures](doc/architectures.md).
