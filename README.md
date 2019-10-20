@@ -1,5 +1,7 @@
 # AMADEE 2020 catkin workspace
 
+The project uses the X-quad copter [TwinScience_V1](https://gitlab.aau.at/aau-nav/development/twins_science_qcopter) build by the Austrian company [Twins](https://start.twins.co.at/). It is build upon the [Pixhawk 4](doc/Pixhawk4.md) flight controller.  
+
 ## How to run the example
 
 ```
@@ -22,6 +24,7 @@ https://gitlab.aau.at/aau-nav/development/examples/example_catkin_ws
 1. Mavlink compatible Flight-Control-Unit (FCU): e.g. [Pixhawk 4](https://docs.px4.io/v1.9.0/en/flight_controller/pixhawk4.html) flashed with the [Ardupilot-Copter](http://ardupilot.org/) or [PX4 flight stack](https://docs.px4.io/master/en/index.html). [Changing the firmware](https://docs.qgroundcontrol.com/en/SetupView/Firmware.html) can be done with QGC.
 1. Serial link between FCU (Telemetry 1: 921600 baud, 8N1) and PC:
 1. connect the Logitec F710 joy pad via USB dongle with our PC.
+
 
 ## Running the system
 
@@ -49,7 +52,7 @@ roslaunch ros_gamepad_teleop twist2pose.launch
  mavproxy.py --master /dev/ttyUSB0 --baud 921600 --out udpin:localhost:9000 --out udpbcast:192.168.42.255:14550
  ```
 1. [Ardupilot-GCS_Mavlink](https://github.com/tridge/ardupilot/blob/master/ArduCopter/GCS_Mavlink.cpp)
-
+1.
 
 
 ## Links
@@ -88,6 +91,12 @@ Get an overview of the possible [architectures](doc/architectures.md).
 
 1. [ros_mavros_wp_mission](https://github.com/jungr-ait/ros_mavros_wp_mission)
 1. [offboard](https://github.com/jungr-ait/offboard)
+
+Further interessting Packages:
+
+1. [State Monitor](https://github.com/ethz-asl/state_monitor)
+1. [ROS-serial](http://wiki.ros.org/rosserial)
+1. [Geodestic Utils](https://github.com/ethz-asl/geodetic_utils)
 
 ## Simulation / Testing
 
