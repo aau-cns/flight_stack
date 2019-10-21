@@ -29,10 +29,7 @@ https://gitlab.aau.at/aau-nav/development/examples/example_catkin_ws
 ## Running the system
 
 Use multiple terminals:
-Terminal1:
-```
-$ ./QGroundControl.AppImage
-```
+
 
 Terminal2:
 ```
@@ -44,6 +41,12 @@ Terminal3:
 roslaunch ros_gamepad_teleop twist2pose.launch
 ```
 
+Terminal1:
+```
+$ ./QGroundControl.AppImage
+```
+**HINT:** If your flight controller controller is directly connected via a serial interface with the PC running QGC, turn off the auto-connect feature. If not, `mavros` will display an `End of file` error, as it loses access to the file handle of the serial port!
+![autoconnect](doc/pictures/autoconnect-settings.png)
 ## Findings
 
 1. FCU: ArduCopter V3.6.9
@@ -51,6 +54,20 @@ roslaunch ros_gamepad_teleop twist2pose.launch
 ```
  mavproxy.py --master /dev/ttyUSB0 --baud 921600 --out udpin:localhost:9000 --out udpbcast:192.168.42.255:14550
  ```
+1. Set the streaming rate (different groups are supported (raw-sensor, all, etc.)):
+```
+mavros/scripts$ python mavsys rate --raw-sensor 25
+```
+1. Get and set Waypoints:
+```
+mavros/scripts$ python mavwp pull
+mavros/scripts$ python mavwp show --full
+```
+1. Arm and disarming the device
+```
+mavros/scripts$ python mavsafety arm
+mavros/scripts$ python mavsafety disarm
+```
 1. [Ardupilot-GCS_Mavlink](https://github.com/tridge/ardupilot/blob/master/ArduCopter/GCS_Mavlink.cpp)
 1.
 
