@@ -1,0 +1,5 @@
+---------- NOTES ----------
+
+- if during the launch of the camera something went wrong the camera triggers a reset that reset also the parameters set during the set_camera_parameters
+
+- TODO: Since the load from dyn reconf does not works, with the final camera we need to write a simple script that dump the wanted parameters into a yaml file which will be loaded during launch (hint: if none works directly load a parameter through rosrun dynamic_reconfigure dynparam set /node parameter_name value getting the value from the yaml file)
