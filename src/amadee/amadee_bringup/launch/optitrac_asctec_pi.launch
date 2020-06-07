@@ -1,0 +1,10 @@
+<launch>
+
+    <include file="$(find asctec_hl_interface)/launch/fcu.launch">
+    </include>
+
+    <include file="$(find ros_vrpn_client)/launch/cns_optitrack.launch"/>
+
+    <include file="$(find realsense2_camera)/launch/rs_t265.launch" />
+</launch>
+

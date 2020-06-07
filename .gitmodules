@@ -4,3 +4,30 @@
 [submodule "src/mavros"]
 	path = src/mavros
 	url = https://github.com/mavlink/mavros.git
+[submodule "src/catkin_simple"]
+	path = src/catkin_simple
+	url = https://github.com/catkin/catkin_simple.git
+[submodule "src/glog_catkin"]
+	path = src/glog_catkin
+	url = https://github.com/ethz-asl/glog_catkin.git
+[submodule "src/matrixvision_camera"]
+	path = src/matrixvision_camera
+	url = git@gitlab.aau.at:aau-cns/matrixvision_camera.git
+[submodule "src/realsense-ros"]
+	path = src/realsense-ros
+	url = https://github.com/IntelRealSense/realsense-ros.git
+[submodule "src/ros_vrpn_client"]
+	path = src/ros_vrpn_client
+	url = https://github.com/ethz-asl/ros_vrpn_client.git
+[submodule "src/serial"]
+	path = src/serial
+	url = https://github.com/wjwwood/serial.git
+[submodule "src/ublox"]
+	path = src/ublox
+	url = https://github.com/KumarRobotics/ublox.git
+[submodule "src/ueye_cam"]
+	path = src/ueye_cam
+	url = https://github.com/anqixu/ueye_cam.git
+[submodule "src/vrpn_catkin"]
+	path = src/vrpn_catkin
+	url = https://github.com/ethz-asl/vrpn_catkin.git

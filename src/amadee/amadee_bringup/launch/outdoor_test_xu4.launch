@@ -7,4 +7,3 @@
     <include file="$(find realsense2_camera)/launch/rs_t265.launch" />
 
 </launch>
-

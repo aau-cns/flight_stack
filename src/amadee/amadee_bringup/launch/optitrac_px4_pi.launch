@@ -1,0 +1,11 @@
+<launch>
+
+    <remap from="/mavros/vision_pose/pose" to="/Twins/vrpn_client/raw_pose" />
+
+    <include file="$(find mavros)/launch/px4.launch">
+        <arg name="fcu_url" default="/dev/ttyAMA0:921600" />
+    </include>
+
+    <include file="$(find ros_vrpn_client)/launch/cns_optitrack.launch"/>
+</launch>
+
