@@ -1,0 +1,5 @@
+**/driver/* filter=lfs diff=lfs merge=lfs -text
+**/driver/camera/ids/ids-software-suite-linux-arm64-4.94.tgz filter=lfs diff=lfs merge=lfs -text
+**driver/camera/ids/ids-software-suite-linux-arm64-4.94.tgz filter=lfs diff=lfs merge=lfs -text
+**driver/* filter=lfs diff=lfs merge=lfs -text
+**driver/camera/ids/uEyeSDK-4.93.00-ARM_LINUX_IDS_GNUEABI_HF.tgz filter=lfs diff=lfs merge=lfs -text
