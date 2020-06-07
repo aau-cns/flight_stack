@@ -53,7 +53,7 @@ $ ./QGroundControl.AppImage
 1. This starts mavproxy so that the serial link to the companion computer (on /dev/ttyUSB0) is available to a companion computer and external GCSs via UDP
 ```
  mavproxy.py --master /dev/ttyUSB0 --baud 921600 --out udpin:localhost:9000 --out udpbcast:192.168.42.255:14550
- ```
+```
 1. Set the streaming rate (different groups are supported (raw-sensor, all, etc.)):
 ```
 mavros/scripts$ python mavsys rate --raw-sensor 25
@@ -118,3 +118,12 @@ Further interessting Packages:
 ## Simulation / Testing
 
 1. [PX4-simulation](http://dev.px4.io/master/en/simulation/)
+
+
+
+## Known issues
+If the ids camera is not recognized then restarting the service can fix this issue:
+
+```sh
+sudo systemctl restart ueyeusbdrc
+```
