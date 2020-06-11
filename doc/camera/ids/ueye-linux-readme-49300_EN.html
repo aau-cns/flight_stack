@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>IDS Software Suite 4.93 for Linux</title>
+   <meta name="keywords" content="IDS Software Suite, ReadMe, Linux" />
+   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+   <meta name="author" content="IDS Imaging Development Systems GmbH" />
+   <meta name="description" content="ReadMe for IDS Software Suite 4.93 for Linux" />
+   <style type="text/css">
+   @media screen {
+     html { font-family: Arial, Helvetica, Sans-Serif; font-size: 0.9em; }
+     body { margin: 0px; padding: 5px; background: #FFFFFF; }
+	 h1 { color: #FFFFFF; background-color: #008A96; padding: 3px; font-size: 1.5em; }
+	 h2 { color: #FFFFFF; background-color: #909090; padding: 3px; font-size: 1.3em; }
+	 h3 { font-size: 1.1em; }
+	 h4 { font-size: 0.9em; }
+	 table, th, td { border: solid 1px #000000; border-collapse: collapse; padding: 3px; }
+	 p { margin: 2px; }
+	 code { font-size: 1.3em; }
+	 }
+	 
+	 @media print {
+	 html { font-family: Arial, Helvetica, Sans-Serif; font-size: 0.9em; }
+	 h1 { color: #000000; background-color: #FFFFFF; padding: 3px; font-size: 1.5em; page-break-after: avoid; }
+	 h2 { color: #000000; background-color: #FFFFFF; padding: 3px; font-size: 1.3em; page-break-after: avoid; }
+	 h3 { page-break-after: avoid; }
+	 h4 { page-break-after: avoid; }
+	 table, th, td { border: solid 1px #000000; border-collapse: collapse; padding: 1px; }
+	 .content { display: none; }
+	 }
+   </style>
+</head>
+<body>
+<h1 id="top">IDS Software Suite 4.93 for Linux</h1>
+<div class="content">
+<h2 id="toc">Contents</h2>
+<ul>
+<li><a href="#system-requirements">System requirements</a></li>
+<li><a href="#configuration">Configuration notes</a></li>
+<li><a href="#older-models">Notes on older camera models</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#first-start">First start</a></li>
+<li><a href="#known-issues">Known issues</a></li>
+<li><a href="#dependencies">List of contained files / dependencies</a></li>
+<li><a href="#uninstallation">Uninstallation</a></li>
+<li><a href="#copyright">Copyright / Trademarks</a></li>
+</ul>
+</div>
+<h2 id="system-requirements">System requirements&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p>For operating the uEye cameras, the following system requirements must be met:</p>
+<table>
+<thead>
+<tr>
+<th>&nbsp;</th>
+<th>USB 3.1/USB 3.0 camera</th>
+<th>USB 2.0 camera</th>
+<th>GigE camera</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface</td>
+<td>USB 3.0 port (Super Speed)</td>
+<td>USB 2.0 port (High Speed 480 Mbps, "Full Powered" 500 mA)</td>
+<td>Gigabit Ethernet port (1000 Mbps)</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>Intel i5 or better</td>
+<td>Intel i3 or better</td>
+<td>Intel i3 or better</td>
+</tr>
+<tr>
+<td>Memory</td>
+<td>min. 2 GB</td>
+<td>min. 2 GB</td>
+<td>min. 2 GB</td>
+</tr>
+<tr>
+<td>Disk space</td>
+<td>min. 500 MB</td>
+<td>min. 500 MB</td>
+<td>min. 500 MB</td>
+</tr>
+<tr>
+<td>Operating system</td>
+<td>Linux > Kernel 3.4 (32/64-bit)
+<br /><strong>For UI-3013XC:</strong> Linux &gt;= Kernel 3.13 (32/64-bit)</td>
+<td>Linux > Kernel 2.6 (32/64-bit)</td>
+<td>Linux > Kernel 2.6 (32/64-bit)</td>
+</tr>
+</tbody>
+</table>
+<p>Depending on the sensor model, the camera performance may be limited with the minimum system requirements.</p>
+<h3>Compatibility list</h3>
+<p>The Linux operation system is one of the most widely ported, running on a huge amount of architectures and provided over many distributions. Although we are trying to be compatible among the whole range of kernel versions and distributions, there is no guarantee that the IDS Software Suite is working on a specific untested combination.</p>
+<p>Below is a list of successfully tested distributions for the current IDS Software Suite:</p>
+<ul>
+<li>Debian 10.2 (buster)</li>
+<li>Debian 9.11 (stretch)</li>
+<li>Ubuntu 19.10 (eoan)</li>
+<li>Ubuntu 18.04.3 LTS (bionic)</li>
+</ul>
+<h2 id="configuration">Configuration notes&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<ul>
+<li>According to the IDS Software Suite version, the Linux system has to support a minimum required version of the GNU C Library (GLIBC, libc.so.6) and the GNU C++ Library (GLIBCXX, libstdc++.so.6):
+<ul>
+<li>libc: minimum version 2.14</li>
+<li>libstdc++: minimum version 3.4.20</li>
+</ul>
+</li>
+<li>POSIX threads library (POSIX threads enabled libc)</li>
+<li>bash (Bourne again shell) or sh to run the script</li>
+<li>libcap v2</li>
+<li>libgomp v2 (for OpenMP support)</li>
+<li>udev min. v105</li>
+<li>libpng (<code>libpng16.so.16</code>) for support of saving images in PNG format</li>
+<li>libjpeg (<code>libjpeg.so.8</code> or <code>libjpeg.so.62</code>) for support of saving images in JPEG format and JPEG mode of XS</li>
+<li>OpenGL graphics functions
+<br />For OpenGL, version 1.4 or higher must be installed.</li>
+<li>If you want to have a graphical environment by using tools like the IDS Camera Manager or the uEye Demo application, you need to install the Qt framework (min. version Qt 5.2)</li>
+<li>Installation of IDS Software Suite 4.91 (or higher) will break USB driver installations prior to 4.91</li>
+</ul>
+<h2 id="older-models">Notes on older camera models&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p>Former versions of the IDS Software Suite  can be downloaded in the software archive under <a href="https://en.ids-imaging.com/ueye-software-archive.html" target="_blank">https://en.ids-imaging.com/ueye-software-archive.html</a>.</p>
+<h3>UI-3013XC</h3>
+<p>The UI-3013XC camera model is supported by driver version <strong>4.92</strong> for the last time.</p>
+<h3>UI-112xSE, UI-512xSE, and XS</h3>
+<p>The models UI-112xSE, UI-512xSE, and XS are supported by driver version <strong>4.91</strong> for the last time.</p>
+<h3>UI-1008XS</h3>
+<p>The UI-1008XS camera model is supported by driver version <strong>4.81</strong> for the last time.</p>
+<h3>GigE uEye RE</h3>
+<p>The GigE uEye RE camera family is supported by driver version <strong>4.80</strong> for the last time. The GigE uEye RE PoE camera family is not affected by this.</p>
+<h3>USB 2 uEye RE</h3>
+<p>The USBE uEye RE camera family is supported by driver version <strong>4.80</strong> for the last time.</p>
+<h3>USB 2 uEye ME</h3>
+<p>The USB uEye ME camera family is supported by driver version <strong>4.40</strong> for the last time.</p>
+<h3>GigE uEye HE</h3>
+<p>The GigE uEye HE camera family is  supported by driver version <strong>3.82</strong> for the last time.</p>
+<h3>USB uEye SE</h3>
+<p>The models UI-121xSE, UI-141xSE, UI-144xSE, UI-145xSE, and UI-154xSE-C have been discontinued and will not be tested from driver version 3.80 on. IDS Imaging Development Systems GmbH therefore cannot guarantee that these models will provide full functionality with new driver versions and operate without problems.</p>
+<h3>uEye memory board USB uEye SE/USB uEye RE</h3>
+<p>The optional memory board of the USB uEye SE and USB uEye RE camera series has been discontinued. The functions required to operate the memory board are supported up to and including driver version 3.25.</p>
+<h3>Older USB 2 uEye CMOS cameras</h3>
+<p>All USB CMOS cameras with USB board revision &lt; 2.1 are not supported by driver versions &gt; 3.10. How can you check whether your camera is affected?</p>
+<p>Check the serial number of your camera. If it is less than 400 26 27000, your camera will not be compatible with driver versions &gt; 3.10.</p>
+<p>If your camera is not compatible with driver versions &gt; 3.10, you can of course continue to use your present driver (up to version 2.40).</p>
+<h2 id="installation">Installation&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p><strong>You must be root to install.</strong></p>
+<ul>
+<li>You must be root to control the daemon.</li>
+<li>The cameras must have a persistent IP configuration for GigE uEye variant.</li>
+<li>If a firewall is active on your system, ensure that UDP ports 50000 to 50003 are not filtered if you installed the GigE uEye variant.</li>
+<li>It is recommended to use a system-wide, fully static interface configuration for the network interfaces that GigE uEye cameras are connected to.</li>
+</ul>
+<h3>Installing the (self-extracting) archive</h3>
+<ol>
+<li>Copy the setup file into a directory on the hard disk (you need write access to decompress).</li>
+<li>Go to the directory you copied the files into and run the setup program script by typing (replace the wildcard with the actual version identifier of the installer file) 
+<br /><code>$&gt; sudo sh ./ueyesdk-setup*.run</code></li>
+<li>If any problems occurred, the <a href="#known-issues">known issues section below</a> or the generated report file <code>(/tmp/ids_ueye_YYYYMMDDhhmmss_PID.log)</code> may include a hint to solve them (see installer output). If not, contact your local distributors support and submit the report file.</li>
+</ol>
+<p><strong>Note:</strong> If older configuration files are present from a previous installation, they are backed up before the new configuration files are created.</p>
+<h3>Installed file structure</h3>
+<p>The created files will be installed in following directories (if you have not uninstalled the USB or GigE package):</p>
+<table>
+<tr>
+<td>/usr/lib/libueye_api.so.[version]</td>
+<td>32-bit uEye shared library</td>
+<td rowspan="2" width="50%">After <code>ldconfig</code> has finished, a symbolic link <code>libueye_api.so</code> should exist to provide linkage against <code>libueye_api.so</code>. Note that only the version for the current target architecture will be installed, e.g. the 32-bit library will only be installed on a 32-bit system and the 64-bit library will only be installed on a 64-bit system.</td>
+</tr>
+<tr>
+<td>/usr/lib/libueye_api64.so.[version]</td>
+<td>64-bit uEye shared library</td>
+</tr>
+<tr>
+<td>/usr/include/ueye.h</td>
+<td>Development header file</td>
+<td>For compatibility with older versions, a symbolic link <code>/usr/include/uEye.h</code> will be created. It is strongly recommended to use the lower case file name in new projects.</td>
+</tr>
+<tr>
+<td>/usr/bin/ueyeethd</td>
+<td>GigE uEye daemon binaries</td>
+<td> Configuration files are located under <code>/etc/ids/...</code></td>
+</tr>
+<tr>
+<td>/usr/bin/ueyeusbd</td>
+<td>USB uEye daemon binaries</td>
+<td>Configuration files are located under <code>/etc/ids/...</code></td>
+</tr>
+<tr>
+<td>/usr/share/ids/ueye/licenses</td>
+<td>Third party licenses and copyrights</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/usr/lib/firmware/ids/ueye</td>
+<td>USB3 firmware binaries</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td">/var/run/ueyed</td>
+<td>Runtime directory</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/etc/init.d/ueyeethdrc</td>
+<td>GigE uEye daemon runlevel control script</td>
+<td>Is only installed if <code>systemd</code> is not available on your system</td>
+</tr>
+<tr>
+<td>/etc/init.d/ueyeusbdrc</td>
+<td>USB uEye daemon runlevel control script</td>
+<td>Is only installed if <code>systemd</code> is not available on your system</td>
+</tr>
+<tr>
+<td>/lib/systemd/system/ueyeethdrc.service</td>
+<td>GigE uEye daemon service file</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/lib/systemd/system/ueyeusbdrc.service</td>
+<td>USB uEye daemon service file</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/usr/src/ids/ueyedemo</td>
+<td>IDS demo sources</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/usr/share/ids/ueye/readme.txt</td>
+<td>IDS SDK readme</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>/usr/share/ids/ueye/manual</td>
+<td>IDS SDK user manual</td>
+<td>&nbsp;</td>
+</tr>
+</table>
+<p>&nbsp;</p>
+<p>Additionally, the installer provides the following tools - unless not indicated otherwise, the tools will be installed to <code>/usr/bin</code>:</p>
+<table>
+<tr>
+<td>ueyesetid</td>
+<td>Camera ID configuration tool</td>
+</tr>
+<tr>
+<td>ueyesetip</td>
+<td>Camera IP address configuration tool</td>
+</tr>
+<tr>
+<td>idscameramanager</td>
+<td>IDS Camera Manager</td>
+</tr>
+<tr>
+<td>ueyedemo</td>
+<td>Demo application</td>
+</tr>
+<tr>
+<td>ueyereport</td>
+<td>Report generator tool</td>
+</tr>
+<tr>
+<td>ueyesetup</td>
+<td>IDS SDK setup tool
+<br />For installing/uninstalling the self-extracting tar archive</td>
+</tr>
+</table>
+<h3>User/group</h3>
+<p>The installer will create a system group <code>'ueye'</code> and a system user <code>'ueyed'</code> to run the daemon with. Currently there are no access control restrictions, but be aware that this might change in the future.</p>
+<h2 id="first-start">First start&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p><strong>Note:</strong>&nbsp;It is recommended to use <code>systemd</code> for controlling the daemons. Do not mix calls of <code>systemd</code> and <code>init.d</code>!</p>
+<ol>
+<li>After installation, you may start the uEye daemons separately with systemd by typing:
+<br /><code>$&gt; sudo systemctl start ueyeethdrc</code>
+<br /><code>$&gt; sudo systemctl start ueyeusbdrc</code>
+<br />If your system does not support <code>systemd</code> yet, you can use the following commands:
+<br /><code>$&gt; sudo /etc/init.d/ueyeethdrc start</code>
+<br /><code>$&gt; sudo /etc/init.d/ueyeusbdrc start</code>
+<br />Before you stop the uEye daemons, make sure that there are no connections to it:
+<br /><code>$&gt; sudo systemctl stop ueyeethdrc</code>
+<br /><code>$&gt; sudo systemctl stop ueyeusbdrc</code>
+<br />Or without <code>systemd</code>:
+<br /><code>$&gt; sudo /etc/init.d/ueyeethdrc stop</code>
+<br /><code>$&gt; sudo /etc/init.d/ueyeusbdrc stop</code>
+<br />Alternatively, if you have a working graphical environment, the daemons may be controlled via the IDS Camera Manager (started as root)</li>
+<li>Set camera ID
+<br />To set the camera ID, you may use the IDS Camera Manager or the <code>ueyesetid</code> tool.</li>
+<li>Set camera IP
+<br />To set the camera persistent IP address, you may use the IDS Camera Manager or the <code>ueyesetip</code> tool.</li>
+</ol>
+<h3>USB 3.1/USB 3/USB 2 uEye camera</h3>
+<p>After you installed the software, connect the camera to the PC, using the corresponding USB cable. The camera will be recognized automatically. When you connect a camera with a PC or a new USB port for the first time, it is detected as a new device and the firmware is uploaded to the camera. When the camera has been correctly installed, the LED on the back of the camera lights up green and the camera is displayed in the list of the IDS Camera Manager.</p>
+<h4>USB 3/USB 3.1 uEye cameras under USB 2.0</h4>
+<p>USB 3/USB 3.1 uEye cameras are limited usable under USB 2.0. Depending on the camera model, not all camera functions are available in USB 2.0 mode. USB 3/USB 3.1 uEye cameras are optimized for USB 3.0 ports and are not tested by IDS Imaging Development Systems GmbH under USB 2.0.</p>
+<p>Please note that due to the high performance of modern sensors, some USB 3/USB 3.1 uEye models are not supported in USB 2.0 mode anymore, as the USB 2.0 interface does not provide enough power.</p>
+<h3>GigE uEye camera</h3>
+<p>After you installed the software, connect the camera with the network. Check the power supply to the camera. Use either an external power supply or - depending on the model - via PoE (Power over Ethernet).</p>
+<p><strong>Attention: The camera should not be supplied through both voltage sources at once as this can irreparably damage the camera.</strong></p>
+<p>Before you can use the camera on the network, you need to assign a valid IP address to the camera in the IDS Camera Manager.</p>
+<h4>Note regarding GigE uEye cameras</h4>
+<p>By default, the installer configures the default ethernet network interfaces. If you use another network interface to connect your cameras, insert the interface name at the interface configuration parameter in <code>&quot;[Parameters]-Interfaces&quot;</code> of <code>/etc/ids/ueye/ueyeethd.conf</code>. You must be root to edit the configuration file.</p>
+<p>The GigE uEye daemon network interfaces may be configured with the IDS Camera Manager if a graphical environment is available.</p>
+<p><strong>Note:</strong> <code>ueyeethd</code> must be stopped <strong>before</strong> manually editing the configuration file!</p>
+<h2 id="known-issues">Known issues&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p>This section lists known issues that might occur in this release.</p>
+<ul>
+<li>USB 3.0 performance issues: High CPU load may lead to USB transfer fails. They possibly can be reduced by:
+<br />Increase the daemon priority by reducing the <code>NICEVALUE</code> in <code>/lib/systemd/ueyeusbdrc.service</code> or <code>/etc/init.d/ueyeusbdrc</code>
+<br /><strong>Note: </strong>If you make changes to the <code>ueyeusbdrc.service</code> file, you will need to run
+<br /><code>$&gt; sudo systemctl daemon-reload</code>
+<br />before starting the USB uEye daemon again.</li>
+<li>OpenMP issues may be cause high CPU load or "Driver out of buffer" errors. They possibly can be reduced by:
+<br />Set the value of the environment variable <code>OMP_WAIT_POLICY</code> to <code>PASSIVE</code>
+<br />This variable specifies whether waiting threads should be active or passive. If the value is <code>PASSIVE</code>, waiting threads should not consume CPU power while waiting; while the value is <code>ACTIVE</code> specifies that they should. If undefined, threads wait actively for a short time before waiting passively.</li>
+<li>Debian 10: USB and ETH daemons cannot be started after installation because no user/group was created during installation.<br />
+<a href="https://wiki.debian.org/NewInBuster">See also "New in Buster"</a><br />
+The <code>su</code> command in buster is provided by the util-linux source package, instead of the shadow source package, and no longer alters the <code>PATH</code> variable by default. This means that after doing <code>su</code>, your <code>PATH</code> may not contain directories like <code>/sbin</code>, and many system administration commands will fail. There are several workarounds:
+	<ul>
+		<li>Use <code>su -</code> instead; this launches a login shell, which forces <code>PATH</code> to be changed, but also changes everything else including the working directory.</li>
+		<li>Use <code>sudo</code> instead. <code>sudo</code> still runs commands with an altered <code>PATH</code> variable.
+			<ul>
+				<li>To get a regular root shell with the correct <code>PATH</code>, you may use <code>sudo -s</code>.</li>
+				<li>To get a login shell as root (equivalent to <code>su -</code>), you may use <code>sudo -i</code>.</li>
+			</ul>
+		</li>
+		<li>Put <code>ALWAYS_SET_PATH yes</code> in <code>/etc/login.defs</code> to get an approximation of the old behavior. This is documented in <a href="https://manpages.debian.org/buster/util-linux/su.1.en.html">su</a> but not in <a href="https://manpages.debian.org/buster/login/login.defs.5.en.html">login.defs</a>. It may also cause a harmless error message to appear in some situations.</li>
+		<li>Put the system administration directories (<code>/sbin, /usr/sbin, /usr/local/sbin</code>) in your regular account's <code>PATH</code>.</li>
+	</ul>
+</li>
+</ul>
+<h2 id="dependencies">List of contained files / dependencies&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p>See list on <a href="https://en.ids-imaging.com/open-source.html" target="_blank">https://en.ids-imaging.com/open-source.html</a></p>
+<h2 id="uninstallation">Uninstallation&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<h3>Uninstalling the (self extracting) archive</h3>
+<ul>
+<li>To uninstall GigE uEye variant, run as root:
+<br /><code>$&gt; sudo /usr/bin/ueyesetup -r eth</code></li>
+<li>To uninstall USB uEye variant, run as root:
+<br /><code>$&gt; sudo /usr/bin/ueyesetup -r usb</code></li>
+</ul>
+<p>You should always use the setup script that came with the previous installation to ensure proper system cleanup. Do not attempt to remove the IDS Software Suite manually.</p>
+<p><strong>Note:</strong> The configuration files are not uninstalled and remain on the system.</p>
+<h2 id="copyright">Copyright / Trademarks&nbsp;&nbsp;&nbsp;<a href="#top" style="color: #FFFFFF;">&uArr;</a></h2>
+<p>&copy; 2019, IDS Imaging Development Systems GmbH</p>
+<p>IDS Imaging Development Systems and uEye are registered trademarks of IDS Imaging Development Systems GmbH.</p>
+<p>&nbsp;</p>
+<p>IDS Imaging Development Systems GmbH
+<br />Dimbacher Str. 6-8
+<br />74182 Obersulm, Germany
+<br /><a href="https://en.ids-imaging.com" target="_bank">https://en.ids-imaging.com</a></p>
+</body>
+</0ËA<ð&
