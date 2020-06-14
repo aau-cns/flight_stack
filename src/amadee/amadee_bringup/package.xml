@@ -12,5 +12,6 @@
 
     <buildtool_depend>catkin</buildtool_depend>
 
-    <exec_depend>realsense_camera</exec_depend>
+    <exec_depend>realsense2_camera</exec_depend>
+    <exec_depend>ueye_cam</exec_depend>
 </package>

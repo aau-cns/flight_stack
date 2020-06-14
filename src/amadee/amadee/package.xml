@@ -12,7 +12,7 @@
 
     <buildtool_depend>catkin</buildtool_depend>
 
-    <run_depend>amadee_bringup</run_depend>
+    <exec_depend>amadee_bringup</exec_depend>
 
     <export>
         <metapackage/>
