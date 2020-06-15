@@ -1,12 +1,6 @@
 <launch>
-
-    <include file="$(find amadee)/launch/px4_pi.launch" />
-
-    <include file="$(find ublox_gps)/launch/ublox_device.launch">
-        <arg name="node_name" default="rtk" />
-    </include>
-
-    <include file="$(find amadee)/launch/ueye_cam.launch" />
-
-    <include file="$(find amadee)/launch/realsense_t265.launch" />
+    <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+    <include file="$(find amadee_bringup)/launch/ublox.launch" />
+    <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+    <include file="$(find amadee_bringup)/launch/realsense_t265.launch" />
 </launch>

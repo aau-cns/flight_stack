@@ -1,9 +1,6 @@
 <launch>
-
-    <include file="$(find mavros)/launch/px4.launch">
-        <arg name="fcu_url" default="/dev/ttySAC0:921600" />
-    </include>
-
-    <include file="$(find realsense2_camera)/launch/rs_t265.launch" />
-
-</launch>
+      <include file="$(find amadee_bringup)/launch/px4_xu4.launch" />
+      <include file="$(find amadee_bringup)/launch/ublox.launch" />
+      <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+      <include file="$(find amadee_bringup)/launch/realsense_t265.launch" />
+ </launch>
