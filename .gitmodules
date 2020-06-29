@@ -3,7 +3,7 @@
 	url = git@gitlab.aau.at:aau-nav/development/ros-nodes/ros_gamepad_teleop.git
 [submodule "src/mavros"]
 	path = src/mavros
-	url = https://github.com/mavlink/mavros.git
+	url = git@gitlab.aau.at:aau-cns/px4_mavros.git
 [submodule "src/catkin_simple"]
 	path = src/catkin_simple
 	url = https://github.com/catkin/catkin_simple.git
@@ -31,3 +31,9 @@
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
+[submodule "src/mavlink"]
+	path = src/mavlink
+	url = git@gitlab.aau.at:aau-cns/mavlink.git
+[submodule "src/open_vins"]
+	path = src/open_vins
+	url = git@gitlab.aau.at:aau-cns/openvins-based-multi-sensor-fusion.git
