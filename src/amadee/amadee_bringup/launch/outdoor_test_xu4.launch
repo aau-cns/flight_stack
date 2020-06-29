@@ -3,4 +3,4 @@
       <include file="$(find amadee_bringup)/launch/ublox.launch" />
       <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
       <include file="$(find amadee_bringup)/launch/realsense_t265.launch" />
- </launch>
+</launch>
