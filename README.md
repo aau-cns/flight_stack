@@ -47,6 +47,35 @@ $ ./QGroundControl.AppImage
 ```
 **HINT:** If your flight controller controller is directly connected via a serial interface with the PC running QGC, turn off the auto-connect feature. If not, `mavros` will display an `End of file` error, as it loses access to the file handle of the serial port!
 ![autoconnect](doc/pictures/autoconnect-settings.png)
+
+
+## Working on the drone
+
+This repository will be copied to the home directory of the user **core** of the drone (**Device**). There one cannot pull from the server. Thus, one has to sync the files, if changes made, manually
+
+```
+host$ rsync -rav ./src/amadee/ core@remote_host:/home/core/catkin_ws/src/amadee
+```  
+
+**remote_host** via WiFi is **192.168.0.158**, via LAN it is **143.205.120.215**
+Before you can work, a public ssh-key needs to be copied by the maintainer onto the **Device**. Generation a SSH-key pair is described on [github](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+If you want to have **hostname** instead of at the IP-address, make an entry in
+```
+host$  sudo nano /etc/hosts
+```
+like
+```
+   143.205.120.215 remote_host
+```
+
+### ROS
+The **ROS-master** should be running on the drone is specified to do so, but the **ROS_MASTER_URI** needs to be set on your PC:
+```
+host$  export ROS_MASTER_URI=http://192.168.0.158:11311
+```
+
+
 ## Findings
 
 1. FCU: ArduCopter V3.6.9
