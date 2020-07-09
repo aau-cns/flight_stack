@@ -2,6 +2,10 @@
 
 clear
 
+DEVICE_IP=192.168.0.158
+USER=core
+export ROS_MASTER_URI=http://${DEVICE_IP}:11311
+
 echo "--------- ----------------------- ----------"
 echo "--------- SETUP CAMERA PARAMETERS ----------"
 echo "--------- ----------------------- ----------"
@@ -13,10 +17,6 @@ cleanup() {
   done
 
 }
-
-DEVICE_IP=192.168.0.158
-USER=core
-export ROS_MASTER_URI=http://${DEVICE_IP}:11311
 
 trap cleanup EXIT TERM
 
@@ -48,7 +48,7 @@ echo ""
 
 if [[ $k = s ]] ; then
 
-#echo "[TODO] dumping parameters..."
+echo "dumping parameters..."
 
 #rosrun dynamic_reconfigure dynparam dump /camera yamlfiles/camera_parameters.yaml
 
