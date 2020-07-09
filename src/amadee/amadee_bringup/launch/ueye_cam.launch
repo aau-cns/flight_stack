@@ -35,7 +35,7 @@
         <param name="binning" type="int" value="1" /> <!-- supported by only some UEye cameras -->
         <param name="sensor_scaling" type="double" value="1.0" /> <!-- supported by only some UEye cameras -->
 
-        <param name="auto_gain" type="bool" value="True" />
+        <param name="auto_gain" type="bool" value="False" />
         <param name="master_gain" type="int" value="0" />
         <param name="red_gain" type="int" value="0" />
         <param name="green_gain" type="int" value="0" />

@@ -31,7 +31,11 @@ echo "--------- LOG IN TO REMOTE DEVICE ----------"
 echo ""
 
 # remove old files
-ssh -t ${USER}@${DEVICE_IP} "bash -c './catkin_ws/src/amadee/scripts/camera_setup/start_intrinsic_recording_local.sh'"
+ssh -t ${USER}@${DEVICE_IP} "bash -c './catkin_ws/src/amadee/scripts/camera_setup/start_intrinsic_recording_locally.sh'"
+
+echo "--------- COPY BAG FILES ----------"
+rsync -azv ${USER}@${DEVICE_IP}:/home/${USER}/bagfiles/intrinsic_recording.bag ./bagfiles/intrinsic_recording.bag
+
 
 #rosnode kill /intrinsic_bag
 echo "--------- LOCAL DONE ----------"

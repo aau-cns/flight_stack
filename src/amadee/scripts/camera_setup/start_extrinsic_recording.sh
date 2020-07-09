@@ -2,46 +2,39 @@
 
 clear
 
+DEVICE_IP=192.168.0.158
+USER=core
+export ROS_MASTER_URI=http://${DEVICE_IP}:11311
+
 echo "--------- ------------------- ----------"
-echo "--------- EXTRINSIC RECORDING ----------"
+echo "- START EXTRINSIC RECORDING REMOTELY   -"
 echo "--------- ------------------- ----------"
 
-# killing
+# remove old files
 cleanup() {
+
+
   for pid in "${pids[@]}"; do
     kill -0 "$pid" && kill "$pid"
   done
-  sleep 0.5
-  mv extrinsic_recording.bag bagfiles
+
+  #echo "kill rosnode on remote device..."
+  #ssh -f ${USER}@${DEVICE_IP} "bash -c 'source ~/.ros_env.bash && rosnode kill -a &'"
+  #sleep 5
+
+  # mv intrinsic_recording.bag bagfiles
 }
 
 trap cleanup EXIT TERM
 
+echo "--------- LOG IN TO REMOTE DEVICE ----------"
+echo ""
+
 # remove old files
-rm -f extrinsic_recording.bag.active
-rm -f extrinsic_recording.bag
-rm -f bagfiles/extrinsic_recording.bag
+ssh -t ${USER}@${DEVICE_IP} "bash -c './catkin_ws/src/amadee/scripts/camera_setup/start_extrinsic_recording_locally.sh'"
 
-echo "--------- WAIT UNTIL THE CAMERA IS READY ----------"
+echo "--------- COPY BAG FILES ----------"
+rsync -azv ${USER}@${DEVICE_IP}:/home/${USER}/bagfiles/extrinsic_recording.bag ./bagfiles/extrinsic_recording.bag
 
-# launch camera
-roslaunch realsense2_camera rs_camera.launch > /dev/null & pids+=( "$!" )
-
-# wait some time to have camera ready
-sleep 15
-
-# load saved parameters
-
-# throttle messages to correct framerate
-rosrun topic_tools throttle messages /camera/color/image_raw 20.0 throttle_camera_20hz & pids+=( "$!" )
-
-# record .bag file
-rosbag record throttle_camera_20hz --publish --output-name=extrinsic_recording __name:=extrinsic_bag &
-
-# visualize camera stream while recording
-rqt --perspective-file perspective/realsense_recording.perspective & pids+=( "$!" )
-
-wait
-#rosnode kill /extrinsic_bag
-echo "--------- EXTRINSIC RECORDING DONE ----------"
-
+#rosnode kill /intrinsic_bag
+echo "--------- LOCAL DONE ----------"

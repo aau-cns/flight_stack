@@ -54,7 +54,7 @@ $ ./QGroundControl.AppImage
 This repository will be copied to the home directory of the user **core** of the drone (**Device**). There one cannot pull from the server. Thus, one has to sync the files, if changes made, manually
 
 ```
-host$ rsync -rav ./src/amadee/ core@remote_host:/home/core/catkin_ws/src/amadee
+host$ rsync -rav ./src/amadee/ core@remote_host:/home/core/catkin_ws/src/amadee --exclude=*.bag
 ```  
 
 **remote_host** via WiFi is **192.168.0.158**, via LAN it is **143.205.120.215**
