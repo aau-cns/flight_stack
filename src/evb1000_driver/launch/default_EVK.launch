@@ -1,0 +1,15 @@
+<!-- default launch -->
+<launch>
+
+  <!-- Arguments -->
+  <arg name="node_name"                 default="EVK1000"/>
+  <arg name="rangeMeasurement"          default="/$(arg node_name)/rangeMeasurement"/>
+  <arg name="serial_port"               default="/dev/ttyACM0" />
+  <arg name="config_file"               default="$(find evb1000_driver)/launch/default_config.yaml" />
+
+  <node name="$(arg node_name)" pkg="evb1000_driver" type="EVK1000_node" output="screen">
+    <param name="device"                  value="$(arg serial_port)"/>
+    <remap from="/rangeMeasurement"       to="$(arg rangeMeasurement)"/>
+    <rosparam file="$(arg config_file)"   command="load" />
+  </node>
+</launch>
