@@ -25,9 +25,6 @@
 [submodule "src/ublox"]
 	path = src/ublox
 	url = https://github.com/KumarRobotics/ublox.git
-[submodule "src/ueye_cam"]
-	path = src/ueye_cam
-	url = https://github.com/anqixu/ueye_cam.git
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
