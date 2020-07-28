@@ -32,7 +32,7 @@ rtk_gps_topic=(
 groups_to_record=(
 ${px4_topics[@]}
 ${ids_camera_topics[@]}
-${real_sense_topics[@]}
+#${real_sense_topics[@]}
 ${rtk_gps_topic[@]}
 )
 
