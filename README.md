@@ -1,22 +1,54 @@
 # AMADEE 2020 catkin workspace
 
-The project uses the X-quad copter [TwinScience_V1](https://gitlab.aau.at/aau-nav/development/twins_science_qcopter) build by the Austrian company [Twins](https://start.twins.co.at/). It is build upon the [Pixhawk 4](doc/Pixhawk4.md) flight controller.  
+# Getting Started
 
-## How to run the example
+## Setup and compile the project
 
-```
-# init git submodules
-./init
-# build from source
-catkin_make all run_tests -j 1
-# add your packages to the ROS environment
-source devel/setup.bash
-# start the mission
-roslaunch bringup mission1.launch
-```
+~~~bash
+# Generate a catkin workspace (optional)
+mkdir -p catkin_ws/src
+cd catkin_ws
+catkin init
+catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
+cd src
+
+# Get the ros package
+git clone <url> amadee20_cws
+cd amadee20_cws
+git submodule update --init --recursive
+
+# Build the project and run tests
+cd ../../
+catkin build
+~~~
 
 For further detail about the scripts and maintainance of an catkin workspace follow:
 https://gitlab.aau.at/aau-nav/development/examples/example_catkin_ws
+
+### QT-Creator setup
+
+~~~bash
+# Move to the catkin workspace
+cd catkin_ws
+
+# Run QT-Creator
+qtcreator .
+# To setup the qt configuration, select desktop and press 'Configure Project'
+~~~
+
+# Hardware
+
+## Copter
+The project uses the X-quad copter [TwinScience_V1](https://gitlab.aau.at/aau-nav/development/twins_science_qcopter) build by the Austrian company [Twins](https://start.twins.co.at/). It is build upon the [Pixhawk 4](doc/Pixhawk4.md) flight controller.  
+
+# Future components, to be restructured
+
+## How to run the example
+TBD
+
+## Run missions
+TBD
+
 
 ## Requirements
 
@@ -47,6 +79,35 @@ $ ./QGroundControl.AppImage
 ```
 **HINT:** If your flight controller controller is directly connected via a serial interface with the PC running QGC, turn off the auto-connect feature. If not, `mavros` will display an `End of file` error, as it loses access to the file handle of the serial port!
 ![autoconnect](doc/pictures/autoconnect-settings.png)
+
+
+## Working on the drone
+
+This repository will be copied to the home directory of the user **core** of the drone (**Device**). There one cannot pull from the server. Thus, one has to sync the files, if changes made, manually
+
+```
+host$ rsync -rav ./src/amadee/ core@remote_host:/home/core/catkin_ws/src/amadee --exclude=*.bag
+```
+
+**remote_host** via WiFi is **192.168.0.158**, via LAN it is **143.205.120.215**
+Before you can work, a public ssh-key needs to be copied by the maintainer onto the **Device**. Generation a SSH-key pair is described on [github](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+If you want to have **hostname** instead of at the IP-address, make an entry in
+```
+host$  sudo nano /etc/hosts
+```
+like
+```
+   143.205.120.215 remote_host
+```
+
+### ROS
+The **ROS-master** should be running on the drone is specified to do so, but the **ROS_MASTER_URI** needs to be set on your PC:
+```
+host$  export ROS_MASTER_URI=http://192.168.0.158:11311
+```
+
+
 ## Findings
 
 1. FCU: ArduCopter V3.6.9

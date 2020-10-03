@@ -1,0 +1,374 @@
+jungr@RolandJung:~/workspace/CNS/evb1000_driver/doc/results$ ./gen_narrow_V2_mod3_results.bash 
+samples   35
+xs.rmse   1.274876 m
+xs.mean   1.274286 m
+xs.median 1.269000 m
+xs.std    0.038788 m
+xs.var    0.001504 m
+xs.min    1.204000 m
+xs.max    1.354000 m
+samples   35
+ys.rmse   1.144943 m
+ys.mean   1.144286 m
+ys.median 1.139000 m
+ys.std    0.038788 m
+ys.var    0.001504 m
+ys.min    1.074000 m
+ys.max    1.224000 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_100cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 1.0, 'x': 1.0, 'z': 0.0}
+x_abs_error.mean   0.274285718373
+x_abs_error.max   0.353999972343
+x_abs_error.min   0.203999996185
+y_abs_error.mean   0.144285719735
+y_abs_error.max   0.223999977112
+y_abs_error.min   0.0740000009537
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_100cm.csv
+samples   34
+dt_error.rmse   0.501001 m
+dt_error.mean   0.501000 m
+dt_error.median 0.500986 m
+dt_error.std    0.001019 m
+dt_error.var    0.000001 m
+dt_error.min    0.499826 m
+dt_error.max    0.502185 m
+###################################
+
+finished after [0.366253852844 sec]
+
+#########################   SUCCESS   #######################
+samples   37
+xs.rmse   5.342535 m
+xs.mean   5.342486 m
+xs.median 5.340000 m
+xs.std    0.022876 m
+xs.var    0.000523 m
+xs.min    5.293000 m
+xs.max    5.401000 m
+samples   37
+ys.rmse   5.292536 m
+ys.mean   5.292486 m
+ys.median 5.290000 m
+ys.std    0.022876 m
+ys.var    0.000523 m
+ys.min    5.243000 m
+ys.max    5.351000 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 5.0, 'x': 5.0, 'z': 0.0}
+x_abs_error.mean   0.342486497518
+x_abs_error.max   0.401000022888
+x_abs_error.min   0.293000221252
+y_abs_error.mean   0.292486487208
+y_abs_error.max   0.350999832153
+y_abs_error.min   0.243000030518
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_500cm.csv
+samples   36
+dt_error.rmse   0.500996 m
+dt_error.mean   0.500995 m
+dt_error.median 0.500979 m
+dt_error.std    0.000989 m
+dt_error.var    0.000001 m
+dt_error.min    0.499793 m
+dt_error.max    0.502204 m
+###################################
+
+finished after [0.361769199371 sec]
+
+#########################   SUCCESS   #######################
+samples   37
+xs.rmse   10.268216 m
+xs.mean   10.268189 m
+xs.median 10.265000 m
+xs.std    0.023644 m
+xs.var    0.000559 m
+xs.min    10.219000 m
+xs.max    10.322000 m
+samples   37
+ys.rmse   10.288216 m
+ys.mean   10.288189 m
+ys.median 10.285000 m
+ys.std    0.023644 m
+ys.var    0.000559 m
+ys.min    10.239000 m
+ys.max    10.342000 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_1000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 10.0, 'x': 10.0, 'z': 0.0}
+x_abs_error.mean   0.268189146712
+x_abs_error.max   0.321999549866
+x_abs_error.min   0.218999862671
+y_abs_error.mean   0.288189192076
+y_abs_error.max   0.342000007629
+y_abs_error.min   0.239000320435
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_1000cm.csv
+samples   36
+dt_error.rmse   0.500999 m
+dt_error.mean   0.500998 m
+dt_error.median 0.500973 m
+dt_error.std    0.001012 m
+dt_error.var    0.000001 m
+dt_error.min    0.499830 m
+dt_error.max    0.502144 m
+###################################
+
+finished after [0.366910219193 sec]
+
+#########################   SUCCESS   #######################
+samples   51
+xs.rmse   25.282912 m
+xs.mean   25.282902 m
+xs.median 25.281000 m
+xs.std    0.022826 m
+xs.var    0.000521 m
+xs.min    25.230000 m
+xs.max    25.333000 m
+samples   51
+ys.rmse   601411.054765 m
+ys.mean   84239.238255 m
+ys.median 25.346001 m
+ys.std    595482.163907 m
+ys.var    354599007531.711609 m
+ys.min    25.290001 m
+ys.max    4294934.000000 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_2500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 25.0, 'x': 25.0, 'z': 0.0}
+x_abs_error.mean   0.282901801315
+x_abs_error.max   0.333000183105
+x_abs_error.min   0.229999542236
+y_abs_error.mean   84214.2382551
+y_abs_error.max   4294909.0
+y_abs_error.min   0.290000915527
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_2500cm.csv
+samples   50
+dt_error.rmse   0.501001 m
+dt_error.mean   0.501000 m
+dt_error.median 0.500974 m
+dt_error.std    0.001032 m
+dt_error.var    0.000001 m
+dt_error.min    0.499784 m
+dt_error.max    0.502221 m
+###################################
+
+finished after [0.368716955185 sec]
+
+#########################   SUCCESS   #######################
+samples   48
+xs.rmse   50.302129 m
+xs.mean   50.302125 m
+xs.median 50.299000 m
+xs.std    0.021057 m
+xs.var    0.000443 m
+xs.min    50.256001 m
+xs.max    50.355000 m
+samples   48
+ys.rmse   50.382130 m
+ys.mean   50.382125 m
+ys.median 50.379002 m
+ys.std    0.021057 m
+ys.var    0.000443 m
+ys.min    50.335999 m
+ys.max    50.435001 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_5000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 50.0, 'x': 50.0, 'z': 0.0}
+x_abs_error.mean   0.302125056585
+x_abs_error.max   0.354999542236
+x_abs_error.min   0.256000518799
+y_abs_error.mean   0.382125377655
+y_abs_error.max   0.435001373291
+y_abs_error.min   0.335998535156
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_5000cm.csv
+samples   47
+dt_error.rmse   0.500933 m
+dt_error.mean   0.500932 m
+dt_error.median 0.500082 m
+dt_error.std    0.001053 m
+dt_error.var    0.000001 m
+dt_error.min    0.499798 m
+dt_error.max    0.502221 m
+###################################
+
+finished after [0.37494802475 sec]
+
+#########################   SUCCESS   #######################
+samples   35
+xs.rmse   75.220034 m
+xs.mean   75.220028 m
+xs.median 75.218002 m
+xs.std    0.030186 m
+xs.var    0.000911 m
+xs.min    75.142998 m
+xs.max    75.289001 m
+samples   35
+ys.rmse   75.300034 m
+ys.mean   75.300028 m
+ys.median 75.297997 m
+ys.std    0.030188 m
+ys.var    0.000911 m
+ys.min    75.223000 m
+ys.max    75.369003 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_7500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 75.0, 'x': 75.0, 'z': 0.0}
+x_abs_error.mean   0.220028250558
+x_abs_error.max   0.289001464844
+x_abs_error.min   0.142997741699
+y_abs_error.mean   0.300027901786
+y_abs_error.max   0.369003295898
+y_abs_error.min   0.222999572754
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_7500cm.csv
+samples   34
+dt_error.rmse   0.501001 m
+dt_error.mean   0.501000 m
+dt_error.median 0.500968 m
+dt_error.std    0.001026 m
+dt_error.var    0.000001 m
+dt_error.min    0.499830 m
+dt_error.max    0.502152 m
+###################################
+
+finished after [0.380020141602 sec]
+
+#########################   SUCCESS   #######################
+samples   27
+xs.rmse   100.336859 m
+xs.mean   100.336776 m
+xs.median 100.303001 m
+xs.std    0.128437 m
+xs.var    0.016496 m
+xs.min    100.142998 m
+xs.max    100.686996 m
+samples   27
+ys.rmse   100.416859 m
+ys.mean   100.416777 m
+ys.median 100.383003 m
+ys.std    0.128437 m
+ys.var    0.016496 m
+ys.min    100.223000 m
+ys.max    100.766998 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_10000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 100.0, 'x': 100.0, 'z': 0.0}
+x_abs_error.mean   0.336776450828
+x_abs_error.max   0.686996459961
+x_abs_error.min   0.142997741699
+y_abs_error.mean   0.416777151602
+y_abs_error.max   0.766998291016
+y_abs_error.min   0.222999572754
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_10000cm.csv
+samples   26
+dt_error.rmse   1.227210 m
+dt_error.mean   0.886389 m
+dt_error.median 0.501990 m
+dt_error.std    0.848739 m
+dt_error.var    0.720358 m
+dt_error.min    0.499827 m
+dt_error.max    3.505986 m
+###################################
+
+finished after [0.361764192581 sec]
+
+#########################   SUCCESS   #######################
+samples   1
+xs.rmse   125.737999 m
+xs.mean   125.737999 m
+xs.median 125.737999 m
+xs.std    0.000000 m
+xs.var    0.000000 m
+xs.min    125.737999 m
+xs.max    125.737999 m
+samples   1
+ys.rmse   125.818001 m
+ys.mean   125.818001 m
+ys.median 125.818001 m
+ys.std    0.000000 m
+ys.var    0.000000 m
+ys.min    125.818001 m
+ys.max    125.818001 m
+/usr/lib/python2.7/dist-packages/matplotlib/mlab.py:1587: RuntimeWarning: divide by zero encountered in double_scalars
+  return 1./(np.sqrt(2*np.pi)*sigma)*np.exp(-0.5 * (1./sigma*(x - mu))**2)
+/usr/lib/python2.7/dist-packages/matplotlib/mlab.py:1587: RuntimeWarning: invalid value encountered in multiply
+  return 1./(np.sqrt(2*np.pi)*sigma)*np.exp(-0.5 * (1./sigma*(x - mu))**2)
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_12500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 125.0, 'x': 125.0, 'z': 0.0}
+x_abs_error.mean   0.737998962402
+x_abs_error.max   0.737998962402
+x_abs_error.min   0.737998962402
+y_abs_error.mean   0.818000793457
+y_abs_error.max   0.818000793457
+y_abs_error.min   0.818000793457
+#########################   SUCCESS   #######################
+/home/jungr/workspace/NAV/development/aaunav_data_analysis_py/data_analysis/eval_scripts/numpy_statistics.py:27: RuntimeWarning: invalid value encountered in double_scalars
+  'rmse': np.sqrt(np.dot(vNumpy, vNumpy) / len(vNumpy)),
+/usr/local/lib/python2.7/dist-packages/numpy/core/fromnumeric.py:2957: RuntimeWarning: Mean of empty slice.
+  out=out, **kwargs)
+/usr/local/lib/python2.7/dist-packages/numpy/core/_methods.py:80: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/usr/local/lib/python2.7/dist-packages/numpy/core/_methods.py:135: RuntimeWarning: Degrees of freedom <= 0 for slice
+  keepdims=keepdims)
+/usr/local/lib/python2.7/dist-packages/numpy/core/_methods.py:105: RuntimeWarning: invalid value encountered in true_divide
+  arrmean, rcount, out=arrmean, casting='unsafe', subok=False)
+/usr/local/lib/python2.7/dist-packages/numpy/core/_methods.py:127: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+Traceback (most recent call last):
+  File "/home/jungr/workspace/NAV/development/aaunav_data_analysis_py/data_analysis/analyse_timestamp.py", line 85, in <module>
+    m = numpy_statistics.numpy_statistics(dt.values[1:])
+  File "/home/jungr/workspace/NAV/development/aaunav_data_analysis_py/data_analysis/eval_scripts/numpy_statistics.py", line 32, in numpy_statistics
+    'min': np.min(vNumpy),
+  File "/usr/local/lib/python2.7/dist-packages/numpy/core/fromnumeric.py", line 2420, in amin
+    out=out, **kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/numpy/core/_methods.py", line 29, in _amin
+    return umr_minimum(a, axis, None, out, keepdims)
+ValueError: zero-size array to reduction operation minimum which has no identity
+samples   2
+xs.rmse   150.337023 m
+xs.mean   150.337006 m
+xs.median 150.337006 m
+xs.std    0.072998 m
+xs.var    0.005329 m
+xs.min    150.264008 m
+xs.max    150.410004 m
+samples   2
+ys.rmse   150.417018 m
+ys.mean   150.417000 m
+ys.median 150.417000 m
+ys.std    0.073006 m
+ys.var    0.005330 m
+ys.min    150.343994 m
+ys.max    150.490005 m
+save to file: ./narrow_V2_mod3/narrow_V2_mod3_15000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 150.0, 'x': 150.0, 'z': 0.0}
+x_abs_error.mean   0.337005615234
+x_abs_error.max   0.410003662109
+x_abs_error.min   0.264007568359
+y_abs_error.mean   0.416999816895
+y_abs_error.max   0.490005493164
+y_abs_error.min   0.343994140625
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod3/recording_15000cm.csv
+samples   1
+dt_error.rmse   2.503907 m
+dt_error.mean   2.503907 m
+dt_error.median 2.503907 m
+dt_error.std    0.000000 m
+dt_error.var    0.000000 m
+dt_error.min    2.503907 m
+dt_error.max    2.503907 m
+###################################
+
+finished after [0.364996910095 sec]
+
+#########################   SUCCESS   #######################
+warning trajectory has less than 5 poses -> ignore (../measurements/EVK1000/narrow_V2_mod3/recording_12500cm.csv)

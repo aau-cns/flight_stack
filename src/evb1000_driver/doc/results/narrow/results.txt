@@ -1,0 +1,261 @@
+/evb1000_driver/doc/results$ ./gen_field_results.sh 
+samples   28
+xs.rmse   0.376673 m
+xs.mean   0.375964 m
+xs.median 0.373500 m
+xs.std    0.023088 m
+xs.var    0.000533 m
+xs.min    0.329000 m
+xs.max    0.423000 m
+samples   28
+ys.rmse   0.207254 m
+ys.mean   0.205964 m
+ys.median 0.203500 m
+ys.std    0.023088 m
+ys.var    0.000533 m
+ys.min    0.159000 m
+ys.max    0.253000 m
+save to file: ./narrow/narrow_50cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 0.5, 'x': 0.5, 'z': 0.0}
+x_abs_error.mean   0.12403571925
+x_abs_error.max   0.171000003815
+x_abs_error.min   0.0769999921322
+y_abs_error.mean   0.294035715716
+y_abs_error.max   0.341000005603
+y_abs_error.min   0.247000008821
+#########################   SUCCESS   #######################
+samples   29
+xs.rmse   0.870818 m
+xs.mean   0.870483 m
+xs.median 0.877000 m
+xs.std    0.024148 m
+xs.var    0.000583 m
+xs.min    0.821000 m
+xs.max    0.918000 m
+samples   29
+ys.rmse   0.712354 m
+ys.mean   0.711862 m
+ys.median 0.717000 m
+ys.std    0.026482 m
+ys.var    0.000701 m
+ys.min    0.661000 m
+ys.max    0.778000 m
+save to file: ./narrow/narrow_100cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 1.0, 'x': 1.0, 'z': 0.0}
+x_abs_error.mean   0.129517255158
+x_abs_error.max   0.179000020027
+x_abs_error.min   0.0820000171661
+y_abs_error.mean   0.288137925082
+y_abs_error.max   0.338999986649
+y_abs_error.min   0.222000002861
+#########################   SUCCESS   #######################
+samples   23
+xs.rmse   1.849911 m
+xs.mean   1.849739 m
+xs.median 1.850000 m
+xs.std    0.025207 m
+xs.var    0.000635 m
+xs.min    1.812000 m
+xs.max    1.915000 m
+samples   23
+ys.rmse   1.742581 m
+ys.mean   1.742348 m
+ys.median 1.740000 m
+ys.std    0.028521 m
+ys.var    0.000813 m
+ys.min    1.702000 m
+ys.max    1.815000 m
+save to file: ./narrow/narrow_200cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 2.0, 'x': 2.0, 'z': 0.0}
+x_abs_error.mean   0.15026086828
+x_abs_error.max   0.18799996376
+x_abs_error.min   0.085000038147
+y_abs_error.mean   0.257652184238
+y_abs_error.max   0.297999978065
+y_abs_error.min   0.18499994278
+#########################   SUCCESS   #######################
+samples   30
+xs.rmse   3.864224 m
+xs.mean   3.864167 m
+xs.median 3.866500 m
+xs.std    0.021075 m
+xs.var    0.000444 m
+xs.min    3.822000 m
+xs.max    3.902000 m
+samples   30
+ys.rmse   3.794225 m
+ys.mean   3.794167 m
+ys.median 3.796500 m
+ys.std    0.021075 m
+ys.var    0.000444 m
+ys.min    3.752000 m
+ys.max    3.832000 m
+save to file: ./narrow/narrow_400cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 4.0, 'x': 4.0, 'z': 0.0}
+x_abs_error.mean   0.135833358765
+x_abs_error.max   0.177999973297
+x_abs_error.min   0.0980000495911
+y_abs_error.mean   0.205833339691
+y_abs_error.max   0.24799990654
+y_abs_error.min   0.167999982834
+#########################   SUCCESS   #######################
+samples   28
+xs.rmse   7.871484 m
+xs.mean   7.871464 m
+xs.median 7.871000 m
+xs.std    0.017693 m
+xs.var    0.000313 m
+xs.min    7.824000 m
+xs.max    7.908000 m
+samples   28
+ys.rmse   7.861484 m
+ys.mean   7.861464 m
+ys.median 7.861000 m
+ys.std    0.017693 m
+ys.var    0.000313 m
+ys.min    7.814000 m
+ys.max    7.898000 m
+save to file: ./narrow/narrow_802cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 8.02, 'x': 8.02, 'z': 0.0}
+x_abs_error.mean   0.148535696438
+x_abs_error.max   0.196000118256
+x_abs_error.min   0.112000007629
+y_abs_error.mean   0.158535720961
+y_abs_error.max   0.2059998703
+y_abs_error.min   0.122000236511
+#########################   SUCCESS   #######################
+samples   24
+xs.rmse   15.850680 m
+xs.mean   15.850666 m
+xs.median 15.846000 m
+xs.std    0.020506 m
+xs.var    0.000420 m
+xs.min    15.818000 m
+xs.max    15.902000 m
+samples   24
+ys.rmse   15.890680 m
+ys.mean   15.890667 m
+ys.median 15.886000 m
+ys.std    0.020506 m
+ys.var    0.000420 m
+ys.min    15.858000 m
+ys.max    15.942000 m
+save to file: ./narrow/narrow_1601cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 16.01, 'x': 16.01, 'z': 0.0}
+x_abs_error.mean   0.159333516757
+x_abs_error.max   0.192000160217
+x_abs_error.min   0.107999572754
+y_abs_error.mean   0.119333356222
+y_abs_error.max   0.152000198364
+y_abs_error.min   0.0679996109009
+#########################   SUCCESS   #######################
+samples   26
+xs.rmse   28.410392 m
+xs.mean   28.410385 m
+xs.median 28.409000 m
+xs.std    0.019637 m
+xs.var    0.000386 m
+xs.min    28.377001 m
+xs.max    28.452000 m
+samples   26
+ys.rmse   28.480392 m
+ys.mean   28.480385 m
+ys.median 28.479000 m
+ys.std    0.019637 m
+ys.var    0.000386 m
+ys.min    28.447001 m
+ys.max    28.521999 m
+save to file: ./narrow/narrow_2860cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 28.6, 'x': 28.6, 'z': 0.0}
+x_abs_error.mean   0.189614941524
+x_abs_error.max   0.222999191284
+x_abs_error.min   0.148000335693
+y_abs_error.mean   0.119615246699
+y_abs_error.max   0.15299949646
+y_abs_error.min   0.0780006408691
+#########################   SUCCESS   #######################
+samples   28
+xs.rmse   56.205041 m
+xs.mean   56.205035 m
+xs.median 56.210501 m
+xs.std    0.024602 m
+xs.var    0.000605 m
+xs.min    56.161999 m
+xs.max    56.255001 m
+samples   28
+ys.rmse   56.285041 m
+ys.mean   56.285036 m
+ys.median 56.290499 m
+ys.std    0.024602 m
+ys.var    0.000605 m
+ys.min    56.242001 m
+ys.max    56.334999 m
+save to file: ./narrow/narrow_5655cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 56.55, 'x': 56.55, 'z': 0.0}
+x_abs_error.mean   0.344964517866
+x_abs_error.max   0.388001251221
+x_abs_error.min   0.294998931885
+y_abs_error.mean   0.264964321681
+y_abs_error.max   0.307999420166
+y_abs_error.min   0.215000915527
+#########################   SUCCESS   #######################
+samples   29
+xs.rmse   102.831313 m
+xs.mean   102.831310 m
+xs.median 102.831001 m
+xs.std    0.025159 m
+xs.var    0.000633 m
+xs.min    102.764999 m
+xs.max    102.882004 m
+samples   29
+ys.rmse   102.911314 m
+ys.mean   102.911311 m
+ys.median 102.911003 m
+ys.std    0.025159 m
+ys.var    0.000633 m
+ys.min    102.845001 m
+ys.max    102.961998 m
+save to file: ./narrow/narrow_10320cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 103.2, 'x': 103.2, 'z': 0.0}
+x_abs_error.mean   0.36869038549
+x_abs_error.max   0.435000610352
+x_abs_error.min   0.31799621582
+y_abs_error.mean   0.288688817518
+y_abs_error.max   0.354998779297
+y_abs_error.min   0.23800201416
+#########################   SUCCESS   #######################
+samples   24
+xs.rmse   182.285252 m
+xs.mean   182.285250 m
+xs.median 182.285004 m
+xs.std    0.027186 m
+xs.var    0.000739 m
+xs.min    182.233994 m
+xs.max    182.345993 m
+samples   24
+ys.rmse   182.365254 m
+ys.mean   182.365252 m
+ys.median 182.365005 m
+ys.std    0.027186 m
+ys.var    0.000739 m
+ys.min    182.313995 m
+ys.max    182.425995 m
+save to file: ./narrow/narrow_18200cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 182.0, 'x': 182.0, 'z': 0.0}
+x_abs_error.mean   0.285249710083
+x_abs_error.max   0.345993041992
+x_abs_error.min   0.233993530273
+y_abs_error.mean   0.365251541138
+y_abs_error.max   0.425994873047
+y_abs_error.min   0.313995361328
+#########################   SUCCESS   #######################

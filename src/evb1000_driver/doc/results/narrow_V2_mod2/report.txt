@@ -1,0 +1,282 @@
+jungr@RolandJung:~/workspace/CNS/evb1000_driver/doc/results$ ./gen_narrow_V2_mod2_results.bash 
+samples   49
+xs.rmse   1.297456 m
+xs.mean   1.297245 m
+xs.median 1.293000 m
+xs.std    0.023405 m
+xs.var    0.000548 m
+xs.min    1.232000 m
+xs.max    1.345000 m
+samples   49
+ys.rmse   1.087497 m
+ys.mean   1.087245 m
+ys.median 1.083000 m
+ys.std    0.023405 m
+ys.var    0.000548 m
+ys.min    1.022000 m
+ys.max    1.135000 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_100cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 1.0, 'x': 1.0, 'z': 0.0}
+x_abs_error.mean   0.297244908858
+x_abs_error.max   0.34500002861
+x_abs_error.min   0.231999993324
+y_abs_error.mean   0.0872448828756
+y_abs_error.max   0.134999990463
+y_abs_error.min   0.0219999551773
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_100cm.csv
+samples   48
+dt_error.rmse   0.500959 m
+dt_error.mean   0.500958 m
+dt_error.median 0.500201 m
+dt_error.std    0.000955 m
+dt_error.var    0.000001 m
+dt_error.min    0.499908 m
+dt_error.max    0.502088 m
+###################################
+
+finished after [0.379873991013 sec]
+
+#########################   SUCCESS   #######################
+samples   37
+xs.rmse   5.395307 m
+xs.mean   5.395270 m
+xs.median 5.396000 m
+xs.std    0.020014 m
+xs.var    0.000401 m
+xs.min    5.363000 m
+xs.max    5.434000 m
+samples   37
+ys.rmse   5.275040 m
+ys.mean   5.275000 m
+ys.median 5.276000 m
+ys.std    0.020497 m
+ys.var    0.000420 m
+ys.min    5.234000 m
+ys.max    5.314000 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 5.0, 'x': 5.0, 'z': 0.0}
+x_abs_error.mean   0.395270231608
+x_abs_error.max   0.434000015259
+x_abs_error.min   0.362999916077
+y_abs_error.mean   0.27500003093
+y_abs_error.max   0.3140001297
+y_abs_error.min   0.234000205994
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_500cm.csv
+samples   36
+dt_error.rmse   0.500996 m
+dt_error.mean   0.500995 m
+dt_error.median 0.501004 m
+dt_error.std    0.000957 m
+dt_error.var    0.000001 m
+dt_error.min    0.499931 m
+dt_error.max    0.502075 m
+###################################
+
+finished after [0.365065097809 sec]
+
+#########################   SUCCESS   #######################
+samples   56
+xs.rmse   10.373299 m
+xs.mean   10.373250 m
+xs.median 10.378000 m
+xs.std    0.031961 m
+xs.var    0.001021 m
+xs.min    10.313000 m
+xs.max    10.420000 m
+samples   56
+ys.rmse   10.313299 m
+ys.mean   10.313250 m
+ys.median 10.318000 m
+ys.std    0.031960 m
+ys.var    0.001021 m
+ys.min    10.253000 m
+ys.max    10.360000 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_1000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 10.0, 'x': 10.0, 'z': 0.0}
+x_abs_error.mean   0.373250075749
+x_abs_error.max   0.420000076294
+x_abs_error.min   0.312999725342
+y_abs_error.mean   0.31324996267
+y_abs_error.max   0.359999656677
+y_abs_error.min   0.253000259399
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_1000cm.csv
+samples   55
+dt_error.rmse   0.500983 m
+dt_error.mean   0.500982 m
+dt_error.median 0.500201 m
+dt_error.std    0.000998 m
+dt_error.var    0.000001 m
+dt_error.min    0.499894 m
+dt_error.max    0.502174 m
+###################################
+
+finished after [0.387243032455 sec]
+
+#########################   SUCCESS   #######################
+samples   60
+xs.rmse   25.358487 m
+xs.mean   25.358483 m
+xs.median 25.359000 m
+xs.std    0.013797 m
+xs.var    0.000190 m
+xs.min    25.323999 m
+xs.max    25.403000 m
+samples   60
+ys.rmse   25.418487 m
+ys.mean   25.418483 m
+ys.median 25.419000 m
+ys.std    0.013797 m
+ys.var    0.000190 m
+ys.min    25.384001 m
+ys.max    25.462999 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_2500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 25.0, 'x': 25.0, 'z': 0.0}
+x_abs_error.mean   0.358483187358
+x_abs_error.max   0.40299987793
+x_abs_error.min   0.323999404907
+y_abs_error.mean   0.418483320872
+y_abs_error.max   0.462999343872
+y_abs_error.min   0.384000778198
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_2500cm.csv
+samples   59
+dt_error.rmse   0.500983 m
+dt_error.mean   0.500982 m
+dt_error.median 0.500191 m
+dt_error.std    0.001009 m
+dt_error.var    0.000001 m
+dt_error.min    0.499806 m
+dt_error.max    0.502233 m
+###################################
+
+finished after [0.37963104248 sec]
+
+#########################   SUCCESS   #######################
+samples   37
+xs.rmse   43.802148 m
+xs.mean   43.287405 m
+xs.median 44.476002 m
+xs.std    6.695426 m
+xs.var    44.828723 m
+xs.min    30.768000 m
+xs.max    50.446999 m
+samples   37
+ys.rmse   43.904695 m
+ys.mean   43.389838 m
+ys.median 44.585999 m
+ys.std    6.704045 m
+ys.var    44.944220 m
+ys.min    30.848000 m
+ys.max    50.556999 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_5000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 50.0, 'x': 50.0, 'z': 0.0}
+x_abs_error.mean   6.71259457356
+x_abs_error.max   19.232000351
+x_abs_error.min   0.446998596191
+y_abs_error.mean   6.61016216794
+y_abs_error.max   19.1520004272
+y_abs_error.min   0.556999206543
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_5000cm.csv
+samples   36
+dt_error.rmse   0.500995 m
+dt_error.mean   0.500994 m
+dt_error.median 0.501030 m
+dt_error.std    0.000994 m
+dt_error.var    0.000001 m
+dt_error.min    0.499794 m
+dt_error.max    0.502149 m
+###################################
+
+finished after [0.371194839478 sec]
+
+#########################   SUCCESS   #######################
+samples   58
+xs.rmse   75.367297 m
+xs.mean   75.367293 m
+xs.median 75.371002 m
+xs.std    0.025386 m
+xs.var    0.000644 m
+xs.min    75.300003 m
+xs.max    75.421997 m
+samples   58
+ys.rmse   75.487298 m
+ys.mean   75.487293 m
+ys.median 75.490997 m
+ys.std    0.025387 m
+ys.var    0.000644 m
+ys.min    75.419998 m
+ys.max    75.542000 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_7500cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 75.0, 'x': 75.0, 'z': 0.0}
+x_abs_error.mean   0.367292733028
+x_abs_error.max   0.421997070312
+x_abs_error.min   0.300003051758
+y_abs_error.mean   0.487293243408
+y_abs_error.max   0.541999816895
+y_abs_error.min   0.419998168945
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_7500cm.csv
+samples   57
+dt_error.rmse   0.570816 m
+dt_error.mean   0.544948 m
+dt_error.median 0.501947 m
+dt_error.std    0.169890 m
+dt_error.var    0.028862 m
+dt_error.min    0.499795 m
+dt_error.max    1.501975 m
+###################################
+
+finished after [0.388707876205 sec]
+
+#########################   SUCCESS   #######################
+samples   2
+xs.rmse   100.503771 m
+xs.mean   100.503502 m
+xs.median 100.503502 m
+xs.std    0.232498 m
+xs.var    0.054055 m
+xs.min    100.271004 m
+xs.max    100.736000 m
+samples   2
+ys.rmse   100.633768 m
+ys.mean   100.633499 m
+ys.median 100.633499 m
+ys.std    0.232498 m
+ys.var    0.054055 m
+ys.min    100.401001 m
+ys.max    100.865997 m
+save to file: ./narrow_V2_mod2/narrow_V2_mod2_10000cm.png
+reference pose:
+	{'qy': 0.0, 'qz': 0.0, 'qw': 1.0, 'qx': 0.0, 'y': 100.0, 'x': 100.0, 'z': 0.0}
+x_abs_error.mean   0.50350189209
+x_abs_error.max   0.736000061035
+x_abs_error.min   0.271003723145
+y_abs_error.mean   0.633499145508
+y_abs_error.max   0.865997314453
+y_abs_error.min   0.401000976562
+#########################   SUCCESS   #######################
+######### ../measurements/EVK1000/narrow_V2_mod2/recording_10000cm.csv
+samples   1
+dt_error.rmse   141.275962 m
+dt_error.mean   141.275962 m
+dt_error.median 141.275962 m
+dt_error.std    0.000000 m
+dt_error.var    0.000000 m
+dt_error.min    141.275962 m
+dt_error.max    141.275962 m
+###################################
+
+finished after [0.371209859848 sec]
+
+#########################   SUCCESS   #######################
+warning trajectory has less than 5 poses -> ignore (../measurements/EVK1000/narrow_V2_mod2/recording_10000cm.csv)

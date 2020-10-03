@@ -1,0 +1,12 @@
+########################################
+### node config
+node_profile: false
+# [Hz]
+node_spinning_rate: 50
+# [sec]
+node_warn_time: 30
+
+########################################
+### ROSnode config
+bVerbose: true
+strExample_text: "loaded parameter from default_config.yaml"

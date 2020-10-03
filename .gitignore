@@ -1,5 +1,7 @@
 src/CMakeLists.txt
 devel
 build
+logs
 .catkin_workspace
 *.workspace
+*.user

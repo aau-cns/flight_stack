@@ -1,0 +1,4 @@
+# v1.0 firmware: DecaRanging ARM Source Code v3.05
+# timestamp[sec] distance_cor[m] distance_rawm] type seq_num
+1524228954.1848474 150.26400756835938 150.343994140625 anchor 1283
+1524228956.6887546 150.41000366210938 150.49000549316406 anchor 1284

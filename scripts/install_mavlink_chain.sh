@@ -3,7 +3,11 @@ apt-get update
 apt-get install -y python-rosinstall-generator python-future python-lxml
 apt-get install -y ros-melodic-geometry2
 #assuming the catkin workspace is setup
-cd /home/core/catkin_ws
+mkdir -p /home/core/catkin_mavros/src
+cd /home/core/catkin_mavros
+catkin init
+catkin config --cmake-args -DCMAKE_BUILD_TYPE=Release
+
 #catkin init
 wstool init src
 rosinstall_generator --rosdistro melodic mavlink | tee /tmp/mavros.rosinstall
@@ -15,11 +19,10 @@ rosdep install -r --from-paths src --ignore-src -y
 ./src/mavros/mavros/scripts/install_geographiclib_datasets.sh
 
 #replacing packages with our own repositorys (mavlink, mavros)
-cd src
+cd /home/core/catkin_mavros/src
 rm -rf mavros mavlink
 cp -r /opt/amadee/src/mavros ./
 cp -r /opt/amadee/src/mavlink ./
 
 cd /home/core/catkin_ws
 catkin build
-
