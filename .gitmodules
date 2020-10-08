@@ -40,3 +40,6 @@
 [submodule "src/amaze_waypoint_following"]
 	path = src/amaze_waypoint_following
 	url = git@gitlab.aau.at:aau-cns/amaze-waypoint-following.git
+[submodule "src/lidar_lite"]
+	path = src/lidar_lite
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/lidar_lite.git
