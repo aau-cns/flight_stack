@@ -43,3 +43,6 @@
 [submodule "src/lidar_lite"]
 	path = src/lidar_lite
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/lidar_lite.git
+[submodule "driver/camera/librealsense"]
+	path = driver/camera/librealsense
+	url = https://github.com/IntelRealSense/librealsense.git
