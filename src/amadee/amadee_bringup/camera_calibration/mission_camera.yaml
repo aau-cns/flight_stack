@@ -1,0 +1,23 @@
+image_width: 2448
+image_height: 2050
+camera_name: mission_cam
+camera_matrix:
+  rows: 3
+  cols: 3
+  # [fx  0  cx  0  fy cy Ty 0   0   1   0]
+  data: [3123.283195553887, 0, 1037.3873700809063, 0, 1563.780759927992, 372.6489663180785, 0, 0, 1]
+distortion_model: plumb_bob
+# The distortion parameters, size depending on the distortion model.
+# For "plumb_bob", the 5 parameters are: (k1, k2, t1, t2, k3).
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [0.2678227499188875, 1.809175043364474, -0.004662597196590816, -0.003295476180024491 0]
+rectification_matrix:
+  rows: 3
+  cols: 3
+  data: [1, 0, 0, 0, 1, 0, 0, 0, 1]
+projection_matrix:
+  rows: 3
+  cols: 4
+  data: [3123.283195553887, 0, 1037.3873700809063, 0, 0, 1563.780759927992, 372.6489663180785, 0, 0, 0, 1, 0]
