@@ -46,3 +46,15 @@
 [submodule "driver/camera/librealsense"]
 	path = driver/camera/librealsense
 	url = https://github.com/IntelRealSense/librealsense.git
+[submodule "src/apriltag"]
+	path = src/apriltag
+	url = https://github.com/AprilRobotics/apriltag.git
+[submodule "src/apriltag_ros"]
+	path = src/apriltag_ros
+	url = https://github.com/AprilRobotics/apriltag_ros.git
+[submodule "src/fiducials"]
+	path = src/fiducials
+	url = https://github.com/UbiquityRobotics/fiducials.git
+[submodule "src/image_undistort"]
+	path = src/image_undistort
+	url = https://github.com/ethz-asl/image_undistort.git

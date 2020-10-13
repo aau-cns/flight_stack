@@ -30,20 +30,20 @@ px4_topics=(
 
 mocap_topics=( "/twins_one/vrpn_client/raw_transform" )
 
-ids_camera_topics=( "/camera/image_raw" )
+ids_camera_topics=( "/mission_cam/image_raw" )
 
 real_sense_imu_odom_topics=(
-"/camera/accel/imu_info"
-"/camera/accel/sample"
-"/camera/gyro/imu_info"
-"/camera/gyro/sample"
-"/camera/odom/sample"
+"/realsense/accel/imu_info"
+"/realsense/accel/sample"
+"/realsense/gyro/imu_info"
+"/realsense/gyro/sample"
+"/realsense/odom/sample"
 )
 real_sense_cam_topics=(
-"/camera/fisheye1/camera_info"
-"/camera/fisheye1/image_raw"
-"/camera/fisheye2/camera_info"
-"/camera/fisheye2/image_raw"
+"/realsense/fisheye1/camera_info"
+"/realsense/fisheye1/image_raw"
+"/realsense/fisheye2/camera_info"
+"/realsense/fisheye2/image_raw"
 )
 
 topics1_to_record=(
@@ -87,6 +87,6 @@ echo "Group 1 topics to record: " ${group1_to_record}
 echo "Group 2 topics to record: " ${group2_to_record}
 echo "Group 3 topics to record: " ${group3_to_record}
 rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
+#rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
 rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group3 ${group3_to_record} && kill $!
 fi;

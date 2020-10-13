@@ -14,6 +14,6 @@
         respawn="$(arg respawn)"
         respawn_delay="$(arg respawn_delay)">
     <rosparam command="load"
-              file="$(find amadee_bringup)/launch/ublox_config/$(arg param_file_name).yaml" />
+              file="$(find amadee_bringup)/configs/ublox_gps/$(arg param_file_name).yaml" />
   </node>
 </launch>

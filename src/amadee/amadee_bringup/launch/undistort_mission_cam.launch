@@ -1,0 +1,22 @@
+<launch>
+
+<arg name="mav_name" default="/" />
+<arg name="namespace" default="$(arg mav_name)" />
+<arg name="input_camera_name" default="mission_cam" />
+<arg name="scale" default="1.0" />
+<arg name="calib_path" default="$(find amadee_bringup)/configs/camera_calibration/mission_camera.yaml"/>
+
+<group ns="$(arg namespace)">
+
+  <node name="image_undistort_node" pkg="image_undistort" type="image_undistort_node" output="screen" clear_params="true">
+    <param name="input_camera_namespace" value="$(arg input_camera_name)"/>      
+    <param name="input_camera_info_from_ros_params" value = "true"/>    
+    <param name="publish_tf" value = "false"/>    
+    <param name="scale" value="$(arg scale)"/>
+    <rosparam file="$(arg calib_path)"/>
+    <remap from="input/image" to="$(arg input_camera_name)/image_raw"/>
+    <remap from="output/image" to="$(arg input_camera_name)/image_rect"/>
+  </node>
+</group>
+
+</launch>
