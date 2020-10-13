@@ -1,6 +1,5 @@
 <launch>
-    <include file="$(find mavros)/launch/px4.launch">
-        <arg name="fcu_url" default="/dev/ttyAMA0:921600" />
-    </include>
+  <include file="$(find mavros)/launch/px4.launch">
+    <arg name="fcu_url" default="/dev/ttyAMA0:921600" />
+  </include>
 </launch>
-

@@ -1,14 +1,14 @@
 <launch>
-    <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
-    <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
-    <!--include file="$(find amadee_bringup)/launch/realsense_t265.launch" /-->
-    <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" >
-      <arg name="object_name" value="twins_one"/>
-    </include>
-    <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" >
-      <arg name="object_name" value="april_tags"/>
-    </include>
-    <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" >
-      <arg name="object_name" value="aruco_tags"/>
-    </include>
+  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+  <!--include file="$(find amadee_bringup)/launch/realsense_t265.launch" /-->
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch">
+    <arg name="object_name" value="twins_one" />
+  </include>
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch">
+    <arg name="object_name" value="april_tags" />
+  </include>
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch">
+    <arg name="object_name" value="aruco_tags" />
+  </include>
 </launch>
