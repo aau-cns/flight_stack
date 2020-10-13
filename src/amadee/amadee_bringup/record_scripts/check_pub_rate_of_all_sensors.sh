@@ -1,7 +1,5 @@
 #!/bin/bash
 
-bag_name="outdoor"
-
 px4_topics=(
 "/mavros/imu/data_raw"
 "/mavros/imu/temperature_imu"
@@ -26,9 +24,12 @@ real_sense_topics=(
 "/realsense/fisheye2/image_raw")
 
 rtk_gps_topic=(
-"/rtk/fix"
-"/rtk/fix_velocity"
+"/rtk_gps_1/fix"
+"/rtk_gps_1/fix_velocity"
+"/rtk_gps_2/fix"
+"/rtk_gps_2/fix_velocity"
 )
+
 
 groups_to_record=(
 ${px4_topics[@]}
@@ -39,11 +40,4 @@ ${rtk_gps_topic[@]}
 
 topics_to_record=${groups_to_record[@]}
 
-# for i in "${px4_topics[@]}" "${ids_camera_topics[@]}" "${real_sense_topics[@]}" "${rtk_gps_topic[@]}"; do
-# 	topics_to_record+=" $i";
-# done
-
-echo "Bagname: " ${bag_name}
-echo "Topics to record: " ${topics_to_record}
-
-rosbag record --split --size=500 --buffsize=2048 -o ${bag_name} ${topics_to_record}
+rostopic hz ${topics_to_record}

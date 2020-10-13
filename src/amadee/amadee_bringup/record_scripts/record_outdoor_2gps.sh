@@ -17,7 +17,7 @@ px4_topics=(
 "/mavros/global_position/raw/satellites"
 )
 
-ids_camera_topics=( "/camera/image_raw" )
+ids_camera_topics=( "/mission_cam/image_raw" )
 
 rtk_gps_topic=(
 "/rtk_gps_1/fix"
