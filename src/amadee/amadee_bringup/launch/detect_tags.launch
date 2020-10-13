@@ -1,4 +1,4 @@
 <launch>
-    <include file="$(find amadee_bringup)/launch/undistort_mission_cam.launch" />
-    <include file="$(find amadee_bringup)/launch/aruco_detect.launch" />
+  <include file="$(find amadee_bringup)/launch/undistort_mission_cam.launch" />
+  <include file="$(find amadee_bringup)/launch/aruco_detect.launch" />
 </launch>

@@ -1,5 +1,5 @@
 <launch>
-    <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
-    <include file="$(find amadee_bringup)/launch/ublox_2dev.launch" />
-    <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+  <include file="$(find amadee_bringup)/launch/ublox_2dev.launch" />
+  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
 </launch>
