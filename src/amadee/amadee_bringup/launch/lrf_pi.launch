@@ -1,0 +1,13 @@
+<launch>
+  <arg name="frame_id"        default="lidar_lite" />
+  <arg name="i2c_bus"         default="1" />
+  <arg name="i2c_address"     default="0x62" />
+  <arg name="pub_rate"        default="30" />
+
+  <node name="lidar_lite" pkg="lidar_lite" type="lidar_lite_node" output="screen" >
+    <param name="frame_id"      value="$(arg frame_id)" />
+    <param name="i2c_bus"       value="$(arg i2c_bus)" />
+    <param name="i2c_address"   value="$(arg i2c_address)"/>
+    <param name="pub_rate"      value="$(arg pub_rate)"/>
+  </node>
+</launch>

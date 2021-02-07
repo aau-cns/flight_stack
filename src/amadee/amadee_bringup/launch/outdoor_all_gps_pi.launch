@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+  <include file="$(find amadee_bringup)/launch/ublox_2dev.launch" />
+</launch>
