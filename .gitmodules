@@ -18,7 +18,7 @@
 	url = https://github.com/IntelRealSense/realsense-ros.git
 [submodule "src/ros_vrpn_client"]
 	path = src/ros_vrpn_client
-	url = https://github.com/ethz-asl/ros_vrpn_client.git
+	url = git@gitlab.aau.at:aau-cns/ros_vrpn_client.git
 [submodule "src/serial"]
 	path = src/serial
 	url = https://github.com/wjwwood/serial.git
