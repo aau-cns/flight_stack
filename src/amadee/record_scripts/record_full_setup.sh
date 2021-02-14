@@ -34,7 +34,7 @@ px4_topics=(
 "/mavros/imu/temperature_imu"
 )
 
-mocap_vehicle_topics=( 
+mocap_vehicle_topics=(
 "/twins_three/vrpn_client/raw_transform"
 )
 
@@ -92,11 +92,15 @@ lrf_topic=(
 "/lidar_lite/range"
 )
 
-imu_lsm9ds1=(
+imu_lsm9ds1_topic=(
 "/imu_lsm9ds1/imu"
 "/imu_lsm9ds1/mag"
 )
 
+uwb_topic=(
+"/uwb_bridge/imu"
+"/uwb_bridge/uwb_meas"
+)
 
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)
 
@@ -122,7 +126,8 @@ name_mod1_ids_img="_ids_img"
 
 group_mod1_sensors=(
 ${real_sense_imu_odom_topics[@]}
-${imu_lsm9ds1[@]}
+${imu_lsm9ds1_topic[@]}
+${uwb_topic[@]}
 )
 
 topics_mod2_sensors=${group_mod1_sensors[@]}
