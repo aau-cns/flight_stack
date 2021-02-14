@@ -1,5 +1,4 @@
 <launch>
-  <!--remap from="/twins_three/vrpn_client/raw_pose" to="/mavros/vision_pose/pose"/-->
-  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" />
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch"/>
   <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
 </launch>

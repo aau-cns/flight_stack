@@ -19,5 +19,7 @@
     <param name="rotational_estimator/outlier_rejection_subsequent_maximum_count" value="50.0" />
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
+    
+    <!--remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose"/-->
   </node>
 </launch>
