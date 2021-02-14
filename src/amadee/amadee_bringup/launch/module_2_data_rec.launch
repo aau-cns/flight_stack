@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find amadee_bringup)/launch/realsense_t265.launch" />
+  <include file="$(find amadee_bringup)/launch/imu_lsm9ds1.launch" />
+  <include file="$(find amadee_bringup)/launch/uwb_bridge.launch" />
+</launch>
+

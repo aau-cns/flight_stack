@@ -1,0 +1,3 @@
+<launch>
+  <node name="imu_lsm9ds1" pkg="imu_lsm9ds1" type="imu_node" clear_params="true" output="screen"/>
+</launch>

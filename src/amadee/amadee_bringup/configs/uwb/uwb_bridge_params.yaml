@@ -1,0 +1,3 @@
+baud_rate: 460800
+serial_port: "ttyUSB0"
+buffer_size: 100
