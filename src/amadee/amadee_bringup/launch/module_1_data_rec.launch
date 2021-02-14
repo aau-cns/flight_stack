@@ -1,7 +1,7 @@
 <launch>
+  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
   <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
   <include file="$(find amadee_bringup)/launch/lrf_pi.launch"/>
   <include file="$(find amadee_bringup)/launch/ublox_2dev.launch" />
-  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
   <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" />
 </launch>
