@@ -97,7 +97,7 @@ lrf_topic=(
 
 ## Device 1
 ### Sensors
-group_dev1_sensors = (
+group_dev1_sensors=(
 ${mocap_vehicle_topics[@]}
 ${px4_topics[@]}
 ${rtk_gps1_topic[@]}
@@ -105,17 +105,18 @@ ${rtk_gps2_topic[@]}
 ${lrf_topic[@]}
 )
 
-topics_dev1_sensors = ${group_dev1_sensors[@]}
+topics_dev1_sensors=${group_dev1_sensors[@]}
 name_dev1_sensors="_sensors"
 
 ### Camera
-topics_dev1_ids_img = ${ids_camera_topics[@]}
+topics_dev1_ids_img=${ids_camera_topics[@]}
 name_dev1_ids_img="_ids_img"
 
 ## Device 2
 ### RealSense Sensors
 topics_dev2_rs_sensors=${real_sense_imu_odom_topics[@]}
 name_dev2_rs_sensors="_rs_sensors"
+
 ### RealSense Camera
 topics_dev2_rs_img=${real_sense_cam_topics[@]}
 name_dev2_rs_img="_rs_img"
@@ -130,6 +131,7 @@ ${px4_topics[@]}
 ${real_sense_imu_odom_topics[@]}
 ${rtk_gps1_topic[@]}
 ${rtk_gps2_topic[@]}
+${lrf_topic[@]}
 )
 
 group1_to_record=${topics1_to_record[@]}
@@ -157,19 +159,27 @@ name_group3="_realsense"
 echo "Bagname: " ${bag_name}
 
 
-if [ "$1" == "dev1" ] ; then
-    echo "Recording for device 1: "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev1_sensors ${topics_dev1_sensors}
+if [ "$1" == "dev1_full" ] ; then
+	echo "Recording for device 1 (full): "
+    rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_dev1_sensors ${topics_dev1_sensors} & \
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev1_ids_img ${topics_dev1_ids_img} && kill $!
+
+elif [ "$1" == "dev1_cam" ] ; then
+	echo "Recording for device 1 (cam): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev1_ids_img ${topics_dev1_ids_img}
+
+elif [ "$1" == "dev1_sensors" ] ; then
+    rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_dev1_sensors ${topics_dev1_sensors}
+	echo "Recording for device 1 (sensors): "
+
 elif [ "$1" == "dev2" ] ; then
     echo "Recording for device 2: "
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_img ${topics_dev2_rs_img} & \
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_sensors ${topics_dev2_rs_sensors} && kill $!
 
 elif [ "$1" == "ids" ] ; then
-    echo "Group 1 topics to record: " ${group1_to_record}
-    echo "Group 2 topics to record: " ${group2_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} && kill $!
+    echo "Group 1 topics to record: " ${group2_to_record}
+    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group2_to_record}
 elif [ "$1" == "realsense" ] ; then
     echo "Group 3 topics to record: " ${group3_to_record}
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_group3 ${group3_to_record}
