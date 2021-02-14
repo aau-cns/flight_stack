@@ -10,7 +10,7 @@
 # - no option (records all tedinfed topics)
 # the association of subgroups can be changed below
 
-# First, list all topics specific to a sensor, then concatinate all strings for one group/device, 
+# First, list all topics specific to a sensor, then concatinate all strings for one group/device,
 # then generate the final string and record ist
 
 # Example to record all non vision sensors and the ids images:
@@ -38,11 +38,11 @@ mocap_vehicle_topics=(
 "/twins_three/vrpn_client/raw_transform"
 )
 
-mocap_tags_topics=( 
+mocap_tags_topics=(
 "/tag_board_8/vrpn_client/raw_transform"
 )
 
-ids_camera_topics=( 
+ids_camera_topics=(
 "/mission_cam/image_raw"
 "/mission_cam/camera_info"
 )
@@ -92,12 +92,17 @@ lrf_topic=(
 "/lidar_lite/range"
 )
 
+imu_lsm9ds1=(
+"/imu_lsm9ds1/imu"
+"/imu_lsm9ds1/mag"
+)
+
 
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)
 
-## Device 1
+## Module 1
 ### Sensors
-group_dev1_sensors=(
+group_mod1_sensors=(
 ${mocap_vehicle_topics[@]}
 ${px4_topics[@]}
 ${rtk_gps1_topic[@]}
@@ -105,21 +110,27 @@ ${rtk_gps2_topic[@]}
 ${lrf_topic[@]}
 )
 
-topics_dev1_sensors=${group_dev1_sensors[@]}
-name_dev1_sensors="_sensors"
+topics_mod1_sensors=${group_mod1_sensors[@]}
+name_dev1_sensors="_mod1_sensors"
 
 ### Camera
-topics_dev1_ids_img=${ids_camera_topics[@]}
-name_dev1_ids_img="_ids_img"
+topics_mod1_ids_img=${ids_camera_topics[@]}
+name_mod1_ids_img="_ids_img"
 
-## Device 2
-### RealSense Sensors
-topics_dev2_rs_sensors=${real_sense_imu_odom_topics[@]}
-name_dev2_rs_sensors="_rs_sensors"
+## Module 2
+### Sensors
+
+group_mod1_sensors=(
+${real_sense_imu_odom_topics[@]}
+${imu_lsm9ds1[@]}
+)
+
+topics_mod2_sensors=${group_mod1_sensors[@]}
+name_mod2_sensors="_mod2_sensors"
 
 ### RealSense Camera
-topics_dev2_rs_img=${real_sense_cam_topics[@]}
-name_dev2_rs_img="_rs_img"
+topics_mod2_rs_img=${real_sense_cam_topics[@]}
+name_mod2_rs_img="_rs_img"
 
 # Generate Topic Strings Grouped by Topics (concatinate string arrays)
 
@@ -174,8 +185,16 @@ elif [ "$1" == "dev1_sensors" ] ; then
 
 elif [ "$1" == "dev2" ] ; then
     echo "Recording for device 2: "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_img ${topics_dev2_rs_img} & \
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_sensors ${topics_dev2_rs_sensors} && kill $!
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_img ${topics_mod2_rs_img} & \
+        rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
+
+elif [ "$1" == "dev2_cam" ] ; then
+    echo "Recording for device 2 (cam): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img}
+
+elif [ "$1" == "dev2_sensors" ] ; then
+    echo "Recording for device 2 (sensors): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors}
 
 elif [ "$1" == "ids" ] ; then
     echo "Group 1 topics to record: " ${group2_to_record}
@@ -192,6 +211,6 @@ else
     echo "Group 2 topics to record: " ${group2_to_record}
     echo "Group 3 topics to record: " ${group3_to_record}
     rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group3 ${group3_to_record} && kill $!
+        rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
+        rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group3 ${group3_to_record} && kill $!
 fi;
