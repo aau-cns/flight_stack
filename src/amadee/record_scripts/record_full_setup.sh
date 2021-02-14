@@ -35,7 +35,7 @@ px4_topics=(
 )
 
 mocap_vehicle_topics=( 
-"/twins_one/vrpn_client/raw_transform"
+"/twins_three/vrpn_client/raw_transform"
 )
 
 mocap_tags_topics=( 
