@@ -188,9 +188,9 @@ elif [ "$1" == "dev1_sensors" ] ; then
     rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_dev1_sensors ${topics_dev1_sensors}
 	echo "Recording for device 1 (sensors): "
 
-elif [ "$1" == "dev2" ] ; then
+elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2: "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_img ${topics_mod2_rs_img} & \
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
         rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
