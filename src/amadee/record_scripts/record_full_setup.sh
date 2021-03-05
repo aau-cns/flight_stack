@@ -10,7 +10,7 @@
 # - no option (records all tedinfed topics)
 # the association of subgroups can be changed below
 
-# First, list all topics specific to a sensor, then concatinate all strings for one group/device, 
+# First, list all topics specific to a sensor, then concatinate all strings for one group/device,
 # then generate the final string and record ist
 
 # Example to record all non vision sensors and the ids images:
@@ -24,6 +24,9 @@
 
 bag_name="mocap_full_setup"
 
+RED='\033[0;31m' #Red Color
+NC='\033[0m'     #No Color
+
 px4_topics=(
 "/mavros/imu/data_raw"
 "/mavros/imu/mag"
@@ -32,26 +35,26 @@ px4_topics=(
 "/mavros/global_position/raw/satellites"
 "/mavros/imu/static_pressure"
 "/mavros/imu/temperature_imu"
+"/mavros/motor_speeds/speed"
 )
 
-mocap_vehicle_topics=( 
-"/twins_one/vrpn_client/raw_transform"
+mocap_vehicle_topics=(
+"/twins_three/vrpn_client/raw_transform"
 )
 
-mocap_tags_topics=( 
+mocap_tags_topics=(
 "/tag_board_8/vrpn_client/raw_transform"
 )
 
-ids_camera_topics=( 
+ids_camera_topics=(
 "/mission_cam/image_raw"
 "/mission_cam/camera_info"
 )
 
 real_sense_imu_odom_topics=(
 "/realsense/accel/imu_info"
-"/realsense/accel/sample"
 "/realsense/gyro/imu_info"
-"/realsense/gyro/sample"
+"/realsense/imu"
 "/realsense/odom/sample"
 )
 
@@ -92,33 +95,66 @@ lrf_topic=(
 "/lidar_lite/range"
 )
 
+imu_lsm9ds1_topic=(
+"/imu_lsm9ds1/imu"
+"/imu_lsm9ds1/mag"
+)
+
+uwb_topic=(
+"/uwb_bridge/imu"
+"/uwb_bridge/uwb_meas"
+)
+
+uwb_decawave=(
+"/uwb_trek/tagDistance_raw"
+"/uwb_trek/tagDistance_corrected"
+"/uwb_trek/anchorDistance"
+)
 
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)
 
-## Device 1
+## Module 1
 ### Sensors
-group_dev1_sensors = (
+group_mod1_sensors=(
 ${mocap_vehicle_topics[@]}
+${mocap_tags_topics[@]}
 ${px4_topics[@]}
 ${rtk_gps1_topic[@]}
 ${rtk_gps2_topic[@]}
 ${lrf_topic[@]}
 )
 
-topics_dev1_sensors = ${group_dev1_sensors[@]}
-name_dev1_sensors="_sensors"
+topics_mod1_sensors=${group_mod1_sensors[@]}
+name_mod1_sensors="_mod1_sensors"
 
 ### Camera
-topics_dev1_ids_img = ${ids_camera_topics[@]}
-name_dev1_ids_img="_ids_img"
+topics_mod1_ids_img=${ids_camera_topics[@]}
+name_mod1_ids_img="_ids_img"
 
-## Device 2
-### RealSense Sensors
-topics_dev2_rs_sensors=${real_sense_imu_odom_topics[@]}
-name_dev2_rs_sensors="_rs_sensors"
+## Module 2
+### Sensors
+
+group_mod2_sensors=(
+${real_sense_imu_odom_topics[@]}
+${imu_lsm9ds1_topic[@]}
+${uwb_decawave[@]}
+)
+
+topics_mod2_sensors=${group_mod2_sensors[@]}
+name_mod2_sensors="_mod2_sensors"
+
 ### RealSense Camera
-topics_dev2_rs_img=${real_sense_cam_topics[@]}
-name_dev2_rs_img="_rs_img"
+topics_mod2_rs_img=${real_sense_cam_topics[@]}
+name_mod2_rs_img="_rs_img"
+
+### MoCap Topics
+
+group_modcap_sensors=(
+${mocap_vehicle_topics[@]}
+${mocap_tags_topics[@]}
+)
+
+name_mocap_sensors="_mocap"
 
 # Generate Topic Strings Grouped by Topics (concatinate string arrays)
 
@@ -130,6 +166,7 @@ ${px4_topics[@]}
 ${real_sense_imu_odom_topics[@]}
 ${rtk_gps1_topic[@]}
 ${rtk_gps2_topic[@]}
+${lrf_topic[@]}
 )
 
 group1_to_record=${topics1_to_record[@]}
@@ -152,36 +189,53 @@ ${real_sense_cam_topics[@]}
 group3_to_record=${topics3_to_record[@]}
 name_group3="_realsense"
 
-# Record options
 
-echo "Bagname: " ${bag_name}
+# Record the given group of topics
+echo "Bagname: ${bag_name}"
 
+if [ "$1" == "dev1_full" ] ; then
+    echo "Recording for device 1 (full): "
+    rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_mod1_sensors ${topics_mod1_sensors} & \
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod1_ids_img ${topics_mod1_ids_img} && kill $!
 
-if [ "$1" == "dev1" ] ; then
-    echo "Recording for device 1: "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev1_sensors ${topics_dev1_sensors}
-elif [ "$1" == "dev2" ] ; then
+elif [ "$1" == "dev1_cam" ] ; then
+    echo "Recording for device 1 (cam): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod1_ids_img ${topics_mod1_ids_img}
+
+elif [ "$1" == "dev1_sensors" ] ; then
+    rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_mod1_sensors ${topics_mod1_sensors}
+	echo "Recording for device 1 (sensors): "
+
+elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2: "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_img ${topics_dev2_rs_img} & \
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_dev2_rs_sensors ${topics_dev2_rs_sensors} && kill $!
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
 
+elif [ "$1" == "dev2_cam" ] ; then
+    echo "Recording for device 2 (cam): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img}
+
+elif [ "$1" == "dev2_sensors" ] ; then
+    echo "Recording for device 2 (sensors): "
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors}
+
+elif [ "$1" == "mocap" ] ; then
+    echo "Recording MoCap Data: "
+    rosbag record --tcpnodelay -b 512 --split --size=1000 -o $bag_name$name_mocap_sensors ${group_modcap_sensors[@]}
+	
 elif [ "$1" == "ids" ] ; then
-    echo "Group 1 topics to record: " ${group1_to_record}
-    echo "Group 2 topics to record: " ${group2_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} && kill $!
+    echo "Group 1 topics to record: " ${group2_to_record}
+    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group2_to_record}
+
 elif [ "$1" == "realsense" ] ; then
     echo "Group 3 topics to record: " ${group3_to_record}
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_group3 ${group3_to_record}
+
 elif [ "$1" == "sensors" ] ; then
     echo "Group 1 topics to record: " ${group1_to_record}
     rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record}
-else
-    echo "Recording all defined topics!"
-    echo "Group 1 topics to record: " ${group1_to_record}
-    echo "Group 2 topics to record: " ${group2_to_record}
-    echo "Group 3 topics to record: " ${group3_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group3 ${group3_to_record} && kill $!
+
+else # Handle error case
+    echo -e "${RED}[ERROR] The given option is not valid! Please add the group of topics you'd like to record.${NC}"
+    exit
 fi;
