@@ -1,0 +1,8 @@
+<launch>
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch">
+    <arg name="object_name" value="twins_three"/>
+  </include>
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch">
+    <arg name="object_name" value="tag_board_8"/>
+  </include>
+</launch>

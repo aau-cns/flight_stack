@@ -1,0 +1,10 @@
+<launch>
+  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+  <include file="$(find amadee_bringup)/launch/lrf_pi.launch"/>
+  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" >
+    <arg name="object_name" value="twins_three"/>
+  </include>
+
+  <node name="mocap_throttle" type="throttle" pkg="topic_tools" args="messages /twins_three/vrpn_client/raw_pose 30.0 /mavros/vision_pose/pose"/>
+</launch>
