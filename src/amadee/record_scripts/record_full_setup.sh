@@ -24,6 +24,9 @@
 
 bag_name="mocap_full_setup"
 
+RED='\033[0;31m' #Red Color
+NC='\033[0m'     #No Color
+
 px4_topics=(
 "/mavros/imu/data_raw"
 "/mavros/imu/mag"
@@ -186,18 +189,17 @@ ${real_sense_cam_topics[@]}
 group3_to_record=${topics3_to_record[@]}
 name_group3="_realsense"
 
-# Record options
 
-echo "Bagname: " ${bag_name}
-
+# Record the given group of topics
+echo "Bagname: ${bag_name}"
 
 if [ "$1" == "dev1_full" ] ; then
-	echo "Recording for device 1 (full): "
+    echo "Recording for device 1 (full): "
     rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_mod1_sensors ${topics_mod1_sensors} & \
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod1_ids_img ${topics_mod1_ids_img} && kill $!
 
 elif [ "$1" == "dev1_cam" ] ; then
-	echo "Recording for device 1 (cam): "
+    echo "Recording for device 1 (cam): "
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod1_ids_img ${topics_mod1_ids_img}
 
 elif [ "$1" == "dev1_sensors" ] ; then
@@ -207,7 +209,7 @@ elif [ "$1" == "dev1_sensors" ] ; then
 elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2: "
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
-        rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
+    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "
@@ -221,22 +223,19 @@ elif [ "$1" == "mocap" ] ; then
     echo "Recording MoCap Data: "
     rosbag record --tcpnodelay -b 512 --split --size=1000 -o $bag_name$name_mocap_sensors ${group_modcap_sensors[@]}
 	
-
 elif [ "$1" == "ids" ] ; then
     echo "Group 1 topics to record: " ${group2_to_record}
     rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group2_to_record}
+
 elif [ "$1" == "realsense" ] ; then
     echo "Group 3 topics to record: " ${group3_to_record}
     rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_group3 ${group3_to_record}
+
 elif [ "$1" == "sensors" ] ; then
     echo "Group 1 topics to record: " ${group1_to_record}
     rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record}
-else
-    echo "Recording all defined topics!"
-    echo "Group 1 topics to record: " ${group1_to_record}
-    echo "Group 2 topics to record: " ${group2_to_record}
-    echo "Group 3 topics to record: " ${group3_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record} & \
-        rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group2 ${group2_to_record} & \
-        rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group3 ${group3_to_record} && kill $!
+
+else # Handle error case
+    echo -e "${RED}[ERROR] The given option is not valid! Please add the group of topics you'd like to record.${NC}"
+    exit
 fi;
