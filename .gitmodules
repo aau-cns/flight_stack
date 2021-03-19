@@ -61,3 +61,6 @@
 [submodule "src/uwb_bridge"]
 	path = src/uwb_bridge
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/aaucns_uwb_bridge.git
+[submodule "src/imu_lsm9ds1_sa"]
+	path = src/imu_lsm9ds1_sa
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/imu_lsm9ds1_sa.git
