@@ -541,8 +541,12 @@ if [ "$MINIMAL_INSTALLATION" == "NO" ] ; then
             $SUDO apt-get update
             echo
             echo "Downloading and installing wxWidgets via apt-get..."
-            echo
-            $SUDO apt-get $APT_GET_EXTRA_PARAMS -q install libwxgtk3.0-dev libwxbase3.0-0* libwxbase3.0-dev libwxgtk3.0-0* wx3.0-headers build-essential libgtk2.0-dev
+            VERSION="$(cut -d'.' -f1 <<< $OS_VERSION)"
+            if [ "$OS_NAME" == "Ubuntu" ] && [ "$VERSION" -ge "20" ]; then
+               $SUDO apt-get $APT_GET_EXTRA_PARAMS -q install libwxgtk3.0-gtk3-* libwxgtk3.0-gtk3-dev libwxbase3.0-0* libwxbase3.0-dev wx3.0-headers build-essential libgtk2.0-dev
+            else
+               $SUDO apt-get $APT_GET_EXTRA_PARAMS -q install libwxgtk3.0-dev libwxbase3.0-0* libwxbase3.0-dev libwxgtk3.0-0* wx3.0-headers build-essential libgtk2.0-dev
+            fi
             echo
             if [ $? == 0 ] && [ "x$(which wx-config)" != "x" ]; then
               echo "Necessary wxWidgets libraries installed successfully!"
