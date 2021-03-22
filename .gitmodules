@@ -64,3 +64,9 @@
 [submodule "src/imu_lsm9ds1_sa"]
 	path = src/imu_lsm9ds1_sa
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/imu_lsm9ds1_sa.git
+[submodule "src/amaze_autonomy"]
+	path = src/amaze_autonomy
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_autonomy.git
+[submodule "src/aaucns_ros_watchdog"]
+	path = src/aaucns_ros_watchdog
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/aaucns_ros_watchdog.git
