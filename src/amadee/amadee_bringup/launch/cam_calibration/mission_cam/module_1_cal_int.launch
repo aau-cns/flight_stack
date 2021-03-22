@@ -1,0 +1,7 @@
+<launch>
+  <include file="$(find amadee_bringup)/launch/cam_calibration/mission_cam/ueye_cam_cal.launch" >
+    <arg name="frame_rate" value="5.0" />
+  </include>
+  
+  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+ </launch>
