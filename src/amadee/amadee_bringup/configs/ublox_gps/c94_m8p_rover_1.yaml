@@ -38,7 +38,7 @@ gnss:
   beidou: false             # Supported by C94-M8P
   qzss: false               # Supported by C94-M8P
 
-dgnss_mode: 3               # Fixed mode
+dgnss_mode: 3               # Float mode: 2, Fixed mode: 3
 
 inf: 
   all: true                   # Whether to display all INF messages in console
