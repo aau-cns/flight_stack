@@ -1,0 +1,26 @@
+<!-- ROS launch file -->
+<launch>
+    <arg name="node_name"           default="watchdog" />
+
+    <arg name="status_o"            default="$(arg node_name)/status" />
+    <arg name="status_service_o"    default="$(arg node_name)/status" />
+    <arg name="start_service_o"     default="$(arg node_name)/start" />
+    <arg name="autonomy_service_o"  default="$(arg node_name)/autonomy" />
+
+    <arg name="do_verbose"          default="True" />
+    <arg name="use_startup_to"      default="False" />
+
+    <node pkg="ros_watchdog" type="WatchdogNode.py" name="watchdog" output="screen">
+        <param name="topics_cfg_file"   value="$(find amadee_bringup)/configs/watchdog/topics.ini"/>
+        <param name="drivers_cfg_file"  value="$(find amadee_bringup)/configs/watchdog/drivers.ini"/>
+        <param name="nodes_cfg_file"    value="$(find amadee_bringup)/configs/watchdog/nodes.ini"/>
+        <param name="topic_check_rate"  value="0.5"/>
+        <param name="bVerbose"          value="$(arg do_verbose)"/>
+        <param name="bUseStartupTO"     value="$(arg use_startup_to)"/>
+
+        <remap from="/status"           to="$(arg status_o)"/>
+        <remap from="/status_service"   to="$(arg status_service_o)"/>
+        <remap from="/start_service"    to="$(arg start_service_o)"/>
+        <remap from="/autonomy_action"  to="$(arg autonomy_service_o)"/>
+    </node>
+</launch>
