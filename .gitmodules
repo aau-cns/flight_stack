@@ -76,3 +76,6 @@
 [submodule "src/data_recorder"]
 	path = src/data_recorder
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/data_recorder.git
+[submodule "src/amaze_mission_sequencer"]
+	path = src/amaze_mission_sequencer
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_mission_sequencer.git
