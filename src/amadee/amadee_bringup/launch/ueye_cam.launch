@@ -4,12 +4,13 @@
   <arg name="frame_rate" default="20.0" />
   <arg name="nodelet_manager_name" value="nodelet_manager" />
   <arg name="camera_name" value="mission_cam" />
+  <arg name="respawn"        default="true" />
 
-  <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" required="true" />
+  <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" required="true" respawn="$(arg respawn)"/>
 
-  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen" />
+  <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen" respawn="$(arg respawn)"/>
 
-  <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet" args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)">
+  <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet" args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)" respawn="$(arg respawn)">
     <param name="camera_name" type="str" value="$(arg camera_name)" /> <!-- == namespace for topics and services -->
     <param name="camera_topic" type="str" value="image_raw" />
     <param name="camera_id" type="int" value="0" /> <!-- 0 = any camera; 1+: camera ID -->

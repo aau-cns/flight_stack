@@ -7,7 +7,9 @@
   <arg name="pose_in_topic" default="mars_pose_in" />
   <arg name="state_out_topic" default="mars_state_out" />
 
-  <node name="pose_node" pkg="mars_ros" type="pose_node" clear_params="true" output="screen">
+  <arg name="respawn" default="true" />
+
+  <node name="pose_node" pkg="mars_ros" type="pose_node" clear_params="true" output="screen" respawn="$(arg respawn)">
     <!-- Input -->
     <remap from="imu_in" to="$(arg imu_in_topic)"/>
     <remap from="transform_in" to="$(arg transform_in_topic)"/>

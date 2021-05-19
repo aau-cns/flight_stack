@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-  <node name="imu_lsm9ds1" pkg="imu_lsm9ds1" type="imu_node" clear_params="true" output="screen"/>
+  <arg name="respawn" default="true" />
+
+  <node name="imu_lsm9ds1" pkg="imu_lsm9ds1" type="imu_node" clear_params="true" output="screen" respawn="$(arg respawn)"/>
 </launch>
