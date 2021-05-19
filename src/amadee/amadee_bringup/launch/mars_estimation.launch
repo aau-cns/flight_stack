@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<arg name="imu_in_topic" default="mars_imu_in" />
-<arg name="transform_in_topic" default="mars_transform_in" />
-<arg name="pose_in_topic" default="mars_pose_in" />
-<arg name="state_out_topic" default="mars_state_out" />
-
 <launch>
+
+  <arg name="imu_in_topic" default="mars_imu_in" />
+  <arg name="transform_in_topic" default="mars_transform_in" />
+  <arg name="pose_in_topic" default="mars_pose_in" />
+  <arg name="state_out_topic" default="mars_state_out" />
+
   <node name="pose_node" pkg="mars_ros" type="pose_node" clear_params="true" output="screen">
     <!-- Input -->
     <remap from="imu_in" to="$(arg imu_in_topic)"/>
