@@ -6,7 +6,8 @@ missions:
 
     description: "T5"
 
-    filepath: "/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T5.csv"
+    filepaths: 
+      - ["/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T5.csv"]
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -23,7 +24,8 @@ missions:
 
     description: "T6"
 
-    filepath: "/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T6.csv"
+    filepaths:
+      - ["/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T6.csv"]
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -40,7 +42,8 @@ missions:
 
     description: "T7"
 
-    filepath: "/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T7.csv"
+    filepaths:
+      - ["/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T7.csv"]
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -57,7 +60,8 @@ missions:
 
     description: "T8"
 
-    filepath: "/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T8.csv"
+    filepaths:
+      - ["/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T8.csv"]
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -74,7 +78,8 @@ missions:
 
     description: "T9"
 
-    filepath: "/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T9.csv"
+    filepaths: 
+      - ["/home/core/Catkin_ws/catkin_ws_amadee/src/amadee/amadee_bringup/trajectories/T9.csv"]
 
     entities_actions:
       - ["px4_gps", "continue"]
