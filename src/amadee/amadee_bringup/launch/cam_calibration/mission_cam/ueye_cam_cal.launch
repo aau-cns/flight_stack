@@ -4,7 +4,7 @@
   <arg name="camera_name" value="mission_cam" />
 
   <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" required="true" />
-
+  
   <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen" />
 
   <node pkg="nodelet" type="nodelet" name="ueye_cam_nodelet" args="load ueye_cam/ueye_cam_nodelet $(arg nodelet_manager_name)">
@@ -32,7 +32,7 @@
     <param name="image_left" type="int" value="-1" /> <!-- -1: center -->
 
     <param name="subsampling" type="int" value="1" /> <!-- supported by only some UEye cameras -->
-    <param name="binning" type="int" value="1" /> <!-- supported by only some UEye cameras -->
+    <param name="binning" type="int" value="2" /> <!-- supported by only some UEye cameras -->
     <param name="sensor_scaling" type="double" value="1.0" /> <!-- supported by only some UEye cameras -->
 
     <param name="auto_gain" type="bool" value="true" />
@@ -40,10 +40,10 @@
     <param name="red_gain" type="int" value="0" />
     <param name="green_gain" type="int" value="0" />
     <param name="blue_gain" type="int" value="0" />
-    <param name="gain_boost" type="bool" value="False" />
+    <param name="gain_boost" type="bool" value="false" />
 
     <param name="auto_exposure" type="bool" value="False" />
-    <param name="exposure" type="double" value="0.6" /> <!-- in ms -->
+    <param name="exposure" type="double" value="5" /> <!-- in ms -->
     <param name="auto_exposure_reference" type="double" value="100.0" />
 
     <param name="auto_white_balance" type="bool" value="False" />

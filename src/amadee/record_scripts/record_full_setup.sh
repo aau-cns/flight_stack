@@ -36,6 +36,7 @@ px4_topics=(
 "/mavros/imu/static_pressure"
 "/mavros/imu/temperature_imu"
 "/mavros/motor_speeds/speed"
+"/mavros/battery"
 )
 
 mocap_vehicle_topics=(
