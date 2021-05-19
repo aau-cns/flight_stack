@@ -73,3 +73,6 @@
 [submodule "src/toland_flight"]
 	path = src/toland_flight
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/toland_flight.git
+[submodule "src/data_recorder"]
+	path = src/data_recorder
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/data_recorder.git
