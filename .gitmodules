@@ -79,3 +79,6 @@
 [submodule "src/amaze_mission_sequencer"]
 	path = src/amaze_mission_sequencer
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_mission_sequencer.git
+[submodule "src/mars_ros"]
+	path = src/mars_ros
+	url = git@gitlab.aau.at:aau-cns/mars_ros.git
