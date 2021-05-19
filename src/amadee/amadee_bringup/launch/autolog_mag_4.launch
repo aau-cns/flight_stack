@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <launch>
   <node ns="1" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM0" />
   <node ns="2" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM1" />

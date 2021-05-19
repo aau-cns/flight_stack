@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <launch>
   <include file="$(find amadee_bringup)/launch/undistort_mission_cam.launch" />
   <include file="$(find amadee_bringup)/launch/aruco_detect.launch" />

@@ -1,3 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <launch>
   <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" required="true" />
   <arg name="nodelet_manager_name" value="nodelet_manager" />
