@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="pi" default="1" />
+
+  <!-- Autonomy Parameters -->
+  <arg name="config_file_path"        default="$(find amadee_bringup)/configs/autonomy/mission_config.yaml" />
+  <arg name="watchdog_rate_hz"        default="1.0" />
+  <arg name="watchdog_startup_time"   default="1.0" />
+
+  <!-- Raspberry PI 1 launches -->
+  <group if="$(eval arg('pi') == 1)">
+    <include file="$(find amaze_autonomy)/launch/autonomy.launch">
+      <arg name="config_file_path"      value="$(arg config_file_path)" />
+      <arg name="watchdog_rate_hz"      value="$(arg watchdog_rate_hz)" />
+      <arg name="watchdog_startup_time" value="$(arg watchdog_startup_time)" />
+    </include>
+  </group>
+</launch>

@@ -2,6 +2,8 @@
 
 <launch>
   <arg name="object_name" default="twins_three" />
+  <arg name="throttle"    default="False" />
+
   <node ns="$(arg object_name)" name="vrpn_client" type="ros_vrpn_client" pkg="ros_vrpn_client" output="screen">
     <param name="vrpn_server_ip" value="192.168.0.107" />
     <param name="vrpn_coordinate_system" value="vicon" />
@@ -21,7 +23,9 @@
     <param name="rotational_estimator/outlier_rejection_subsequent_maximum_count" value="50.0" />
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
-    
-    <!--remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose"/-->
+
+    <remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose" if="$(arg throttle)"/>
   </node>
+
+  <node name="mocap_throttle" type="throttle" pkg="topic_tools" args="messages /twins_three/vrpn_client/raw_pose 30.0 /mavros/vision_pose/pose" if="$(arg throttle)"/>
 </launch>

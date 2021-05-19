@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="pi"    default="1" />
+
+  <!-- MaRS arguments -->
+  <arg name="mars_use_pose"       default="False" />
+  <arg name="mars_imu_in"         default="/mavros/imu/data_raw" />
+  <arg name="mars_transform_in"   default="/twins_three/vrpn_client/raw_transform" />
+  <arg name="mars_pose_in"        default="/ov_msckf/posegt" />
+  <arg name="mars_ext_state_out"  default="/mavros/external_state/external_state_estimate" />
+
+  <!-- OV arguments -->
+  <arg name="use_openvins"        default="False" />
+  <arg name="ov_imu_in"           default="/mavros/imu/data_raw" />
+  <arg name="ov_cam_in1"          default="/mission_cam/image_raw" />
+  <arg name="ov_cam_in2"          default="/mission_cam/image_raw" />
+  <arg name="ov_use_stereo"       default="False" />
+
+  <group if="$(eval arg('pi') == 1)">
+    <!-- MaRS Estimator -->
+    <include file="$(find amadee_bringup)/launch/mars_estimation.launch" if="$(arg use_openvins)">
+      <arg name="topic_imu"     value="$(arg ov_imu_in)" />
+      <arg name="topic_camera0" value="$(arg ov_cam_in1)" />
+      <arg name="topic_camera1" value="$(arg ov_cam_in2)" />
+      <arg name="use_stereo"    value="$(arg ov_use_stereo)" />
+    </include>
+
+    <!-- OpenVINS Estimator -->
+    <include file="$(find amadee_bringup)/launch/default.launch">
+    </include>
+  </group>
+</launch>

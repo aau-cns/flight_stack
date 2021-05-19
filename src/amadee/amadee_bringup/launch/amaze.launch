@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="pi"    default="1" />
+
+  <include file="$(find amadee_bringup)/amadee_operator.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+  <include file="$(find amadee_bringup)/amadee_safety.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+  <include file="$(find amadee_bringup)/amadee_sensors.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+  <include file="$(find amadee_bringup)/amadee_estimation.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+  <include file="$(find amadee_bringup)/amadee_navigation.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+  <include file="$(find amadee_bringup)/amadee_recording.launch">
+    <arg name="pi"  value="$(arg pi)" />
+  </include>
+</launch>
