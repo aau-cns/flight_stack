@@ -28,9 +28,6 @@
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
-[submodule "src/mavlink"]
-	path = src/mavlink
-	url = git@gitlab.aau.at:aau-cns/mavlink.git
 [submodule "src/open_vins"]
 	path = src/open_vins
 	url = git@gitlab.aau.at:aau-cns/openvins-based-multi-sensor-fusion.git
