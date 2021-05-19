@@ -2,22 +2,22 @@
 <launch>
   <arg name="pi"    default="1" />
 
-  <include file="$(find amadee_bringup)/amadee_operator.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_operator.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/amadee_safety.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_safety.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/amadee_sensors.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_sensors.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/amadee_estimation.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_estimation.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/amadee_navigation.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_navigation.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/amadee_recording.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_recording.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
 </launch>
