@@ -6,7 +6,7 @@
   <arg name="camera_name" value="mission_cam" />
   <arg name="respawn"        default="true" />
 
-  <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" required="true" respawn="$(arg respawn)"/>
+  <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" respawn="$(arg respawn)"/>
 
   <node pkg="nodelet" type="nodelet" name="$(arg nodelet_manager_name)" args="manager" output="screen" respawn="$(arg respawn)"/>
 
