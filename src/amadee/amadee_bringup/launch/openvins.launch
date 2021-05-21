@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- mono or stereo and what ros bag to play -->
+    <arg name="max_cameras" default="1" />
+    <arg name="use_stereo"  default="false" />
+
+    <arg name="topic_imu"     default="/mus/imu" />
+    <arg name="topic_camera0" default="/mus/image" />
+    <arg name="topic_camera1" default="/mus/image2" />
+
+    <!-- MASTER NODE! -->
+    <node name="run_subscribe_ms_msckf" pkg="ov_msckf" type="run_subscribe_ms_msckf" output="screen" clear_params="true" required="true">
+
+        <!-- bag topics -->
+        <param name="topic_imu"      type="string" value="$(arg topic_imu)" />
+        <param name="topic_camera0"  type="string" value="$(arg topic_camera0)" />
+        <param name="topic_camera1"  type="string" value="$(arg topic_camera1)" if="$(arg use_stereo)"/>
+
+        <!-- world/filter parameters -->
+        <param name="use_fej"                                type="bool"     value="false" />
+        <param name="use_rk4int"                             type="bool"     value="true" />
+        <param name="use_stereo"                             type="bool"     value="$(arg use_stereo)" />
+        <param name="calib_cam_extrinsics"                   type="bool"     value="true" />
+        <param name="calib_cam_intrinsics"                   type="bool"     value="true" />
+        <param name="calib_cam_timeoffset"                   type="bool"     value="true" />
+        <param name="max_clones"                             type="int"      value="15" />
+        <param name="max_slam"                               type="int"      value="25" />
+        <param name="max_slam_in_update"                     type="int"      value="25" />
+        <param name="max_msckf_in_update"                    type="int"      value="100" />
+        <param name="dt_slam_delay"                          type="double"   value="3" />
+        <param name="max_cameras"                            type="int"      value="$(arg max_cameras)" />
+        <param name="feat_representation"                    type="string"   value="ANCHORED_MSCKF_INVERSE_DEPTH" />
+        <param name="feat_rep_slam"                          type="string"   value="ANCHORED_SINGLE_INVERSE_DEPTH" />
+        <param name="init_window_time"                       type="double"   value="1.5" />
+        <param name="init_imu_thresh"                        type="double"   value="0.0735" />
+
+        <!-- gravity -->
+        <rosparam param="gravity">[0.0,0.0,9.81]</rosparam>
+
+        <!-- tracker/extractor properties -->
+        <param name="use_klt"            type="bool"   value="true" />
+        <param name="num_pts"            type="int"    value="250" />
+        <param name="fast_threshold"     type="int"    value="10" />
+        <param name="grid_x"             type="int"    value="5" />
+        <param name="grid_y"             type="int"    value="3" />
+        <param name="min_px_dist"        type="int"    value="5" />
+        <param name="knn_ratio"          type="double" value="0.70" />
+        <param name="downsample_cameras" type="bool"   value="true" />
+
+        <!-- sensor noise values / update VIO -->
+        <param name="up_msckf_sigma_px"            type="double"   value="1" />
+        <param name="up_msckf_chi2_multipler"      type="double"   value="1" />
+        <param name="gyroscope_noise_density"      type="double"   value="1.87e-4" />
+        <param name="gyroscope_random_walk"        type="double"   value="2.66e-5" />
+        <param name="accelerometer_noise_density"  type="double"   value="1.86e-3" />
+        <param name="accelerometer_random_walk"    type="double"   value="4.33e-4" />
+
+        <!-- camera intrinsics -->
+        <param name="cam0_is_fisheye" type="bool" value="false" />
+        <rosparam param="cam0_k">[250.0, 250.0, 159.5, 119.5]</rosparam>
+        <rosparam param="cam0_d">[0.0, 0.0, 0.0, 0.0, 0.0]</rosparam>
+
+        <!-- camera extrinsics -->
+        <rosparam param="T_C0toI">
+            [
+            1.0, 0.0, 0.0, 0.0,
+            0.0, -1.0, 0.0, 0.0,
+            0.0, 0.0, -1.0, 0.0,
+            0.0, 0.0, 0.0, 1.0
+            ]
+        </rosparam>
+
+        <!-- fixed value initial prior covariance -->
+        <param name="prior_core_cov"                        type="double"   value="1e-3" />
+        <param name="prior_hand_measurement_pos_cov"        type="double"   value="0.05" />
+        <param name="prior_hand_measurement_ori_cov"        type="double"   value="5" />
+
+        <!-- Other params -->
+        <param name="suppress_output"   type="bool" value="true" />
+
+    </node>
+</launch>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+    <node name="uwb_bridge" pkg="uwb_bridge" type="uwb_bridge" clear_params="true" output="screen" respawn="true">
+       <rosparam file="$(find amadee_bringup)/configs/uwb/uwb_bridge_params.yaml"/>
+    </node>
+</launch>

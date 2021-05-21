@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="pi" default="1" />
+
+  <!-- Watchdog Parameters -->
+  <arg name="watchdog_verbose"          default="False" />
+  <arg name="watchdog_topics_cfg_file"  default="$(find amadee_bringup)/configs/watchdog/topics.ini" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find amadee_bringup)/configs/watchdog/nodes.ini" />
+  <arg name="watchdog_drivers_cfg_file" default="$(find amadee_bringup)/configs/watchdog/drivers.ini" />
+
+  <!-- Watchdog Parameters -->
+  <arg name="toland_imu"                default="/mavros/imu/data_raw" />
+  <arg name="toland_lrf"                default="/lidar_light/range" />
+  <arg name="angle_threshold"           default="10.0" />
+  <arg name="distance_threshold"        default="0.1" />
+
+
+  <!-- Raspberry PI 1 launches -->
+  <group if="$(eval arg('pi') == 1)">
+    <include file="$(find amadee_bringup)/launch/watchdog.launch">
+      <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
+      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
+      <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
+      <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
+    </include>
+
+    <include file="$(find toland_flight)/launch/toland.launch">
+      <arg name="imu_topic"           value="$(arg toland_imu)" />
+      <arg name="lrf_topic"           value="$(arg toland_lrf)" />
+      <arg name="angle_threshold"     value="$(arg watchdog_nodes_cfg_file)" />
+      <arg name="distance_threshold"  value="$(arg distance_threshold)" />
+    </include>
+  </group>
+</launch>

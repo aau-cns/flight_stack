@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="pi"    default="1" />
+
+  <!-- Optitrack Arguments -->
+  <arg name="use_optitrack"         default="True" />
+  <arg name="optitrack_object_name" default="twins_three" />
+  <arg name="optitrack_throttle"    default="False" />
+
+
+  <group if="$(eval arg('pi') == 1)">
+    <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
+    <include file="$(find amadee_bringup)/launch/sensors_module1.launch" />
+    <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" if="$(arg use_optitrack)">
+      <arg name="object_name"       value="$(arg optitrack_object_name)" />
+      <arg name="throttle"          value="$(arg optitrack_throttle)" />
+    </include>
+  </group>
+
+  <group if="$(eval arg('pi') == 2)">
+    <include file="$(find amadee_bringup)/launch/sensors_module2.launch" />
+  </group>
+</launch>

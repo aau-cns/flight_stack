@@ -1,7 +1,0 @@
-<launch>
-  <node ns="1" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM0" />
-  <node ns="2" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM1" />
-  <node ns="3" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM2" />
-  <node ns="4" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM3" />
-  <node ns="5" name="serial_client" type="serial_client" pkg="lsm9ds1_imu" output="screen" args="_serial_port:=/dev/ttyACM4" />
-</launch>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <!-- camera_bluefox.xml
+
+       A general launch file for the camera_bluefox node
+  -->
+
+  <!-- Arguments -->
+  <arg name="pixel_clock"      default="40"/>
+  <arg name="frame_rate"       default="30"/>
+  <arg name="gain_auto"        default="False"/>
+  <arg name="shutter_auto"     default="False"/>
+  <arg name="color_coding"     default="mono8"/>
+  <arg name="shutter"          default="0.008"/>
+  <arg name="exposure"         default="100"/>
+  <arg name="gain"             default="1"/>
+  <arg name="name"             default="mv_camera"/>
+  <arg name="use_ros_time"     default="True"/>
+  <arg name="embed_image_info" default="False"/>
+
+  <!-- Camera Node -->
+  <node pkg="mv_camera" type="mv_camera_node" name="$(arg name)"  respawn="true" output="screen">
+    <param name="use_ros_time"    value="$(arg use_ros_time)"/>
+    <param name="embed_image_info" value="$(arg embed_image_info)"/>
+    <param name="frame_rate"      value="$(arg frame_rate)"/>
+    <param name="gain_auto"       value="$(arg gain_auto)"/>
+    <param name="shutter_auto"    value="$(arg shutter_auto)"/>
+    <param name="shutter"         value="$(arg shutter)"/>
+    <param name="exposure"        value="$(arg exposure)"/>
+    <param name="gain"            value="$(arg gain)"/>
+    <param name="pixel_clock"     value="$(arg pixel_clock)"/>
+    <param name="gain"            value="$(arg gain)"/>
+    <param name="color_coding"    value="$(arg color_coding)"/>
+
+    <remap from="camera/camera_info" to="$(arg name)/camera_info"/>
+    <remap from="camera/image_raw"   to="$(arg name)/image_raw"/>
+  </node>
+
+</launch>
+
+
+
