@@ -5,14 +5,18 @@
   <!-- Autonomy Parameters -->
   <arg name="config_filepath"         default="$(find amadee_bringup)/configs/autonomy/mission_config.yaml" />
   <arg name="watchdog_rate_hz"        default="1.0" />
-  <arg name="watchdog_startup_time"   default="1.0" />
+  <arg name="watchdog_startup_time"   default="15" />
+  <arg name="missionseq_request_topic" default="/autonomy/request" />
+  <arg name="missionseq_response_topic" default="/autonomy/response" />
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
     <include file="$(find amaze_autonomy)/launch/autonomy.launch">
       <arg name="config_filepath"       value="$(arg config_filepath)" />
-      <arg name="watchdog_rate_hz"      value="$(arg watchdog_rate_hz)" />
-      <arg name="watchdog_startup_time" value="$(arg watchdog_startup_time)" />
+      <arg name="watchdog_rate_Hz"      value="$(arg watchdog_rate_hz)" />
+      <arg name="watchdog_startup_time_s" value="$(arg watchdog_startup_time)" />
+      <arg name="mission_sequencer_request_topic" value="$(arg missionseq_request_topic)" />
+      <arg name="mission_sequencer_responce_topic" value="$(arg missionseq_response_topic)" />
     </include>
   </group>
 </launch>

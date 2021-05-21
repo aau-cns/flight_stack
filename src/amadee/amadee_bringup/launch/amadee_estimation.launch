@@ -18,15 +18,19 @@
 
   <group if="$(eval arg('pi') == 1)">
     <!-- MaRS Estimator -->
-    <include file="$(find amadee_bringup)/launch/mars_estimation.launch" if="$(arg use_openvins)">
+    <include file="$(find amadee_bringup)/launch/mars_estimation.launch" >
+      <arg name="imu_in_topic"  value="$(arg mars_imu_in)" />
+      <arg name="transform_in_topic"  value="$(arg mars_transform_in)" unless="$(arg mars_use_pose)" />
+      <arg name="pose_in_topic"  value="$(arg mars_pose_in)" if="$(arg mars_use_pose)" />
+      <arg name="state_out_topic"  value="$(arg mars_ext_state_out)" />
+    </include>
+
+    <!-- OpenVINS Estimator -->
+    <include file="$(find amadee_bringup)/launch/openvins.launch" if="$(arg use_openvins)" >
       <arg name="topic_imu"     value="$(arg ov_imu_in)" />
       <arg name="topic_camera0" value="$(arg ov_cam_in1)" />
       <arg name="topic_camera1" value="$(arg ov_cam_in2)" />
       <arg name="use_stereo"    value="$(arg ov_use_stereo)" />
-    </include>
-
-    <!-- OpenVINS Estimator -->
-    <include file="$(find amadee_bringup)/launch/default.launch">
     </include>
   </group>
 </launch>

@@ -2,9 +2,9 @@
 <launch>
   <arg name="pi"    default="1" />
 
-  <include file="$(find amadee_bringup)/launch/amadee_operator.launch">
+  <!-- <include file="$(find amadee_bringup)/launch/amadee_operator.launch">
     <arg name="pi"  value="$(arg pi)" />
-  </include>
+  </include> -->
   <include file="$(find amadee_bringup)/launch/amadee_safety.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>

@@ -4,7 +4,7 @@
   <!-- node -->
 
   <group if="$(eval arg('pi') == 1)">
-    <node pkg="amaze_waypoint_following" type="amaze_waypoint_following" name="amaze_waypoint_following" output="screen" clear_params="true" required="true" respawn="True">
+    <node pkg="amaze_mission_sequencer" type="amaze_mission_sequencer_node" name="amaze_mission_sequencer" output="screen" clear_params="true" required="true" respawn="True">
     </node>
   </group>
 </launch>
