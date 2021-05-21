@@ -17,7 +17,7 @@
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
-    <include file="$(find watchdog_bringup)/launch/watchdog.launch">
+    <include file="$(find amadee_bringup)/launch/watchdog.launch">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
