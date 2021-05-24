@@ -2,19 +2,19 @@
 <launch>
   <arg name="pi"    default="1" />
 
-  <!-- MaRS arguments -->
-  <arg name="mars_use_pose"       default="False" />
-  <arg name="mars_imu_in"         default="/mavros/imu/data_raw" />
-  <arg name="mars_transform_in"   default="/twins_three/vrpn_client/raw_transform" />
-  <arg name="mars_pose_in"        default="/ov_msckf/posegt" />
-  <arg name="mars_ext_state_out"  default="/mavros/external_state/external_state_estimate" />
-
   <!-- OV arguments -->
   <arg name="use_openvins"        default="False" />
   <arg name="ov_imu_in"           default="/mavros/imu/data_raw" />
   <arg name="ov_cam_in1"          default="/mission_cam/image_raw" />
   <arg name="ov_cam_in2"          default="/mission_cam/image_raw" />
   <arg name="ov_use_stereo"       default="False" />
+
+  <!-- MaRS arguments -->
+  <arg name="mars_use_pose"       default="$(arg use_openvins)" />
+  <arg name="mars_imu_in"         default="/mavros/imu/data_raw" />
+  <arg name="mars_transform_in"   default="/twins_three/vrpn_client/raw_transform" />
+  <arg name="mars_pose_in"        default="/ov_msckf/posegt" />
+  <arg name="mars_ext_state_out"  default="/mavros/external_state/external_state_estimate" />
 
   <group if="$(eval arg('pi') == 1)">
     <!-- MaRS Estimator -->
