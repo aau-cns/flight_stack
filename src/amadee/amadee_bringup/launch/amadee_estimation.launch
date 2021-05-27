@@ -24,7 +24,9 @@
       <arg name="pose_in_topic"  value="$(arg mars_pose_in)" if="$(arg mars_use_pose)" />
       <arg name="state_out_topic"  value="$(arg mars_ext_state_out)" />
     </include>
+  </group>
 
+  <group if="$(eval arg('pi') == 2)">
     <!-- OpenVINS Estimator -->
     <include file="$(find amadee_bringup)/launch/openvins.launch" if="$(arg use_openvins)" >
       <arg name="topic_imu"     value="$(arg ov_imu_in)" />
