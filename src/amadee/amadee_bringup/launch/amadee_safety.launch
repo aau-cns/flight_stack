@@ -27,7 +27,7 @@
     <include file="$(find toland_flight)/launch/toland.launch">
       <arg name="imu_topic"           value="$(arg toland_imu)" />
       <arg name="lrf_topic"           value="$(arg toland_lrf)" />
-      <arg name="angle_threshold"     value="$(arg watchdog_nodes_cfg_file)" />
+      <arg name="angle_threshold"     value="$(arg angle_threshold)" />
       <arg name="distance_threshold"  value="$(arg distance_threshold)" />
     </include>
   </group>
