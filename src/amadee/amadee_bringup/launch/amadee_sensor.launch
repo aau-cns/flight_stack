@@ -7,10 +7,15 @@
   <arg name="optitrack_object_name" default="twins_three" />
   <arg name="optitrack_throttle"    default="False" />
 
+  <!-- Camera Arguments -->
+  <arg name="frame_rate"            default="15.0" />
+
 
   <group if="$(eval arg('pi') == 1)">
     <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
-    <include file="$(find amadee_bringup)/launch/sensors_module1.launch" />
+    <include file="$(find amadee_bringup)/launch/sensors_module1.launch">
+      <arg name="frame_rate"        value="$(arg frame_rate)" />
+    </include>
     <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch" if="$(arg use_optitrack)">
       <arg name="object_name"       value="$(arg optitrack_object_name)" />
       <arg name="throttle"          value="$(arg optitrack_throttle)" />
