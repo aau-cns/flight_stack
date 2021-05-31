@@ -13,7 +13,7 @@
   <arg name="mars_use_pose"       default="$(arg use_openvins)" />
   <arg name="mars_imu_in"         default="/mavros/imu/data_raw" />
   <arg name="mars_transform_in"   default="/twins_three/vrpn_client/raw_transform" />
-  <arg name="mars_pose_in"        default="/ov_msckf/posegt" />
+  <arg name="mars_pose_in"        default="/ov_msckf/poseimu" />
   <arg name="mars_ext_state_out"  default="/mavros/external_state/external_state_estimate" />
 
   <group if="$(eval arg('pi') == 1)">
