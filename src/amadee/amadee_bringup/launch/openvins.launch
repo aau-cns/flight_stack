@@ -37,7 +37,7 @@
         <param name="dt_slam_delay"                          type="double"   value="2" />
         <param name="max_cameras"                            type="int"      value="$(arg max_cameras)" />
         <param name="feat_representation"                    type="string"   value="ANCHORED_MSCKF_INVERSE_DEPTH" />
-        <param name="feat_rep_slam"                          type="string"   value="ANCHORED_FULL_INVERSE_DEPTH" />
+        <param name="feat_rep_slam"                          type="string"   value="GLOBAL_3D" />
         <param name="init_window_time"                       type="double"   value="1.5" />
         <param name="init_imu_thresh"                        type="double"   value="1.0" />
 
@@ -63,7 +63,7 @@
         <param name="min_px_dist"        type="int"    value="5" />
         <param name="knn_ratio"          type="double" value="0.75" />
         <param name="downsample_cameras" type="bool"   value="true" />
-	<param name="downsample_scale"   type="int"    value="4" />
+	<param name="downsample_scale"   type="int"    value="8" />
 
         <!-- sensor noise values / update VIO -->
         <param name="up_msckf_sigma_px"            type="double"   value="1" />
@@ -78,6 +78,9 @@
         <param name="cam0_is_fisheye" type="bool" value="false" />
         <rosparam param="cam0_k">[1135.5650258005983, 1135.8739681751554, 1041.4618117459981, 751.1986090537343]</rosparam>
         <rosparam param="cam0_d">[-0.25555106539016703, 0.055741385659997734, 0.00044388409589346035, -2.8944627402399608e-05]</rosparam>
+        <!--<param name="cam0_is_fisheye" type="bool" value="true" />
+        <rosparam param="cam0_k">[1137.238068737436, 1136.9689027335482, 1043.2813814416118, 754.4032152006072]</rosparam>
+        <rosparam param="cam0_d">[0.02325666335725533, -0.003530708040518529, 0.007110568684563335, -0.0027025674198155746]</rosparam>-->
 
         <!-- camera extrinsics -->
         <rosparam param="T_C0toI">
@@ -101,7 +104,7 @@
         <param name="prior_hand_measurement_ori_cov"        type="double"   value="5" />
 
         <!-- Other params -->
-        <param name="suppress_output"   type="bool" value="false" />
+        <param name="suppress_output"   type="bool" value="true" />
 
     </node>
 </launch>
