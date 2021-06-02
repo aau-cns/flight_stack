@@ -26,8 +26,10 @@ PI2_IP=192.168.0.195
 # ==============================================
 # OR
 
-CMD1="ssh -t core@${PI1_IP} 'bash -c \"/home/core/amadee_pi1.sh\"'"
-CMD2="ssh -t core@${PI2_IP} 'bash -c \"/home/core/amadee_pi2.sh\"'"
+#CMD1="ssh -t core@${PI1_IP} 'bash -c \"/home/core/amadee_pi1.sh\"'"
+#CMD2="ssh -t core@${PI2_IP} 'bash -c \"/home/core/amadee_pi2.sh\"'"
+CMD1="ssh -t amadee1_w_core 'bash -c \"/home/core/amadee_pi1.sh\"'"
+CMD2="ssh -t amadee2_w_core 'bash -c \"/home/core/amadee_pi2.sh\"'"
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`
