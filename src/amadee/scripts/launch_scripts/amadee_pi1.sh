@@ -13,10 +13,10 @@ tmux send-keys -t ${SES_NAME}.1 "roscore" 'C-m'
 
 # BACKGROUND
 tmux new-window -n 'background'
-tmux send-keys -t ${SES_NAME}.1 "roslaunch amadee_bringup amaze.launch pi:=1" 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "sleep 10; roslaunch amadee_bringup amaze.launch pi:=1" 'C-m'
 
-# BACKGROUND
+# OPERATOR
 tmux new-window -n 'operator'
-tmux send-keys -t ${SES_NAME}.1 "roslaunch amadee_bringup amadee_operator pi:=1" 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "sleep 10; roslaunch amadee_bringup amadee_operator.launch pi:=1" 'C-m'
 
 tmux attach -t ${SES_NAME}

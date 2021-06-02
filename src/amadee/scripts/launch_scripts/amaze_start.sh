@@ -18,16 +18,16 @@ PI2_IP=192.168.0.195
 # ssh -f -t -N -M -S /tmp/session_test core@${PI1_IP} 'bash -ic "roslaunch amadee_bringup amadee_operator.launch pi:=1"'
 #ssh -t  core@${PI1_IP} 'bash -ic "roslaunch amadee_bringup amadee_operator.launch pi:=1"'
 
-ssh -t core@${PI2_IP} 'bash -c "roslaunch amadee_bringup amaze.launch pi:=2"'
-
-gnome-terminal --tab
-ssh -t core@${PI1_IP} 'bash -c "/home/core/start_pi.sh"'
+# ssh -t core@${PI2_IP} 'bash -c "roslaunch amadee_bringup amaze.launch pi:=2"'
+#
+# gnome-terminal --tab
+# ssh -t core@${PI1_IP} 'bash -c "/home/core/start_pi.sh"'
 
 # ==============================================
 # OR
 
-CMD1="ssh -t core@${PI1_IP} 'bash -c \"/home/core/start_pi.sh\"'"
-CMD2="ssh -t core@${PI2_IP} 'bash -c \"roslaunch amadee_bringup amaze.launch pi:=2\"'"
+CMD1="ssh -t core@${PI1_IP} 'bash -c \"/home/core/amadee_pi1.sh\"'"
+CMD2="ssh -t core@${PI2_IP} 'bash -c \"/home/core/amadee_pi2.sh\"'"
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`
@@ -44,4 +44,5 @@ tmux send-keys -t ${SES_NAME}.1 "${CMD1}" 'C-m'
 tmux new-window -n 'pi2'
 tmux send-keys -t ${SES_NAME}.1 "${CMD2}" 'C-m'
 
+tmux select-window -t 'pi1'
 tmux attach -t ${SES_NAME}
