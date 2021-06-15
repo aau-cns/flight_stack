@@ -5,3 +5,4 @@ logs
 .catkin_workspace
 *.workspace
 *.user
+.catkin_tools
