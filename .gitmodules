@@ -76,3 +76,6 @@
 [submodule "src/mars_ros"]
 	path = src/mars_ros
 	url = git@gitlab.aau.at:aau-cns/mars_ros.git
+[submodule "src/estimator_supervisor"]
+	path = src/estimator_supervisor
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/estimator_supervisor.git
