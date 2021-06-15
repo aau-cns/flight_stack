@@ -8,7 +8,7 @@
   <include file="$(find amadee_bringup)/launch/amadee_safety.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/launch/amadee_sensors.launch">
+  <include file="$(find amadee_bringup)/launch/amadee_sensor.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
   <include file="$(find amadee_bringup)/launch/amadee_estimation.launch">

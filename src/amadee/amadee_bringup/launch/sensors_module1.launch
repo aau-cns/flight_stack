@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <launch>
-  <include file="$(find amadee_bringup)/launch/ueye_cam.launch" />
+  <arg name="frame_rate" default="20.0" />
+
+  <include file="$(find amadee_bringup)/launch/ueye_cam.launch">
+    <arg name="frame_rate" value="$(arg frame_rate)" />
+  </include>
   <include file="$(find amadee_bringup)/launch/lrf_pi.launch"/>
   <include file="$(find amadee_bringup)/launch/ublox_2dev.launch" />
 </launch>

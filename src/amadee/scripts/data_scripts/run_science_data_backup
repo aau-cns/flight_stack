@@ -1,0 +1,8 @@
+#!/bin/sh
+
+echo "PERFORMING SCIENCE DATA BACKUP"
+
+sleep 2
+
+echo "Data backup has completed"
+exit 0
