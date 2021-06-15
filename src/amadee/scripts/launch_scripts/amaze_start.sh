@@ -1,7 +1,10 @@
 #!/bin/sh
 
-PI1_IP=192.168.0.105
-PI2_IP=192.168.0.195
+#PI1_IP=192.168.0.105
+#PI2_IP=192.168.0.195
+
+PI1_IP=192.168.1.103
+PI2_IP=192.168.1.102
 
 # connect to ssh
 # https://superuser.com/questions/8673/how-can-i-use-ssh-to-run-a-command-on-a-remote-unix-machine-and-exit-before-the
