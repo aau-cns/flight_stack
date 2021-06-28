@@ -3,10 +3,10 @@
     <arg name="pi"    default="1" />
 
     <!-- data recorder paramters -->
-    <arg name="rec_script_file"   default="$(find data_recorder)/scripts/record.sh" />
-    <arg name="rec_cmd"           default="test1" />
-    <arg name="store_script_file" default="$(find data_recorder)/scripts/store.sh" />
-    <arg name="store_cmd"         default="test2" />
+    <arg name="rec_script_file"   default="$(find amadee_bringup)/../record_scripts/record_full_setup.sh" />
+    <arg name="rec_cmd"           default="dev1_full" />
+    <arg name="store_script_file" default="$(find amadee_bringup)/../record_scripts/safe_merge_data_multi_dev.sh" />
+    <arg name="store_cmd"         default="" />
     <arg name="rec_verbose"       default="False" />
 
     <group if="$(eval arg('pi') == 1)">
