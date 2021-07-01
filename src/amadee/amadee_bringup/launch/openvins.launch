@@ -17,12 +17,12 @@
         <param name="topic_imu"      type="string" value="$(arg topic_imu)" />
         <param name="topic_camera0"  type="string" value="$(arg topic_camera0)" />
         <param name="topic_camera1"  type="string" value="$(arg topic_camera1)" if="$(arg use_stereo)"/>
-	<param name="topic_pose"     type="string" value="/twins_three/vrpn_client/raw_transform" if="$(arg use_mocap)"/>
-	<param name="topic_lrf"	     type="string" value="/lidar_lite/range"/>
+        <param name="topic_pose"     type="string" value="/twins_three/vrpn_client/raw_transform" if="$(arg use_mocap)"/>
+        <param name="topic_lrf"	     type="string" value="/lidar_lite/range"/>
 
-	<!-- Execution parameters -->
-	<param name="tcp_no_delay"                           type="bool"     value="true" />
-	<param name="visualize_fast"                         type="bool"     value="false" />
+        <!-- Execution parameters -->
+        <param name="tcp_no_delay"                           type="bool"     value="true" />
+        <param name="visualize_fast"                         type="bool"     value="false" />
 
         <!-- world/filter parameters -->
         <param name="use_fej"                                type="bool"     value="false" />
@@ -33,8 +33,8 @@
         <param name="calib_cam_timeoffset"                   type="bool"     value="true" />
         <param name="max_clones"                             type="int"      value="8" />
         <param name="max_slam"                               type="int"      value="30" /> <!--25-->
-        <param name="max_slam_in_update"                     type="int"      value="30" /> <!--25--> 
-        <param name="max_msckf_in_update"                    type="int"      value="60" /> <!--50--> 
+        <param name="max_slam_in_update"                     type="int"      value="30" /> <!--25-->
+        <param name="max_msckf_in_update"                    type="int"      value="60" /> <!--50-->
         <param name="dt_slam_delay"                          type="double"   value="2" />
         <param name="max_cameras"                            type="int"      value="$(arg max_cameras)" />
         <param name="feat_representation"                    type="string"   value="ANCHORED_MSCKF_INVERSE_DEPTH" />
@@ -42,16 +42,16 @@
         <param name="init_window_time"                       type="double"   value="1.0" />
         <param name="init_imu_thresh"                        type="double"   value="1.0" />
 
-	<!-- Pose update -->
+        <!-- Pose update -->
         <param name="calib_pose_extrinsics"                  type="bool"     value="True" if="$(arg use_mocap)"/>
-	<param name="global_pose_init"			     type="bool"     value="True" if="$(arg use_mocap)"/>
-        <param name="pose_sigma_ori"            	     type="double"   value="0.01" if="$(arg use_mocap)"/>
+        <param name="global_pose_init"			                 type="bool"     value="True" if="$(arg use_mocap)"/>
+        <param name="pose_sigma_ori"            	           type="double"   value="0.01" if="$(arg use_mocap)"/>
         <param name="pose_sigma_pos"                         type="double"   value="0.05" if="$(arg use_mocap)"/>
-	<param name="pose_chi2_multipler"      		     type="double"   value="9e9" if="$(arg use_mocap)"/>
+        <param name="pose_chi2_multipler"      		           type="double"   value="9e9" if="$(arg use_mocap)"/>
 
-	<!-- LRF Update -->
-	<param name="lrf_sigma_range" 			     type="double"   value="0.05"/>
-	<param name="lrf_chi2_multipler"		     type="double"   value="1.0"/>     
+        <!-- LRF Update -->
+        <param name="lrf_sigma_range" 			                 type="double"   value="0.05"/>
+        <param name="lrf_chi2_multipler"		                 type="double"   value="1.0"/>
 
         <!-- Time delay cam-imu -->
         <!--<param name="calib_camimu_dt"                        type="double"   value="-0.33" />-->
@@ -61,14 +61,14 @@
 
         <!-- tracker/extractor properties -->
         <param name="use_klt"            type="bool"   value="true" />
-        <param name="num_pts"            type="int"    value="90" /> <!--75--> 
+        <param name="num_pts"            type="int"    value="90" /> <!--75-->
         <param name="fast_threshold"     type="int"    value="5" />
         <param name="grid_x"             type="int"    value="5" />
         <param name="grid_y"             type="int"    value="3" />
         <param name="min_px_dist"        type="int"    value="3" />
         <param name="knn_ratio"          type="double" value="0.6" />
         <param name="downsample_cameras" type="bool"   value="true" />
-	<param name="downsample_scale"   type="int"    value="16" />
+        <param name="downsample_scale"   type="int"    value="16" />
 
         <!-- sensor noise values / update VIO -->
         <param name="up_msckf_sigma_px"            type="double"   value="1" />
@@ -79,7 +79,7 @@
         <param name="accelerometer_random_walk"    type="double"   value="1e-4" />
 
         <!-- camera intrinsics -->
-	<rosparam param="cam0_wh">[2056, 1542]</rosparam>
+        <rosparam param="cam0_wh">[2056, 1542]</rosparam>
         <param name="cam0_is_fisheye" type="bool" value="false" />
         <rosparam param="cam0_k">[1135.5650258005983, 1135.8739681751554, 1041.4618117459981, 751.1986090537343]</rosparam>
         <rosparam param="cam0_d">[-0.25555106539016703, 0.055741385659997734, 0.00044388409589346035, -2.8944627402399608e-05]</rosparam>
