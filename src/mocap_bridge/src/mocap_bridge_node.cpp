@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
   // Launch ros node
   ros::init(argc, argv, "estimator_supervisor");
   ros::NodeHandle nh("~");
+  ros::TransportHints().tcpNoDelay();
 
   ROS_INFO("Starting the Mocap Bridge");
 
