@@ -33,6 +33,9 @@ int main(int argc, char** argv) {
   // Instanciate the supervisor
   MocapBridge MocapBridge(nh, subscriber_topic, publisher_topic);
 
+  // Spin
+  ros::spin();
+
   // Done!
   std::cout << std::endl;
   ROS_INFO("Done!");

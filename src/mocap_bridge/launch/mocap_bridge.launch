@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <!-- mocap_bridge node -->
+    <node name="mocap_bridge_posestamped" pkg="mocap_bridge" type="mocap_bridge" output="screen" clear_params="true" required="false">
+        <remap from="~mocap_bridge/external_core_state" to="/mavros/external_state/external_state_estimate"/>
+    </node>
+
+</launch>
