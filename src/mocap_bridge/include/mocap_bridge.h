@@ -20,6 +20,7 @@
 #include <ros/ros.h>
 #include <std_srvs/Trigger.h>
 #include <geometry_msgs/PoseStamped.h>
+#include <nav_msgs/Odometry.h>
 #include <mocap_bridge/ExtCoreState.h>
 #include <iostream>
 #include <string>
@@ -48,6 +49,12 @@ private:
    */
   void callback_posestamped(const geometry_msgs::PoseStamped::ConstPtr& msg);
 
+  /**
+   * @brief Odometry callback
+   * @param const pointer to message
+   */
+  void callback_odometry(const nav_msgs::Odometry::ConstPtr& msg);
+
   /// Nodehandler
   ros::NodeHandle nh_;
 
@@ -59,6 +66,7 @@ private:
 
   /// Subscriber
   ros::Subscriber sub_posestamped_;
+  ros::Subscriber sub_odometry_;
 
 };
 

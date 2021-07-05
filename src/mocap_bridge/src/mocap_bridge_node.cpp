@@ -24,11 +24,23 @@ int main(int argc, char** argv) {
   ros::init(argc, argv, "estimator_supervisor");
   ros::NodeHandle nh("~");
 
-  ROS_INFO("Starting the Estimator Supervisor");
+  ROS_INFO("Starting the Mocap Bridge");
 
-  // Define topics
-  std::string subscriber_topic = "/twins_three/vrpn_client/raw_pose";
-  std::string publisher_topic = "mocap_bridge/external_core_state";
+  // Define parameters
+  std::string subscriber_topic;
+  std::string publisher_topic;
+
+  // Parse parameters
+  if(!nh.getParam("subscriber_topic", subscriber_topic)) {
+    std::cout << std::endl;
+    ROS_ERROR("No subscriber topic defined");
+    std::exit(EXIT_FAILURE);
+  }
+  if(!nh.getParam("publisher_topic", publisher_topic)) {
+    std::cout << std::endl;
+    ROS_ERROR("No publisher topic defined");
+    std::exit(EXIT_FAILURE);
+  }
 
   // Instanciate the supervisor
   MocapBridge MocapBridge(nh, subscriber_topic, publisher_topic);

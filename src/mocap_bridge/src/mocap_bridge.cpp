@@ -25,8 +25,10 @@ MocapBridge::MocapBridge(ros::NodeHandle &nh, std::string &subscriber_topic, std
   ROS_INFO("Publishing: %s", pub_ecs_.getTopic().c_str());
 
   // Subscribers
-  sub_posestamped_ = nh.subscribe(subscriber_topic_, 1, &MocapBridge::callback_posestamped, this);
-  ROS_INFO("Subscribing: %s", sub_posestamped_.getTopic().c_str());
+//  sub_posestamped_ = nh.subscribe(subscriber_topic_, 1, &MocapBridge::callback_posestamped, this);
+//  ROS_INFO("Subscribing: %s", sub_posestamped_.getTopic().c_str());
+  sub_odometry_ = nh.subscribe(subscriber_topic_, 1, &MocapBridge::callback_odometry, this);
+  ROS_INFO("Subscribing: %s", sub_odometry_.getTopic().c_str());
 
 }
 
@@ -51,4 +53,31 @@ void MocapBridge::callback_posestamped(const geometry_msgs::PoseStamped::ConstPt
 
   // Publish
   pub_ecs_.publish(ecs);
+}
+
+void MocapBridge::callback_odometry(const nav_msgs::Odometry::ConstPtr& msg) {
+
+  // Define External Core State
+  mocap_bridge::ExtCoreState ecs;
+
+  // Assign mocap estimate to ecs
+  ecs.header.stamp = msg->header.stamp;
+  ecs.header.seq = msg->header.seq;
+  ecs.header.frame_id = msg->header.frame_id;
+  ecs.p_wi.x = msg->pose.pose.position.x;
+  ecs.p_wi.y = msg->pose.pose.position.y;
+  ecs.p_wi.z = msg->pose.pose.position.z;
+  ecs.q_wi.x = msg->pose.pose.orientation.x;
+  ecs.q_wi.y = msg->pose.pose.orientation.y;
+  ecs.q_wi.z = msg->pose.pose.orientation.z;
+  ecs.q_wi.w = msg->pose.pose.orientation.w;
+  ecs.v_wi.x = msg->twist.twist.linear.x;
+  ecs.v_wi.y = msg->twist.twist.linear.y;
+  ecs.v_wi.z = msg->twist.twist.linear.z;
+  ecs.QUATERNION_TYPE = 1; //Hamiltonian
+  ecs.FRAME_TYPE = 1; //ENU
+
+  // Publish
+  pub_ecs_.publish(ecs);
+
 }
