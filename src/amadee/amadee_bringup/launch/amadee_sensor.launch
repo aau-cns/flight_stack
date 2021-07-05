@@ -5,7 +5,7 @@
   <!-- Optitrack Arguments -->
   <arg name="use_optitrack"         default="True" />
   <arg name="optitrack_object_name" default="twins_three" />
-  <arg name="optitrack_throttle"    default="False" />
+  <arg name="optitrack_throttle"    default="True" />
 
   <!-- Camera Arguments -->
   <arg name="frame_rate"            default="15.0" />
