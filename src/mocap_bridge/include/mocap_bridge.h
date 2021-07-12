@@ -22,6 +22,7 @@
 #include <geometry_msgs/PoseStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <mocap_bridge/ExtCoreState.h>
+#include <mocap_bridge/ExtCoreStateLite.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -63,6 +64,7 @@ private:
 
   /// Publishers
   ros::Publisher pub_ecs_;
+  ros::Publisher pub_ecsl_;
 
   /// Subscriber
   ros::Subscriber sub_posestamped_;

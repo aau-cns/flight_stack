@@ -50,7 +50,9 @@ message(STATUS "BOOST VERSION: " ${Boost_VERSION})
 ## Generate messages in the 'msg' folder
 add_message_files(
  DIRECTORY msg
- FILES ExtCoreState.msg
+ FILES
+ ExtCoreState.msg
+ ExtCoreStateLite.msg
 )
 
 ## Generate services in the 'srv' folder

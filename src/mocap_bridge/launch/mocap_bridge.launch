@@ -2,15 +2,18 @@
 <launch>
 
     <!-- arguments-->
-    <arg name="subscriber_topic"        default="/twins_three/vrpn_client/estimated_odometry" />
-    <arg name="publisher_topic"         default="/mavros/external_state/external_state_estimate" />
+    <arg name="subscriber_topic"        default="/twins_five/vrpn_client/estimated_odometry" />
+    <arg name="publisher_full_topic"         default="none" />
+    <arg name="publisher_lite_topic"         default="/mavros/external_state_lite/external_state_estimate_lite" />  
+
 
     <!-- mocap_bridge node -->
     <node name="mocap_bridge_posestamped" pkg="mocap_bridge" type="mocap_bridge" output="screen" clear_params="true" required="false">
 
         <!-- topics -->
-        <param name="subscriber_topic"  type="string"   value="$(arg subscriber_topic)" />
-        <param name="publisher_topic"  type="string"   value="$(arg publisher_topic)" />
+        <param name="subscriber_topic"      type="string"       value="$(arg subscriber_topic)" />
+        <param name="publisher_full_topic"  type="string"   value="$(arg publisher_full_topic)" />
+	<param name="publisher_lite_topic"  type="string"   value="$(arg publisher_lite_topic)" />
 
     </node>
 

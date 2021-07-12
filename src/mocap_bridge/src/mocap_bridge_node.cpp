@@ -23,13 +23,12 @@ int main(int argc, char** argv) {
   // Launch ros node
   ros::init(argc, argv, "estimator_supervisor");
   ros::NodeHandle nh("~");
-  ros::TransportHints().tcpNoDelay();
+//  ros::TransportHints().tcpNoDelay();
 
   ROS_INFO("Starting the Mocap Bridge");
 
   // Define parameters
-  std::string subscriber_topic;
-  std::string publisher_topic;
+  std::string subscriber_topic, publisher_topic;
 
   // Parse parameters
   if(!nh.getParam("subscriber_topic", subscriber_topic)) {
