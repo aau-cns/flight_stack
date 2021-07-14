@@ -90,6 +90,7 @@ add_library(mavros_extras
   src/plugins/wheel_odometry.cpp
   src/plugins/mount_control.cpp
   src/plugins/external_state_estimate.cpp
+  src/plugins/external_state_estimate_lite.cpp
 )
 add_dependencies(mavros_extras
   ${catkin_EXPORTED_TARGETS}

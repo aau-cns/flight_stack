@@ -64,6 +64,7 @@ add_message_files(
   WaypointReached.msg
   WheelOdomStamped.msg
   ExtCoreState.msg
+  ExtCoreStateLite.msg
 )
 
 add_service_files(

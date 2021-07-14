@@ -6663,19 +6663,25 @@
       <field type="uint8_t" name="target_component">Component ID</field>
       <field type="uint32_t" name="format" enum="TUNE_FORMAT" display="bitmask">Bitfield of supported tune formats.</field>
     </message>
-
     <!-- Custom message for External ststa estimation-->
     <message id="6000" name="EXT_CORE_STATE">
-    <description>external core state</description>
-        <field type="uint64_t" name="usec" units="us">Timestamp (UNIX)</field>
-        <field type="float[3]" name="p_wi">position x y z of i expressed in w (NED)</field>
-        <field type="float[3]" name="v_wi">velocity vx vy vz of i expressed in w (NED)</field>
-        <field type="float[4]" name="q_wi">orientation qx qy qz qw from i to w (NED) in hamiltonian convention</field>
-        <field type="float[3]" name="b_a">accelerometer bias</field>
-        <field type="float[3]" name="b_w">gyroscope bias</field>
-        <field type="float[45]" name="cov_urt">position orientation and velocity upper triangular covariance in Row-Major order</field>
+      <description>external core state</description>
+      <field type="uint64_t" name="usec" units="us">Timestamp (UNIX)</field>
+      <field type="float[3]" name="p_wi">position x y z of i expressed in w (NED)</field>
+      <field type="float[3]" name="v_wi">velocity vx vy vz of i expressed in w (NED)</field>
+      <field type="float[4]" name="q_wi">orientation qx qy qz qw from i to w (NED) in hamiltonian convention</field>
+      <field type="float[3]" name="b_a">accelerometer bias</field>
+      <field type="float[3]" name="b_w">gyroscope bias</field>
+      <field type="float[45]" name="cov_urt">position orientation and velocity upper triangular covariance in Row-Major order</field>
     </message>
-
+    <!-- Custom message for External state lite estimation-->
+    <message id="6001" name="EXT_CORE_STATE_LITE">
+      <description>external core state lite</description>
+      <field type="uint64_t" name="usec" units="us">Timestamp (UNIX)</field>
+      <field type="float[3]" name="p_wi">position x y z of i expressed in w (NED)</field>
+      <field type="float[3]" name="v_wi">velocity vx vy vz of i expressed in w (NED)</field>
+      <field type="float[4]" name="q_wi">orientation qx qy qz qw from i to w (NED) in hamiltonian convention</field>
+    </message>
     <!-- Rover specific messages -->
     <message id="9000" name="WHEEL_DISTANCE">
       <description>Cumulative distance traveled for each reported wheel.</description>
