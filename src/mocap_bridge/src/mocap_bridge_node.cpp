@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
   ROS_INFO("Starting the Mocap Bridge");
 
   // Define parameters
-  std::string subscriber_topic, publisher_topic;
+  std::string subscriber_topic, subscriber_type, publisher_topic, publisher_type;
 
   // Parse parameters
   if(!nh.getParam("subscriber_topic", subscriber_topic)) {
@@ -36,14 +36,24 @@ int main(int argc, char** argv) {
     ROS_ERROR("No subscriber topic defined");
     std::exit(EXIT_FAILURE);
   }
+  if(!nh.getParam("subscriber_type", subscriber_type)) {
+    std::cout << std::endl;
+    ROS_ERROR("No subscriber type defined");
+    std::exit(EXIT_FAILURE);
+  }
   if(!nh.getParam("publisher_topic", publisher_topic)) {
     std::cout << std::endl;
     ROS_ERROR("No publisher topic defined");
     std::exit(EXIT_FAILURE);
   }
+  if(!nh.getParam("publisher_type", publisher_type)) {
+    std::cout << std::endl;
+    ROS_ERROR("No publisher type defined");
+    std::exit(EXIT_FAILURE);
+  }
 
   // Instanciate the supervisor
-  MocapBridge MocapBridge(nh, subscriber_topic, publisher_topic);
+  MocapBridge MocapBridge(nh, subscriber_topic, subscriber_type, publisher_topic, publisher_type);
 
   // Spin
   ros::spin();

@@ -30,6 +30,11 @@
 #include <chrono>
 #include <thread>
 
+/**
+ * @brief Type of esternal core state publisher.
+ */
+enum publisherType {FULL, LITE};
+
 class MocapBridge {
 
 public:
@@ -38,9 +43,11 @@ public:
    * @brief Mocap Bridge constructor
    * @param Ros NodeHandle
    * @param subscriber topic
+   * @param subscriber type
    * @param publisher topic
+   * @param publisher type
    */
-  MocapBridge(ros::NodeHandle &nh, std::string &subscriber_topic, std::string &publisher_topic);
+  MocapBridge(ros::NodeHandle &nh, std::string &subscriber_topic, std::string &subscriber_type, std::string &publisher_topic, std::string &publisher_type);
 
 private:
 
@@ -59,16 +66,17 @@ private:
   /// Nodehandler
   ros::NodeHandle nh_;
 
-  /// Topics
-  std::string subscriber_topic_, publisher_topic_;
+  /// Topics and subscriber type
+  std::string subscriber_topic_, subscriber_type_, publisher_topic_;
+
+  /// Publisher type
+  publisherType publisher_type_;
 
   /// Publishers
-  ros::Publisher pub_ecs_;
-  ros::Publisher pub_ecsl_;
+  ros::Publisher pub_;
 
   /// Subscriber
-  ros::Subscriber sub_posestamped_;
-  ros::Subscriber sub_odometry_;
+  ros::Subscriber sub_;
 
 };
 
