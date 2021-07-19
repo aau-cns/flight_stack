@@ -25,9 +25,9 @@
       <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
       <arg name="watchdog_startup_time_s"               value="$(arg watchdog_startup_time)" />
       <arg name="watchdog_start_service_name"           value="$(arg watchdog_start_service_name)" />
+      <arg name="watchdog_heartbeat_topic"              value="$(arg watchdog_heartbeat_topic)" />
+      <arg name="watchdog_status_topic"                 value="$(arg watchdog_status_topic)" />
       <arg name="watchdog_action_topic"                 value="$(arg watchdog_action_topic)" />
-      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
-      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
       <arg name="mission_sequencer_request_topic"       value="$(arg missionseq_request_topic)" />
       <arg name="mission_sequencer_responce_topic"      value="$(arg missionseq_response_topic)" />
       <arg name="data_recrding_service_name"            value="$(arg data_recrding_service_name)" />
