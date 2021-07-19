@@ -3,22 +3,38 @@
   <arg name="pi" default="1" />
 
   <!-- Autonomy Parameters -->
-  <arg name="config_filepath"             default="$(find amadee_bringup)/configs/autonomy/mission_config.yaml" />
-  <arg name="watchdog_rate_hz"            default="1.0" />
-  <arg name="watchdog_startup_time"       default="15" />
-  <arg name="missionseq_request_topic"    default="/autonomy/request" />
-  <arg name="missionseq_response_topic"   default="/autonomy/response" />
-  <arg name="data_recrding_service_name"  default="/data_recorder/record" />
+  <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config.yaml" />
+  <arg name="watchdog_rate_hz"                      default="1.0" />
+  <arg name="watchdog_startup_time"                 default="15" />
+  <arg name="watchdog_start_service_name"           default="/watchdog/service/start" />
+  <arg name="watchdog_heartbeat_topic"              default="/watchdog/status" />
+  <arg name="watchdog_status_topic"                 default="/watchdog/log" />
+  <arg name="watchdog_action_topic"                 default="/watchdog/action" />
+  <arg name="missionseq_request_topic"              default="/autonomy/request" />
+  <arg name="missionseq_response_topic"             default="/autonomy/response" />
+  <arg name="data_recrding_service_name"            default="/data_recorder/record" />
+  <arg name="takeoff_service_name"                  default="/toland/service/takeoff" />
+  <arg name="landing_detection_topic"               default="/toland/is_landed" />
+  <arg name="estimator_supervisor_service_name"     default="/estimator_supervisor_posewithcovariancestamped/service/supervision" />
+  <arg name="estimator_init_service_name"           default="/mars_pose_node/init_service" />
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
     <include file="$(find amaze_autonomy)/launch/autonomy.launch">
-      <arg name="config_filepath"                   value="$(arg config_filepath)" />
-      <arg name="watchdog_rate_Hz"                  value="$(arg watchdog_rate_hz)" />
-      <arg name="watchdog_startup_time_s"           value="$(arg watchdog_startup_time)" />
-      <arg name="mission_sequencer_request_topic"   value="$(arg missionseq_request_topic)" />
-      <arg name="mission_sequencer_responce_topic"  value="$(arg missionseq_response_topic)" />
-      <arg name="data_recrding_service_name"        value="$(arg data_recrding_service_name)" />
+      <arg name="config_filepath"                       value="$(arg config_filepath)" />
+      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
+      <arg name="watchdog_startup_time_s"               value="$(arg watchdog_startup_time)" />
+      <arg name="watchdog_start_service_name"           value="$(arg watchdog_start_service_name)" />
+      <arg name="watchdog_action_topic"                 value="$(arg watchdog_action_topic)" />
+      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
+      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
+      <arg name="mission_sequencer_request_topic"       value="$(arg missionseq_request_topic)" />
+      <arg name="mission_sequencer_responce_topic"      value="$(arg missionseq_response_topic)" />
+      <arg name="data_recrding_service_name"            value="$(arg data_recrding_service_name)" />
+      <arg name="takeoff_service_name"                  value="$(arg takeoff_service_name)" />
+      <arg name="landing_detection_topic"               value="$(arg landing_detection_topic)" />
+      <arg name="estimator_supervisor_service_name"     value="$(arg estimator_supervisor_service_name)" />
+      <arg name="estimator_init_service_name"           value="$(arg estimator_init_service_name)" />
     </include>
   </group>
 </launch>

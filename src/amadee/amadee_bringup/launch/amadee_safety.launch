@@ -14,6 +14,9 @@
   <arg name="angle_threshold"           default="10.0" />
   <arg name="distance_threshold"        default="0.15" />
 
+    <!-- Supervisor parameter -->
+    <arg name="topic_to_supervise"      default="/ov_msckf/poseimu" />
+
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
@@ -22,6 +25,10 @@
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
+    </include>
+
+    <include file="$(find estimator_supervisor)/launch/posewithcovariancestamped_supervisor.launch">
+        <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
     </include>
 
     <include file="$(find toland_flight)/launch/toland.launch">
