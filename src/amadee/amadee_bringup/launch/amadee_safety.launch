@@ -4,6 +4,7 @@
 
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
+  <arg name="watchdog_check_dt"         default="1.0" />
   <arg name="watchdog_topics_cfg_file"  default="$(find amadee_bringup)/configs/watchdog/topics.ini" />
   <arg name="watchdog_nodes_cfg_file"   default="$(find amadee_bringup)/configs/watchdog/nodes.ini" />
   <arg name="watchdog_drivers_cfg_file" default="$(find amadee_bringup)/configs/watchdog/drivers.ini" />
@@ -14,14 +15,15 @@
   <arg name="angle_threshold"           default="10.0" />
   <arg name="distance_threshold"        default="0.15" />
 
-    <!-- Supervisor parameter -->
-    <arg name="topic_to_supervise"      default="/ov_msckf/poseimu" />
+  <!-- Supervisor parameter -->
+  <arg name="topic_to_supervise"      default="/ov_msckf/poseimu" />
 
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
     <include file="$(find amadee_bringup)/launch/watchdog.launch">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
+      <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
