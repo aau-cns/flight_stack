@@ -7,6 +7,8 @@
     <arg name="start_service_o"     default="$(arg node_name)/start" />
     <arg name="autonomy_service_o"  default="$(arg node_name)/autonomy" />
 
+    <arg name="topic_check_dt"      default="0.5" />
+
     <!-- config files -->
     <arg name="topics_cfg_file"   default="$(find watchdog_bringup)/config/topics.ini"/>
     <arg name="sensors_cfg_file"  default="$(find watchdog_bringup)/config/sensors.ini"/>
@@ -22,7 +24,7 @@
         <param name="drivers_cfg_file"  value="$(arg drivers_cfg_file)"/>
         <param name="nodes_cfg_file"    value="$(arg nodes_cfg_file)"/>
 
-        <param name="topic_check_rate"  value="0.5"/>
+        <param name="topic_check_rate"  value="$(arg topic_check_dt)"/>
         <param name="bVerbose"          value="$(arg do_verbose)"/>
         <param name="bUseStartupTO"     value="$(arg use_startup_to)"/>
 

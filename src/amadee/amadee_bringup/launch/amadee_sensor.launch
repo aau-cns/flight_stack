@@ -3,9 +3,9 @@
   <arg name="pi"    default="1" />
 
   <!-- Optitrack Arguments -->
-  <arg name="use_optitrack"         default="True" />
-  <arg name="optitrack_object_name" default="twins_three" />
-  <arg name="optitrack_throttle"    default="True" />
+  <arg name="use_optitrack"         default="False" />
+  <arg name="optitrack_object_name" default="twins_amadee" />
+  <arg name="optitrack_throttle"    default="False" />
 
   <!-- Camera Arguments -->
   <arg name="frame_rate"            default="15.0" />

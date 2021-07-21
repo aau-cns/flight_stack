@@ -74,4 +74,7 @@
         <class name="external_state_estimate" type="mavros::extra_plugins::ExternalStateEstimatePlugin" base_class_type="mavros::plugin::PluginBase">
              <description>Send external state estimate to FCU.</description>
          </class>
+        <class name="external_state_estimate_lite" type="mavros::extra_plugins::ExternalStateEstimateLitePlugin" base_class_type="mavros::plugin::PluginBase">
+             <description>Send external lite state estimate to FCU.</description>
+        </class>
 </library>
