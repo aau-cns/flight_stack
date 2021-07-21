@@ -17,7 +17,7 @@
 
   <!-- Supervisor parameter -->
   <arg name="topic_to_supervise"      default="/ov_msckf/poseimu" />
-
+  <arg name="Supervisor_window_s"     default="10.0" />
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('pi') == 1)">
@@ -31,6 +31,7 @@
 
     <include file="$(find estimator_supervisor)/launch/posewithcovariancestamped_supervisor.launch">
         <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
+        <arg name="Supervisor_window_s"        value="$(arg Supervisor_window_s)" />
     </include>
 
     <include file="$(find toland_flight)/launch/toland.launch">
