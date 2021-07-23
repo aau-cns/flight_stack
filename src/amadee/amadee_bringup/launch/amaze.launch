@@ -11,12 +11,12 @@
   <include file="$(find amadee_bringup)/launch/amadee_sensor.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
-  <include file="$(find amadee_bringup)/launch/amadee_estimation.launch">
+  <!--include file="$(find amadee_bringup)/launch/amadee_estimation.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
   <include file="$(find amadee_bringup)/launch/amadee_navigation.launch">
     <arg name="pi"  value="$(arg pi)" />
-  </include>
+  </include-->
   <include file="$(find amadee_bringup)/launch/amadee_recording.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
