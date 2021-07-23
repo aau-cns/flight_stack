@@ -4,7 +4,7 @@
 
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
-  <arg name="watchdog_check_dt"         default="1.0" />
+  <arg name="watchdog_check_dt"         default="0.5" />
   <arg name="watchdog_topics_cfg_file"  default="$(find amadee_bringup)/configs/watchdog/topics.ini" />
   <arg name="watchdog_nodes_cfg_file"   default="$(find amadee_bringup)/configs/watchdog/nodes.ini" />
   <arg name="watchdog_drivers_cfg_file" default="$(find amadee_bringup)/configs/watchdog/drivers.ini" />
