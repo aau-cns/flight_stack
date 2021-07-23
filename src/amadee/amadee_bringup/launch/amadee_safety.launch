@@ -16,7 +16,7 @@
   <arg name="distance_threshold"        default="0.15" />
 
   <!-- Supervisor parameter -->
-  <arg name="topic_to_supervise"      default="/ov_msckf/poseimu" />
+  <arg name="topic_to_supervise"        default="/ov_msckf/poseimu" />
 
 
   <!-- Raspberry PI 1 launches -->

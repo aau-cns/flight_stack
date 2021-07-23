@@ -18,6 +18,7 @@
         <param name="topic_camera0"  type="string" value="$(arg topic_camera0)" />
         <param name="topic_camera1"  type="string" value="$(arg topic_camera1)" if="$(arg use_stereo)"/>
 	<param name="topic_pose"     type="string" value="/twins_three/vrpn_client/raw_transform" if="$(arg use_mocap)"/>
+	<param name="topic_lrf"	     type="string" value="/lidar_lite/range"/>
 
 	<!-- Execution parameters -->
 	<param name="tcp_no_delay"                           type="bool"     value="true" />
@@ -47,6 +48,10 @@
         <param name="pose_sigma_ori"            	     type="double"   value="0.01" if="$(arg use_mocap)"/>
         <param name="pose_sigma_pos"                         type="double"   value="0.05" if="$(arg use_mocap)"/>
 	<param name="pose_chi2_multipler"      		     type="double"   value="9e9" if="$(arg use_mocap)"/>
+
+	<!-- LRF Update -->
+	<param name="lrf_sigma_range" 			     type="double"   value="0.05"/>
+	<param name="lrf_chi2_multipler"		     type="double"   value="1.0"/>     
 
         <!-- Time delay cam-imu -->
         <!--<param name="calib_camimu_dt"                        type="double"   value="-0.33" />-->

@@ -10,6 +10,7 @@
     <arg name="rec_verbose"       default="False" />
 
     <group if="$(eval arg('pi') == 1)">
+      <!-- exclude until completed
       <include file="$(find data_recorder)/launch/recorder.launch">
         <arg name="record_script"   default="$(arg rec_script_file)" />
         <arg name="record_cmd"      default="$(arg rec_cmd)" />
@@ -17,5 +18,6 @@
         <arg name="store_cmd"       default="$(arg store_cmd)" />
         <arg name="verbose"         default="$(arg rec_verbose)" />
       </include>
+      -->
     </group>
 </launch>
