@@ -6,7 +6,11 @@ missions:
 
     description: "T5"
 
-    filepaths: 
+    filepaths:
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
       - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
 
     entities_actions:
@@ -78,7 +82,7 @@ missions:
 
     description: "T9"
 
-    filepaths: 
+    filepaths:
       - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T9.csv"
 
     entities_actions:
