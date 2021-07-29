@@ -30,7 +30,7 @@ path_media=""
 if [ ! -z "${2}" ]; then
   path_local="${2}/"
 fi
-if [ ! -z "${3}"]; then
+if [ ! -z "${3}" ]; then
   path_media="${3}/"
 fi
 
