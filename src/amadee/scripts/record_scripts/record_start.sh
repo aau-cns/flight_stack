@@ -5,10 +5,10 @@
 REC_IN="${1}"
 PI2_IP=10.42.0.102
 
-# CMD_PI1="/home/core/catkin_ws/src/amadee/scripts/record_scripts/record_full_setup.sh"
-# CMD_PI1="ssh core@${PI2_IP}:/home/core/catkin_ws/src/amadee/scripts/record_scripts/record_full_setup.sh"
-CMD_PI1="/home/core/catkin_ws/src/amadee/scripts/record_scripts/dummy/sleep_dummy.sh"
-CMD_PI2="/home/core/catkin_ws/amadee20_cws/src/amadee/scripts/record_scripts/dummy/sleep_dummy.sh"
+CMD_PI1="/home/core/catkin_ws/src/amadee/scripts/record_scripts/record_full_setup.sh"
+CMD_PI1="ssh core@${PI2_IP}:/home/core/catkin_ws/src/amadee/scripts/record_scripts/record_full_setup.sh"
+# CMD_PI1="/home/core/catkin_ws/src/amadee/scripts/record_scripts/dummy/sleep_dummy.sh"
+# CMD_PI2="/home/core/catkin_ws/amadee20_cws/src/amadee/scripts/record_scripts/dummy/sleep_dummy.sh"
 # CMD_PI1="/data/dummy/sleep_dummy.sh"
 # CMD_PI2="/data/dummy/sleep_dummy.sh"
 
