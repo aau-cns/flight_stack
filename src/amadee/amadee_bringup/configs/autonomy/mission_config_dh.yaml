@@ -8,10 +8,10 @@ missions:
 
     filepaths:
       - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_02.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_03.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_04.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_05.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]

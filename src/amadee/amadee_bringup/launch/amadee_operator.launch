@@ -2,8 +2,13 @@
 <launch>
   <arg name="pi" default="1" />
 
-  <!-- Autonomy Parameters -->
-  <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config.yaml" />
+  <!--Autonomy Mission Config -->
+  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_mp.yaml" /> -->
+  <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_dh.yaml" />
+  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_bhp_test.yaml" /> -->
+  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_bhp_full.yaml" /> -->
+
+  <!-- Other Autonomy Parameters -->
   <arg name="watchdog_rate_hz"                      default="1.0" />
   <arg name="watchdog_startup_time"                 default="15" />
   <arg name="watchdog_start_service_name"           default="/watchdog/service/start" />
