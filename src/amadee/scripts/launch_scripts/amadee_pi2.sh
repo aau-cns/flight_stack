@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# perform a RS reset
+sudo uhubctl --action cycle --location 2
+
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`
 export SES_NAME="amadee_pi2_${CUR_DATE}"
