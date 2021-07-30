@@ -1,0 +1,104 @@
+missions:
+
+  number: 4
+
+  mission_1:
+
+    description: "T5"
+
+    filepaths:
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_02.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_03.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_04.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_05.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_06.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_07.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_08.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_09.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_10.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_11.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_12.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_13.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_14.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_15.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_16.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_17.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_18.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_19.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_20.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_21.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_22.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_23.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_24.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_25.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_26.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_27.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_28.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_29.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T5/T5_30.csv"
+
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "manual"]
+      - ["px4_mag", "hold"]
+      - ["px4_bar", "hold"]
+      - ["mission_cam", "manual"]
+      - ["lsm9ds1", "continue"]
+      - ["rtk_gps_1", "continue"]
+      - ["rtk_gps_2", "continue"]
+      - ["realsense", "hold"]
+
+  mission_2:
+
+    description: "T6"
+
+    filepaths:
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T6.csv"
+
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "manual"]
+      - ["px4_mag", "hold"]
+      - ["px4_bar", "hold"]
+      - ["mission_cam", "manual"]
+      - ["lsm9ds1", "continue"]
+      - ["rtk_gps_1", "continue"]
+      - ["rtk_gps_2", "continue"]
+      - ["realsense", "hold"]
+
+  mission_3:
+
+    description: "T7"
+
+    filepaths:
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T7.csv"
+
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "manual"]
+      - ["px4_mag", "hold"]
+      - ["px4_bar", "hold"]
+      - ["mission_cam", "manual"]
+      - ["lsm9ds1", "continue"]
+      - ["rtk_gps_1", "continue"]
+      - ["rtk_gps_2", "continue"]
+      - ["realsense", "hold"]
+
+  mission_4:
+
+    description: "T8"
+
+    filepaths:
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/mp_full/T8.csv"
+
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "manual"]
+      - ["px4_mag", "hold"]
+      - ["px4_bar", "hold"]
+      - ["mission_cam", "manual"]
+      - ["lsm9ds1", "continue"]
+      - ["rtk_gps_1", "continue"]
+      - ["rtk_gps_2", "continue"]
+      - ["realsense", "hold"]

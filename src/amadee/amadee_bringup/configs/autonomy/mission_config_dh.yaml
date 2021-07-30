@@ -7,11 +7,11 @@ missions:
     description: "T5"
 
     filepaths:
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T5.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T5/T5_01.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -29,7 +29,7 @@ missions:
     description: "T6"
 
     filepaths:
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T6.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T6.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -47,7 +47,7 @@ missions:
     description: "T7"
 
     filepaths:
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T7.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T7.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -65,7 +65,7 @@ missions:
     description: "T8"
 
     filepaths:
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T8.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T8.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]
@@ -80,10 +80,10 @@ missions:
 
   mission_5:
 
-    description: "T9"
+    description: "T14"
 
     filepaths:
-      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/T9.csv"
+      - "/home/core/catkin_ws/src/amadee/amadee_bringup/trajectories/dh_test/T14.csv"
 
     entities_actions:
       - ["px4_gps", "continue"]
