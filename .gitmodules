@@ -79,3 +79,6 @@
 [submodule "src/estimator_supervisor"]
 	path = src/estimator_supervisor
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/estimator_supervisor.git
+[submodule "src/camera-downsample"]
+	path = src/camera-downsample
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/camera-downsample.git
