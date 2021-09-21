@@ -6,8 +6,8 @@
 
   <!-- OV arguments -->
   <arg name="ov_imu_in"           default="/mavros/imu/data_raw" />
-  <arg name="ov_cam_in1"          default="/mission_cam/image_raw" />
-  <arg name="ov_cam_in2"          default="/mission_cam/image_raw" />
+  <arg name="ov_cam_in1"          default="/camera_downsample/image_downsample" /> <!-- to be checked -->
+  <arg name="ov_cam_in2"          default="/camera_downsample/image_downsample" />
   <arg name="ov_use_stereo"       default="False" />
 
   <!-- MaRS arguments -->
@@ -17,6 +17,10 @@
   <arg name="mars_pose_out"             default="/mavros/vision_pose/pose" />
   <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
 
+  <!-- Camera downsample arguments -->
+  <arg name="downsample_factor"               default="16" />
+  <arg name="image_raw_topic"                 default="/camera/image_raw" />
+ 
   <group if="$(eval arg('pi') == 1)">
     <!-- MaRS Estimator -->
     <include file="$(find mars_ros)/launch/mars_pose.launch" >
@@ -25,6 +29,11 @@
       <arg name="pose_with_cov_in_topic"        value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
       <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
       <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+    </include>
+    <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
+    <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
+      <arg name="downsample_factor"             value="$(arg downsample_factor)" />
+      <arg name="image_raw_topic"               value="$(arg image_raw_topic)" />
     </include>
   </group>
 
