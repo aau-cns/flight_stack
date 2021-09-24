@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <arg name="object_name" default="twins_five" />
+  <arg name="throttle"    default="False" />
+
+  <node ns="$(arg object_name)" name="vrpn_client" type="ros_vrpn_client" pkg="ros_vrpn_client" output="screen">
+    <param name="vrpn_server_ip" value="192.168.0.107" />
+    <param name="vrpn_coordinate_system" value="vicon" />
+    <param name="timestamping_system" value="ros" />
+    <param name="object_name" value="$(arg object_name)" />
+    <param name="verbose" value="true" />
+    <param name="translational_estimator/kp" value="0.5" />
+    <param name="translational_estimator/kv" value="0.5" />
+    <param name="rotational_estimator/orientation_estimate_initial_covariance" value="100.0" />
+    <param name="rotational_estimator/rate_estimate_initial_covariance" value="100.0" />
+    <param name="rotational_estimator/orientation_process_covariance" value="0.000002" />
+    <param name="rotational_estimator/rate_process_covariance" value="10.0" />
+    <param name="rotational_estimator/orientation_measurementCovriance" value="0.001" />
+    <param name="rotational_estimator/outlier_rejection_method" value="mahalanobis_distance" />
+    <param name="rotational_estimator/outlier_rejection_mahalanobis_threshold" value="4.0" />
+    <param name="rotational_estimator/outlier_rejection_subsequent_threshold_degrees" value="30.0" />
+    <param name="rotational_estimator/outlier_rejection_subsequent_maximum_count" value="50.0" />
+    <param name="rotational_estimator/output_minimal_quaternions" value="false" />
+    <param name="rotational_estimator/output_minimal_quaternions" value="false" />
+
+    <remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose" if="$(arg throttle)"/>
+  </node>
+
+  <node name="mocap_throttle" type="throttle" pkg="topic_tools" args="messages /twins_three/vrpn_client/raw_pose 30.0 /mavros/vision_pose/pose" if="$(arg throttle)"/>
+</launch>
