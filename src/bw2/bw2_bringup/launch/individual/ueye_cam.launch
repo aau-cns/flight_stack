@@ -6,8 +6,10 @@
   <arg name="camera_name" value="mission_cam" />
   <arg name="respawn"        default="true" />
 
-  <arg name="res_x" default="640" />
-  <arg name="res_y" default="480" />
+  <!--arg name="res_x" default="640" />
+  <arg name="res_y" default="480" /-->
+  <arg name="res_x" default="2056" />
+  <arg name="res_y" default="1542" />
 
   <node name="check_ueye_api" pkg="ueye_cam" type="check_ueye_api" respawn="$(arg respawn)"/>
 

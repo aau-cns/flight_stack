@@ -6,7 +6,7 @@
 
   <!-- OV arguments -->
   <arg name="ov_imu_in"           default="/mavros/imu/data_raw" />
-  <arg name="ov_cam_in1"          default="/camera_downsample/image_downsample" /> <!-- to be checked -->
+  <arg name="ov_cam_in1"          default="/image_downsample" /> <!-- to be checked -->
   <arg name="ov_cam_in2"          default="/camera_downsample/image_downsample" />
   <arg name="ov_use_stereo"       default="False" />
 
