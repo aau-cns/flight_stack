@@ -35,10 +35,10 @@ tmux send-keys -t ${SES_NAME}.1 "roscore" 'C-m'
 
 # BACKGROUND
 tmux new-window -n 'background'
-tmux send-keys -t ${SES_NAME}.1 ${BKG} 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "${BKG}" 'C-m'
 
 # OPERATOR
 tmux new-window -n 'operator'
-tmux send-keys -t ${SES_NAME}.1 ${OPR} 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "${OPR}" 'C-m'
 
 tmux attach -t ${SES_NAME}

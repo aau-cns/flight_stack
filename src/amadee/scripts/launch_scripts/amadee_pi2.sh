@@ -32,6 +32,6 @@ tmux new -d -s "${SES_NAME}"
 
 # BACKGROUND
 tmux rename-window 'background'
-tmux send-keys -t ${SES_NAME}.1 ${BKG} 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "${BKG}" 'C-m'
 
 tmux attach -t ${SES_NAME}
