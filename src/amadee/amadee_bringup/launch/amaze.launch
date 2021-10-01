@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <arg name="pi"    default="1" />
+  <arg name="pi"      default="1" />
+  <arg name="type"    default="vio" />
 
   <!-- <include file="$(find amadee_bringup)/launch/amadee_operator.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include> -->
   <include file="$(find amadee_bringup)/launch/amadee_safety.launch">
-    <arg name="pi"  value="$(arg pi)" />
+    <arg name="pi"    value="$(arg pi)" />
+    <arg name="type"  value="$(arg type)" />
   </include>
   <include file="$(find amadee_bringup)/launch/amadee_sensor.launch">
     <arg name="pi"  value="$(arg pi)" />
   </include>
   <include file="$(find amadee_bringup)/launch/amadee_estimation.launch">
-    <arg name="pi"  value="$(arg pi)" />
+    <arg name="pi"    value="$(arg pi)" />
+    <arg name="type"  value="$(arg type)" />
   </include>
   <include file="$(find amadee_bringup)/launch/amadee_navigation.launch">
     <arg name="pi"  value="$(arg pi)" />

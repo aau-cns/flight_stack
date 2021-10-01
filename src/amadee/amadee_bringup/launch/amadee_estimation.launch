@@ -3,6 +3,7 @@
   <arg name="pi"                        default="1" />
   <arg name="use_openvins"              default="True" /> <!-- if False it will use mocap -->
   <arg name="use_px4_bridge"            default="False" /> <!-- if False it will setup mars to input into PX4 EKF2 -->
+  <arg name="type"                      default="vio" />
 
   <!-- OV arguments -->
   <arg name="ov_imu_in"           default="/mavros/imu/data_raw" />
@@ -22,22 +23,33 @@
   <arg name="image_raw_topic"                 default="/camera/image_raw" />
  
   <group if="$(eval arg('pi') == 1)">
-    <!-- MaRS Estimator -->
-    <include file="$(find mars_ros)/launch/mars_pose.launch" >
-      <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-      <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
-      <arg name="pose_with_cov_in_topic"        value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
-      <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
-      <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
-    </include>
-    <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
-    <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
-      <arg name="downsample_factor"             value="$(arg downsample_factor)" />
-      <arg name="image_raw_topic"               value="$(arg image_raw_topic)" />
-    </include>
+
+    <!-- GPS -->
+    <group if="$(eval arg('type') == 'gps')">
+      <!-- MaRS Estimator -->
+      <!-- FILL HERE WITH MARS INCLUDE FOR THE GPS VERSION -->
+    </group>
+
+    <!-- VIO -->
+    <group if="$(eval arg('type') == 'vio')">
+      <!-- MaRS Estimator -->
+      <include file="$(find mars_ros)/launch/mars_pose.launch" >
+        <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
+        <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
+        <arg name="pose_with_cov_in_topic"        value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
+        <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
+        <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+      </include>
+      <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
+      <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
+        <arg name="downsample_factor"             value="$(arg downsample_factor)" />
+        <arg name="image_raw_topic"               value="$(arg image_raw_topic)" />
+      </include>
+    </group>
+
   </group>
 
-  <group if="$(eval arg('pi') == 2)">
+  <group if="$(eval arg('pi') == 2 and arg('type') == 'vio')">
     <!-- OpenVINS Estimator -->
     <include file="$(find amadee_bringup)/launch/openvins.launch" if="$(arg use_openvins)" >
       <arg name="topic_imu"     value="$(arg ov_imu_in)" />
@@ -46,4 +58,5 @@
       <arg name="use_stereo"    value="$(arg ov_use_stereo)" />
     </include>
   </group>
+
 </launch>

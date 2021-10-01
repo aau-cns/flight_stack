@@ -26,10 +26,27 @@
 # ==============================================
 # OR
 
-#CMD1="ssh -t core@${PI1_IP} 'bash -c \"/home/core/amadee_pi1.sh\"'"
-#CMD2="ssh -t core@${PI2_IP} 'bash -c \"/home/core/amadee_pi2.sh\"'"
-CMD1="ssh -t amadee1_w_core 'bash -c \"/home/core/amadee_pi1.sh\"'"
-CMD2="ssh -t amadee2_w_core 'bash -c \"/home/core/amadee_pi2.sh\"'"
+# parse flags
+while getopts t: flag
+do
+    case "${flag}" in
+        t) type=${OPTARG};;
+    esac
+done
+shift $((OPTIND-1))
+
+# Check if flag is provided and define commands
+if [ -z ${type} ]; then
+
+    CMD1="ssh -t amadee1_w_core 'bash -c \"/home/core/amadee_pi1.sh\"'"
+    CMD2="ssh -t amadee2_w_core 'bash -c \"/home/core/amadee_pi2.sh\"'"
+
+else
+
+    CMD1="ssh -t amadee1_w_core 'bash -c \"/home/core/amadee_pi1.sh -t ${type}\"'"
+    CMD2="ssh -t amadee2_w_core 'bash -c \"/home/core/amadee_pi2.sh -t ${type}\"'"
+
+fi
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`

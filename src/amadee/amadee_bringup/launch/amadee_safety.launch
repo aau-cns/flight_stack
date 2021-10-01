@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <arg name="pi" default="1" />
+  <arg name="pi"    default="1" />
+  <arg name="type"  default="vio" />
 
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
@@ -30,11 +31,13 @@
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
     </include>
 
-    <include file="$(find estimator_supervisor)/launch/posewithcovariancestamped_supervisor.launch">
-        <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
-        <arg name="Supervisor_window_s"       value="$(arg window_s)" />
-        <arg name="max_norm_changes"          value="$(arg max_norm)" />
-    </include>
+    <group if="$(eval arg('type') == 'vio')">
+        <include file="$(find estimator_supervisor)/launch/posewithcovariancestamped_supervisor.launch">
+            <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
+            <arg name="Supervisor_window_s"       value="$(arg window_s)" />
+            <arg name="max_norm_changes"          value="$(arg max_norm)" />
+        </include>
+    </group>
 
     <include file="$(find toland_flight)/launch/toland.launch">
       <arg name="imu_topic"           value="$(arg toland_imu)" />
