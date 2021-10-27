@@ -6,3 +6,4 @@ logs
 *.workspace
 *.user
 .catkin_tools
+.idea/
