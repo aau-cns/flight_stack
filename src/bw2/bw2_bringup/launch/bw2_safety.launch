@@ -22,7 +22,7 @@
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('dev_id') == 1)">
-    <include file="$(find amadee_bringup)/launch/watchdog.launch">
+    <include file="$(find watchdog_bringup)/launch/watchdog.launch">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
       <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />

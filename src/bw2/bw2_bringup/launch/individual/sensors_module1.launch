@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <include file="$(find amadee_bringup)/launch/lrf_xu4.launch"/>
+  <arg name="frame_rate" default="20.0" />
+  
+  <include file="$(find bw2_bringup)/launch/lrf_xu4.launch"/>
 </launch>
