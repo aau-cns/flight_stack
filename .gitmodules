@@ -82,3 +82,6 @@
 [submodule "src/camera-downsample"]
 	path = src/camera-downsample
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/camera-downsample.git
+[submodule "src/uwb_init_cpp"]
+	path = src/uwb_init_cpp
+	url = git@gitlab.aau.at:mascheiber/uwb_init_cpp.git
