@@ -2,7 +2,7 @@
 
 <launch>
   <arg name="frame_id"        default="lidar_lite" />
-  <arg name="i2c_bus"         default="1" />
+  <arg name="i2c_bus"         default="5" />
   <arg name="i2c_address"     default="0x62" />
   <arg name="pub_rate"        default="30" />
 

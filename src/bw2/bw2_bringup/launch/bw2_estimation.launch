@@ -39,7 +39,7 @@
 
   <group if="$(eval arg('dev_id') == 2)">
     <!-- OpenVINS Estimator -->
-    <include file="$(find bw2_bringup)/launch/openvins.launch" if="$(arg use_openvins)" >
+    <include file="$(find bw2_bringup)/launch/individual/openvins.launch" if="$(arg use_openvins)" >
       <arg name="topic_imu"     value="$(arg ov_imu_in)" />
       <arg name="topic_camera0" value="$(arg ov_cam_in1)" />
       <arg name="topic_camera1" value="$(arg ov_cam_in2)" />

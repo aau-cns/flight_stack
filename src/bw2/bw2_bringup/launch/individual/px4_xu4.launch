@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
-  <arg name="device_id" default="USB0" />
-  
+  <arg name="device_id" default="SAC0" />
+
   <include file="$(find mavros)/launch/px4.launch">
     <arg name="fcu_url" default="/dev/tty$(arg device_id):921600" />
   </include>
