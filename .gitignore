@@ -7,3 +7,5 @@ logs
 *.user
 .catkin_tools
 .idea/
+
+bw2_cws.**

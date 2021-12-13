@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <arg name="frame_rate" default="20.0" />
-  
-  <include file="$(find bw2_bringup)/launch/lrf_xu4.launch"/>
+
+  <include file="$(find bw2_bringup)/launch/individual/lrf_xu4.launch"/>
 </launch>
