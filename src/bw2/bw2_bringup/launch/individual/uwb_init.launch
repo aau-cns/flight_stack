@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- topic parameters -->
+  <arg name="topic_pose_in"     default="/TREK1000/tagDistance_raw" />
+  <arg name="topic_uwb_in"      default="/ov_msckf/poseimu" />
+  <arg name="topic_anchor_out"  default="~anchors" />
+  <arg name="topic_wp_out"      default="~waypoints"
+
+  <!-- calibration -->
+  <arg name="calib_p_ItoU"      default="[-0.03, -0.04, -0.11]" />
+
+  <!-- node parameters -->
+  <arg name="num_anchors"       default="4" />
+  <arg name="buffer_size_in_s"  default="50.0" />
+  <arg name="max_cond_number"   default="300.0" />
+
+  <!-- waypoint generation -->
+  <arg name="wp_max_dist_in_m"  default="1.0" />
+  <arg name="wp_height_in_m"    default="2.0" />
+
+
+  <node file="$(find uwb_init_cpp)/launch/uwb_init.launch">
+    <arg name="topic_uwb_in"      value="$(arg topic_pose_in)" />
+    <arg name="topic_pose_in"     value="$(arg topic_uwb_in)" />
+    <arg name="topic_anchor_out"  value="$(arg topic_anchor_out)" />
+    <arg name="topic_wp_out"      value="$(arg topic_wp_out)" />
+
+    <arg name="calib_p_ItoU"      value="$(arg calib_p_ItoU)" />
+
+    <arg name="num_anchors"       value="$(arg num_anchors)" />
+    <arg name="buffer_size_in_s"  value="$(arg buffer_size_in_s)" />
+    <arg name="max_cond_number"   value="$(arg max_cond_number)" />
+
+    <arg name="wp_max_dist_in_m"  value="$(arg wp_max_dist_in_m)" />
+    <arg name="wp_height_in_m"    value="$(arg wp_height_in_m)" />
+  </node>
+</launch>

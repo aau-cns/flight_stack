@@ -13,4 +13,6 @@
     <arg name="roi_width"   value="$(arg res_x)" />
     <arg name="roi_height"  value="$(arg res_y)" />
   </include>
+
+  <include file="$(find evb1000_driver)/launch/default_TREK.launch" />
 </launch>
