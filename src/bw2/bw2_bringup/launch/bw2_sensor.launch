@@ -3,8 +3,8 @@
   <arg name="dev_id"    default="1" />
 
   <!-- Optitrack Arguments -->
-  <arg name="use_optitrack"         default="False" />
-  <arg name="optitrack_object_name" default="twins_four" />
+  <arg name="use_optitrack"         default="True" />
+  <arg name="optitrack_object_name" default="twins_five" />
   <arg name="optitrack_throttle"    default="False" />
 
   <!-- Camera Arguments -->
