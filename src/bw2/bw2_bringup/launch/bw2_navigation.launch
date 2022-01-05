@@ -23,6 +23,10 @@
   <arg name="takeoff_type_int"        default="0" />
   <arg name="takeoff_height_m"        default="1.0" /> -->
 
+  <!-- waypoint boundaries -->
+  <arg name="wp_max"                         default="[1.5, 1.5, 1.0]"/>
+  <arg name="wp_min"                         default="[-1.5, -1.5, 0.0]"/>
+
   <group if="$(eval arg('dev_id') == 1)">
     <!-- <node pkg="amaze_mission_sequencer" type="amaze_mission_sequencer_node" name="amaze_mission_sequencer" output="screen" clear_params="true" required="true">
     </node> -->
@@ -36,6 +40,9 @@
         <arg name="relative_waypoints"      value="$(arg relative_waypoints)" />
         <arg name="waypoint_from_file"      value="$(arg waypoint_from_file)" />
         <arg name="verbose"                 value="$(arg verbose)" />
+
+        <arg name="bound_max"               value="$(arg wp_max)" />
+        <arg name="bound_min"               value="$(arg wp_min)" />
     </include>
   </group>
 </launch>
