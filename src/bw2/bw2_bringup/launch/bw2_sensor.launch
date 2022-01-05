@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="dev_id"    default="1" />
+
+  <!-- Optitrack Arguments -->
+  <arg name="use_optitrack"         default="True" />
+  <arg name="optitrack_object_name" default="twins_five" />
+  <arg name="optitrack_throttle"    default="False" />
+
+  <!-- Camera Arguments -->
+  <arg name="frame_rate"            default="15.0" />
+
+
+  <group if="$(eval arg('dev_id') == 1)">
+    <include file="$(find bw2_bringup)/launch/individual/px4_xu4.launch" />
+    <include file="$(find bw2_bringup)/launch/individual/sensors_module1.launch">
+      <arg name="frame_rate"        value="$(arg frame_rate)" />
+    </include>
+    <include file="$(find bw2_bringup)/launch/individual/optitrack_dronehall.launch" if="$(arg use_optitrack)">
+      <arg name="object_name"       value="$(arg optitrack_object_name)" />
+      <arg name="throttle"          value="$(arg optitrack_throttle)" />
+    </include>
+  </group>
+
+  <group if="$(eval arg('dev_id') == 2)">
+    <include file="$(find bw2_bringup)/launch/individual/sensors_module2.launch">
+      <arg name="frame_rate"        value="$(arg frame_rate)" />
+    </include>
+  </group>
+</launch>
