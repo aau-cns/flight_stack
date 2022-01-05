@@ -12,7 +12,7 @@
 
   <!-- MaRS arguments -->
   <arg name="mars_imu_in"               default="/mavros/imu/data_raw" />
-  <arg name="mars_transform_in"         default="/twins_amadee/vrpn_client/raw_transform" />
+  <arg name="mars_transform_in"         default="/twins_five/vrpn_client/raw_transform" />
   <arg name="mars_pose_in"              default="/ov_msckf/poseimu" />
   <arg name="mars_pose_out"             default="/mavros/vision_pose/pose" />
   <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
@@ -37,17 +37,17 @@
       <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
     </include>
     <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
-    <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
+    <!-- <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
       <arg name="downsample_factor"             value="$(arg downsample_factor)" />
       <arg name="image_raw_topic"               value="$(arg image_raw_topic)" />
     </include>
 
     <include file="$(find bw2_bringup)/launch/individual/uwb_init.launch">
-      <arg name="topic_uwb_in" value="$(arg uwb_init_topic_uwb_in)" />
+      <arg name="topic_uwb_in" value="$(arg uwb_init_uwb_in)" />
       <arg name="topic_pose_in" value="$(arg uwb_init_pose_in)" />
       <arg name="topic_anchor_out" value="$(arg uwb_init_anchor_out)" />
-      <arg name="topic_wp_out" value="$(arg uwb_init_topic_uwb_in)" />
-    </include>
+      <arg name="topic_wp_out" value="$(arg uwb_init_wp_out)" />
+    </include> -->
   </group>
 
   <group if="$(eval arg('dev_id') == 2)">
