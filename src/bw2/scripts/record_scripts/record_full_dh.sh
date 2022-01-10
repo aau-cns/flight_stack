@@ -86,6 +86,7 @@ est_topics=(
 "/mavros/local_position/pose"
 "/mavros/local_position/pose_cov"
 "/uwb_init/anchors"
+"/bw2_ms_msckf/pose"
 )
 
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)

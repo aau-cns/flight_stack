@@ -13,7 +13,7 @@
   <!-- MaRS arguments -->
   <arg name="mars_imu_in"               default="/mavros/imu/data_raw" />
   <arg name="mars_transform_in"         default="/twins_five/vrpn_client/raw_transform" />
-  <arg name="mars_pose_in"              default="/ov_msckf/poseimu" />
+  <arg name="mars_pose_in"              default="/bw2_ms_msckf/pose" />
   <arg name="mars_pose_out"             default="/mavros/vision_pose/pose" />
   <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
 
@@ -32,7 +32,7 @@
     <include file="$(find mars_ros)/launch/mars_pose.launch" >
       <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
       <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
-      <arg name="pose_with_cov_in_topic"        value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
+      <arg name="pose_in_topic"                 value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
       <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
       <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
     </include>
