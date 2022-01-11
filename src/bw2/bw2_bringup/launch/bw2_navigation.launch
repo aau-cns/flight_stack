@@ -24,7 +24,7 @@
   <arg name="takeoff_height_m"        default="1.0" /> -->
 
   <!-- waypoint boundaries -->
-  <arg name="wp_max"                         default="[2.0, 4.0, 1.0]"/>
+  <arg name="wp_max"                         default="[2.0, 4.0, 1.5]"/>
   <arg name="wp_min"                         default="[-2.0, -3.0, 0.0]"/>
   <arg name="boundary_reference"             default="GLOBAL" />
 
