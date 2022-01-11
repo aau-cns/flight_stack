@@ -2,7 +2,7 @@
 
 <launch>
   <arg name="frame_rate" default="20.0" />
-  <arg name="res_x" default="640" />
+  <arg name="res_x" default="752" />
   <arg name="res_y" default="480" />
 
   <!-- <include file="$(find amadee_bringup)/launch/ueye_cam.launch">

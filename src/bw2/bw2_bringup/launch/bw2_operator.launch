@@ -3,13 +3,43 @@
   <arg name="dev_id" default="1" />
 
   <!--Autonomy Mission Config -->
-  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_mp.yaml" /> -->
-  <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_dh.yaml" />
-  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_bhp_test.yaml" /> -->
-  <!-- <arg name="config_filepath"                       default="$(find amadee_bringup)/configs/autonomy/mission_config_bhp_full.yaml" /> -->
+  <arg name="config_filepath"                       default="$(find bw2_bringup)/configs/autonomy/config_dh_test.yaml" />
 
-  <!-- Other Autonomy Parameters -->
-  <arg name="watchdog_rate_hz"                      default="1.0" />
+  <!-- autonomy topics -->
+  <arg name="watchdog_heartbeat_topic"              default="/watchdog/status" />
+  <arg name="watchdog_status_topic"     		        default="/watchdog/log" />
+  <arg name="watchdog_action_topic"     		        default="/watchdog/action" />
+  <arg name="mission_sequencer_request_topic"       default="/autonomy/request" />
+  <arg name="mission_sequencer_responce_topic"      default="/autonomy/response" />
+  <arg name="landing_detection_topic"               default="/toland/is_landed" />
+  <arg name="mission_sequencer_waypoints_topic"     default="/mission_sequencer/waypoint_list" />
+
+  <!-- autonomy services -->
+  <arg name="watchdog_start_service_name"           default="/watchdog/service/start" />
+  <arg name="data_recrding_service_name"            default="/datarecording/record" />
+  <arg name="takeoff_service_name"			default="/toland/service/takeoff" />
+  <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor/supervise" />
+  <arg name="estimator_init_service_name"             default="/estimator/init" />
+
+  <!-- other arguments -->
+  <arg name="watchdog_rate_Hz"			default="1.0" />
+  <arg name="watchdog_startup_time_s"			default="10" />
+  <arg name="watchdog_heartbeat_timeout_multiplier"	default="2.0" />
+  <arg name="maximum_flight_time_min"                 default="3" />
+  <arg name="fix_timeout_ms"                          default="1500" />
+  <arg name="mission_id_no_ui"                        default="1" />
+
+  <!-- autonomy flags -->
+  <arg name="activate_user_interface"                 default="true" />
+  <arg name="activate_watchdog"                       default="false" />
+  <arg name="activate_data_recording"                 default="false" />
+  <arg name="estimator_init_service"                  default="false" />
+  <arg name="perform_takeoff_check"                   default="true" />
+  <arg name="perform_estimator_check"                 default="false" />
+  <arg name="activate_landing_detection"              default="true" />
+  <arg name="hover_after_mission_completion"          default="true" />
+
+  <!-- <arg name="watchdog_rate_hz"                      default="1.0" />
   <arg name="watchdog_startup_time"                 default="15" />
   <arg name="watchdog_start_service_name"           default="/watchdog/service/start" />
   <arg name="watchdog_heartbeat_topic"              default="/watchdog/status" />
@@ -21,25 +51,46 @@
   <arg name="takeoff_service_name"                  default="/toland/service/takeoff" />
   <arg name="landing_detection_topic"               default="/toland/is_landed" />
   <arg name="estimator_supervisor_service_name"     default="/estimator_supervisor_posewithcovariancestamped/service/supervision" />
-  <arg name="estimator_init_service_name"           default="/mars_pose_node/init_service" />
+  <arg name="estimator_init_service_name"           default="/mars_pose_node/init_service" /> -->
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('dev_id') == 1)">
-    <include file="$(find amaze_autonomy)/launch/autonomy.launch">
-      <arg name="config_filepath"                       value="$(arg config_filepath)" />
-      <arg name="watchdog_rate_Hz"                      value="$(arg watchdog_rate_hz)" />
-      <arg name="watchdog_startup_time_s"               value="$(arg watchdog_startup_time)" />
-      <arg name="watchdog_start_service_name"           value="$(arg watchdog_start_service_name)" />
-      <arg name="watchdog_heartbeat_topic"              value="$(arg watchdog_heartbeat_topic)" />
-      <arg name="watchdog_status_topic"                 value="$(arg watchdog_status_topic)" />
-      <arg name="watchdog_action_topic"                 value="$(arg watchdog_action_topic)" />
-      <arg name="mission_sequencer_request_topic"       value="$(arg missionseq_request_topic)" />
-      <arg name="mission_sequencer_responce_topic"      value="$(arg missionseq_response_topic)" />
-      <arg name="data_recrding_service_name"            value="$(arg data_recrding_service_name)" />
-      <arg name="takeoff_service_name"                  value="$(arg takeoff_service_name)" />
-      <arg name="landing_detection_topic"               value="$(arg landing_detection_topic)" />
-      <arg name="estimator_supervisor_service_name"     value="$(arg estimator_supervisor_service_name)" />
-      <arg name="estimator_init_service_name"           value="$(arg estimator_init_service_name)" />
+    <include file="$(find autonomy)/launch/autonomy.launch">
+      <arg name="config_filepath"     			value="$(arg config_filepath)" />
+
+      <!-- arguments topics -->
+      <arg name="watchdog_heartbeat_topic"     		value="$(arg watchdog_heartbeat_topic)" />
+      <arg name="watchdog_status_topic"     		value="$(arg watchdog_status_topic)" />
+      <arg name="watchdog_action_topic"     		value="$(arg watchdog_action_topic)" />
+      <arg name="mission_sequencer_request_topic"		value="$(arg mission_sequencer_request_topic)" />
+      <arg name="mission_sequencer_responce_topic"	value="$(arg mission_sequencer_responce_topic)" />
+      <arg name="landing_detection_topic"			value="$(arg landing_detection_topic)" />
+      <arg name="mission_sequencer_waypoints_topic"	value="$(arg mission_sequencer_waypoints_topic)" />
+
+      <!-- arguments services -->
+      <arg name="watchdog_start_service_name"     	value="$(arg watchdog_start_service_name)" />
+      <arg name="data_recrding_service_name"		value="$(arg data_recrding_service_name)" />
+      <arg name="takeoff_service_name"			value="$(arg takeoff_service_name)" />
+      <arg name="estimator_supervisor_service_name"       value="$(arg estimator_supervisor_service_name)" />
+      <arg name="estimator_init_service_name"             value="$(arg estimator_init_service_name)" />
+
+      <!-- arguments setup -->
+      <arg name="watchdog_rate_Hz"			value="$(arg watchdog_rate_Hz)" />
+      <arg name="watchdog_startup_time_s"			value="$(arg watchdog_startup_time_s)" />
+      <arg name="watchdog_heartbeat_timeout_multiplier"	value="$(arg watchdog_heartbeat_timeout_multiplier)" />
+      <arg name="maximum_flight_time_min"                 value="$(arg maximum_flight_time_min)" />
+      <arg name="fix_timeout_ms"                          value="$(arg fix_timeout_ms)" />
+      <arg name="mission_id_no_ui"                        value="$(arg mission_id_no_ui)" />
+
+      <!-- arguments flags -->
+      <arg name="activate_user_interface"                 value="$(arg activate_user_interface)" />
+      <arg name="activate_watchdog"                       value="$(arg activate_watchdog)" />
+      <arg name="activate_data_recording"                 value="$(arg activate_data_recording)" />
+      <arg name="estimator_init_service"                  value="$(arg estimator_init_service)" />
+      <arg name="perform_takeoff_check"                   value="$(arg perform_takeoff_check)" />
+      <arg name="perform_estimator_check"                 value="$(arg perform_estimator_check)" />
+      <arg name="activate_landing_detection"              value="$(arg activate_landing_detection)" />
+      <arg name="hover_after_mission_completion"          value="$(arg hover_after_mission_completion)" />
     </include>
   </group>
 </launch>

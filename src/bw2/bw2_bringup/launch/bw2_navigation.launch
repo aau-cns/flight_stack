@@ -5,7 +5,15 @@
   <!-- Mission Sequencer Args -->
   <arg name="threshold_position"    default="0.3" />
   <arg name="threshold_yaw"         default="0.1" />
-  <!-- <arg name="automatic_sequencing"    default="False" /> <!- if 'True', this parameter overwrites the auto land and disarm function --> 
+
+  <!-- mission sequencer flags -->
+  <arg name="automatic_sequencing"    default="False" /> <!-- if 'True', this parameter overwrites the auto land and disarm function -->
+  <arg name="automatic_landing"       default="False" />
+  <arg name="automatic_disarming"     default="False" />
+  <arg name="relative_waypoints"      default="True" />
+  <arg name="waypoint_from_file"      default="False" />
+  <arg name="verbose"                 default="True" />
+  <!-- <arg name="automatic_sequencing"    default="False" /> <!- if 'True', this parameter overwrites the auto land and disarm function -->
   <!-- <arg name="automatic_landing"       default="False" />
   <arg name="automatic_disarming"     default="True" />
   <arg name="relative_waypoints"      default="True" />
@@ -15,12 +23,28 @@
   <arg name="takeoff_type_int"        default="0" />
   <arg name="takeoff_height_m"        default="1.0" /> -->
 
+  <!-- waypoint boundaries -->
+  <arg name="wp_max"                         default="[2.0, 4.0, 1.5]"/>
+  <arg name="wp_min"                         default="[-2.0, -3.0, 0.0]"/>
+  <arg name="boundary_reference"             default="GLOBAL" />
+
   <group if="$(eval arg('dev_id') == 1)">
     <!-- <node pkg="amaze_mission_sequencer" type="amaze_mission_sequencer_node" name="amaze_mission_sequencer" output="screen" clear_params="true" required="true">
     </node> -->
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
         <arg name="threshold_position"  value="$(arg threshold_position)" />
         <arg name="threshold_yaw"       value="$(arg threshold_yaw)" />
+
+        <arg name="automatic_sequencing"    value="$(arg automatic_sequencing)" /> <!-- if 'True', this parameter overwrites the auto land and disarm function -->
+        <arg name="automatic_landing"       value="$(arg automatic_landing)" />
+        <arg name="automatic_disarming"     value="$(arg automatic_disarming)" />
+        <arg name="relative_waypoints"      value="$(arg relative_waypoints)" />
+        <arg name="waypoint_from_file"      value="$(arg waypoint_from_file)" />
+        <arg name="verbose"                 value="$(arg verbose)" />
+
+        <arg name="bound_max"               value="$(arg wp_max)" />
+        <arg name="bound_min"               value="$(arg wp_min)" />
+        <arg name="boundary_reference"      value="$(arg boundary_reference)" />
     </include>
   </group>
 </launch>

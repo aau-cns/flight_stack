@@ -2,28 +2,35 @@
 <launch>
   <!-- topic parameters -->
   <arg name="topic_uwb_in"      default="/TREK1000/tagDistance_raw" />
-  <arg name="topic_pose_in"     default="/bw2_ms_msckf/pose" />
+  <!-- <arg name="topic_pose_in"     default="/bw2_ms_msckf/pose" /> -->
+  <arg name="topic_pose_in"     default="/mavros/vision_pose/pose" />
   <arg name="topic_anchor_out"  default="/uwb_init/anchors" />
-  <arg name="topic_wp_out"      default="/uwb_init/waypoints" />
+  <!-- <arg name="topic_wp_out"      default="/uwb_init/waypoints" /> -->
+  <arg name="topic_wp_out"      default="/mission_sequencer/waypoint_list" />
 
   <!-- calibration -->
   <arg name="calib_p_ItoU"      default="[-0.03, -0.04, -0.11]" />
 
   <!-- node parameters -->
   <arg name="num_anchors"               default="3" />
-  <arg name="buffer_size_in_s"          default="100.0" />
+  <arg name="buffer_size_in_s"          default="210.0" />
   <arg name="max_cond_number"           default="20.0" />
-  <arg name="init_check_duration_in_s"  default="10.0" />
+  <arg name="init_check_duration_in_s"  default="30.0" />
   <arg name="t_pose_diff_s"             default="0.0" />
 
   <arg name="meas_baseline_m"           default="0.2" />
   <arg name="meas_baseline_idx"         default="30" />
   <arg name="reg_lambda"                default="100" />
   <arg name="continous_init"            default="False" />
+  <arg name="cov_sv_threshold"          default="3e-3" />
+  <arg name="regularize_z"              default="True" />
+
+  <arg name="init_method"               default="DOUBLE" />
+  <arg name="init_variables"            default="FULL_BIAS" />
 
   <!-- waypoint generation -->
   <arg name="wp_max_dist_in_m"  default="1.0" />
-  <arg name="wp_height_in_m"    default="2.0" />
+  <arg name="wp_height_in_m"    default="1.0" />
 
   <include file="$(find uwb_init_cpp)/launch/uwb_init.launch">
     <arg name="topic_uwb_in"      value="$(arg topic_uwb_in)" />
@@ -38,6 +45,11 @@
     <arg name="max_cond_number"           value="$(arg max_cond_number)" />
     <arg name="init_check_duration_in_s"  value="$(arg init_check_duration_in_s)" />
     <arg name="t_pose_diff_s"             value="$(arg t_pose_diff_s)" />
+    <arg name="cov_sv_threshold"          value="$(arg cov_sv_threshold)" />
+    <arg name="regularize_z"              value="$(arg regularize_z)" />
+
+    <arg name="init_method"               value="$(arg init_method)" />
+    <arg name="init_variables"            value="$(arg init_variables)" />
 
     <arg name="meas_baseline_m"   value="$(arg meas_baseline_m)" />
     <arg name="meas_baseline_idx" value="$(arg meas_baseline_idx)" />
