@@ -2,11 +2,11 @@
 <launch>
   <!-- topic parameters -->
   <arg name="topic_uwb_in"      default="/TREK1000/tagDistance_raw" />
-  <arg name="topic_pose_in"     default="/bw2_ms_msckf/pose" />
-  <!-- <arg name="topic_pose_in"     default="/mavros/vision_pose/pose" /> -->
+  <!-- <arg name="topic_pose_in"     default="/bw2_ms_msckf/pose" /> -->
+  <arg name="topic_pose_in"     default="/mavros/vision_pose/pose" />
   <arg name="topic_anchor_out"  default="/uwb_init/anchors" />
-  <arg name="topic_wp_out"      default="/uwb_init/waypoints" />
-  <!-- <arg name="topic_wp_out"      default="/mission_sequencer/waypoint_list" /> -->
+  <!-- <arg name="topic_wp_out"      default="/uwb_init/waypoints" /> -->
+  <arg name="topic_wp_out"      default="/mission_sequencer/waypoint_list" />
 
   <!-- calibration -->
   <arg name="calib_p_ItoU"      default="[-0.03, -0.04, -0.11]" />
