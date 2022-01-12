@@ -29,8 +29,10 @@
   <arg name="init_variables"            default="FULL_BIAS" />
 
   <!-- waypoint generation -->
-  <arg name="wp_max_dist_in_m"  default="1.0" />
-  <arg name="wp_height_in_m"    default="1.0" />
+  <arg name="wp_max_dist_in_m"          default="1.0" />
+  <arg name="wp_height_in_m"            default="1.0" />
+  <arg name="wp_random_offset_in_m"     default="0.5" />
+  <arg name="wp_holdtime_in_s"          default="0.5" />
 
   <include file="$(find uwb_init_cpp)/launch/uwb_init.launch">
     <arg name="topic_uwb_in"      value="$(arg topic_uwb_in)" />
@@ -51,12 +53,14 @@
     <arg name="init_method"               value="$(arg init_method)" />
     <arg name="init_variables"            value="$(arg init_variables)" />
 
-    <arg name="meas_baseline_m"   value="$(arg meas_baseline_m)" />
-    <arg name="meas_baseline_idx" value="$(arg meas_baseline_idx)" />
-    <arg name="reg_lambda"        value="$(arg reg_lambda)" />
-    <arg name="continous_init"    value="$(arg continous_init)" />
+    <arg name="meas_baseline_m"           value="$(arg meas_baseline_m)" />
+    <arg name="meas_baseline_idx"         value="$(arg meas_baseline_idx)" />
+    <arg name="reg_lambda"                value="$(arg reg_lambda)" />
+    <arg name="continous_init"            value="$(arg continous_init)" />
 
-    <arg name="wp_max_dist_in_m"  value="$(arg wp_max_dist_in_m)" />
-    <arg name="wp_height_in_m"    value="$(arg wp_height_in_m)" />
+    <arg name="wp_max_dist_in_m"          value="$(arg wp_max_dist_in_m)" />
+    <arg name="wp_height_in_m"            value="$(arg wp_height_in_m)" />
+    <arg name="wp_random_offset_in_m"     value="$(arg wp_random_offset_in_m)" />
+    <arg name="wp_holdtime_in_s"          value="$(arg wp_holdtime_in_s)" />
   </include>
 </launch>

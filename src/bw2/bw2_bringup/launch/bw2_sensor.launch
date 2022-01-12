@@ -9,6 +9,7 @@
 
   <!-- Camera Arguments -->
   <arg name="frame_rate"            default="15.0" />
+  <arg name="shutter"               default="0.006" />
 
 
   <group if="$(eval arg('dev_id') == 1)">
@@ -25,6 +26,7 @@
   <group if="$(eval arg('dev_id') == 2)">
     <include file="$(find bw2_bringup)/launch/individual/sensors_module2.launch">
       <arg name="frame_rate"        value="$(arg frame_rate)" />
+      <arg name="shutter"           value="$(arg shutter)" />
     </include>
   </group>
 </launch>
