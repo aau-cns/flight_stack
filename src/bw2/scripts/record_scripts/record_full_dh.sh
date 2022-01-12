@@ -188,9 +188,10 @@ elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2 (full): "
     echo "  local path: $path_local"
     # echo "  media path: $path_media"
-    rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all2" ${topics_mod2_sensors} && kill $!
+    # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all2" ${topics_mod2_sensors} && kill $!
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_media$bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_local$bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
+    roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:="${bag_name}_all2" rosbag_topics:="[/camera/image_raw, /camera/camera_info]" && kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "
