@@ -26,6 +26,7 @@
   <arg name="cov_sv_threshold"          default="3e-3" />
   <arg name="regularize_z"              default="True" />
   <arg name="exit_when_done"            default="False" />
+  <arg name="auto_init"                 default="False" />
 
   <arg name="init_method"               default="DOUBLE" />
   <arg name="init_variables"            default="FULL_BIAS" />
@@ -42,6 +43,7 @@
     <arg name="topic_anchor_out"          value="$(arg topic_anchor_out)" />
     <arg name="topic_wp_out"              value="$(arg topic_wp_out)" />
     <arg name="srv_get_start_pose"        value="$(arg srv_get_start_pose)" />
+    <arg name="srv_start_init"            value="/uwb_init/start" />
 
     <arg name="calib_p_ItoU"              value="$(arg calib_p_ItoU)" />
 
@@ -53,6 +55,7 @@
     <arg name="cov_sv_threshold"          value="$(arg cov_sv_threshold)" />
     <arg name="regularize_z"              value="$(arg regularize_z)" />
     <arg name="exit_when_done"            value="$(arg exit_when_done)" />
+    <arg name="auto_init"                 value="$(arg auto_init)" />
 
     <arg name="init_method"               value="$(arg init_method)" />
     <arg name="init_variables"            value="$(arg init_variables)" />
