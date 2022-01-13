@@ -23,7 +23,7 @@
   <arg name="meas_baseline_idx"         default="30" />
   <arg name="reg_lambda"                default="100" />
   <arg name="continous_init"            default="False" />
-  <arg name="cov_sv_threshold"          default="3e-3" />
+  <arg name="cov_sv_threshold"          default="3.5e-3" />
   <arg name="regularize_z"              default="True" />
   <arg name="exit_when_done"            default="False" />
   <arg name="auto_init"                 default="False" />
