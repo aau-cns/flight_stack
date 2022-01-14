@@ -84,7 +84,7 @@
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/camera-downsample.git
 [submodule "src/uwb_init_cpp"]
 	path = src/uwb_init_cpp
-	url = git@gitlab.aau.at:mascheiber/uwb_init_cpp.git
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs//uwb_init_cpp.git
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
