@@ -16,7 +16,7 @@
   <arg name="distance_threshold"        default="0.20" />
 
   <!-- Supervisor parameter -->
-  <arg name="topic_to_supervise"        default="/ov_msckf/poseimu" />
+  <arg name="topic_to_supervise"        default="/mavros/vision_pose/pose" />
   <arg name="window_s"                  default="10.0" />
   <arg name="max_norm"                  default="0.3" />
 
@@ -30,11 +30,12 @@
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
     </include> -->
 
-    <!-- <include file="$(find estimator_supervisor)/launch/posewithcovariancestamped_supervisor.launch">
+    <include file="$(find estimator_supervisor)/launch/supervisor.launch">
         <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
         <arg name="Supervisor_window_s"       value="$(arg window_s)" />
         <arg name="max_norm_changes"          value="$(arg max_norm)" />
-    </include> -->
+        <arg name="estiamte_msg_type"                       value="posestamped" />
+    </include>
 
     <include file="$(find toland_flight)/launch/toland.launch">
       <arg name="imu_topic"           value="$(arg toland_imu)" />
