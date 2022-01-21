@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>flightstack</name>
+    <version>0.1.0</version>
+    <description>Metapackage for CNS Flightstack</description>
+    <author>Martin Scheiber</author>
+    <author>Alessandro Fornasier</author>
+    <maintainer email="martin.scheiber@aau.at">Martin Scheiber</maintainer>
+    <maintainer email="alessandro.fornasier@aau.at">Alessandro Fornasier</maintainer>
+
+    <license>aau-cns</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+
+    <exec_depend>flightstack_scripts</exec_depend>
+    <exec_depend>flightstack_bringup</exec_depend>
+
+    <export>
+        <metapackage/>
+    </export>
+</package>

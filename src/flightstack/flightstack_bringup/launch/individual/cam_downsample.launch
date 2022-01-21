@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+  <arg name="downsample_factor"     default="4" />
+  <arg name="image_raw_topic"       default="/mission_cam/image_raw" />
+
+  <include file="$(find camera_downsample)/launch/camera_downsample.launch">
+    <arg name="downsample_factor"   value="$(arg downsample_factor)" />
+    <arg name="image_raw_topic"     value="$(arg image_raw_topic)" />
+  </include>
+
+
+</launch>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>flightstack_scripts</name>
+    <version>0.1.0</version>
+    <description>CNS Flightstack scripts collection</description>
+    <author>Martin Scheiber</author>
+    <author>Alessandro Fornasier</author>
+    <author>Christian Brommer</author>
+    <maintainer email="martin.scheiber@aau.at">Martin Scheiber</maintainer>
+
+    <license>AAU-CNS</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+</package>
