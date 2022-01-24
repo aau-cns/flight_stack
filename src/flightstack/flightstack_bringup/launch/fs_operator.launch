@@ -31,7 +31,7 @@
 
   <!-- autonomy flags -->
   <arg name="activate_user_interface"                 default="true" />
-  <arg name="activate_watchdog"                       default="false" />
+  <arg name="activate_watchdog"                       default="true" />
   <arg name="activate_data_recording"                 default="false" />
   <arg name="estimator_init_service"                  default="true" />
   <arg name="perform_takeoff_check"                   default="true" />
