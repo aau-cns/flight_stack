@@ -80,6 +80,12 @@ ms_topics=(
 "/mavros/extended_state"
 )
 
+wd_topics=(
+"/watchdog/status"
+"/watchdog/log"
+"/watchdog/action"
+)
+
 est_topics=(
 "/mavros/vision_pose/pose"
 "/mavros/vision_pose/pose_cov"
@@ -108,6 +114,7 @@ group_mod1_nodes=(
 ${autonomy_topics[@]}
 ${ms_topics[@]}
 ${est_topics[@]}
+${wd_topics[@]}
 )
 
 # topics_mod1_nodes=${group_mod1_nodes[@]}
@@ -121,6 +128,8 @@ ${bluefox_camera_topics[@]}
 )
 
 topics_mod2_sensors=${group_mod2_sensors[@]}
+# printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
+
 #
 # ### RealSense Camera
 # topics_mod2_rs_img=${real_sense_cam_topics[@]}
@@ -195,7 +204,9 @@ elif [ "$1" == "dev2_full" ] ; then
     # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all2" ${topics_mod2_sensors} && kill $!
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_media$bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_local$bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
-    roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:="${bag_name}_all2" rosbag_topics:="[/camera/image_raw, /camera/camera_info]" && kill $!
+    # roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:="${bag_name}_all2" rosbag_topics:="[/camera/image_raw, /camera/camera_info]" && kill $!
+    # roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all2 rosbag_topics:="[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" && kill $!
+    # roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:="[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" && kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "
