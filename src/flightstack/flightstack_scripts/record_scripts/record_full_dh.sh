@@ -22,7 +22,7 @@
 # - RealSense camera images and imu
 # - PX4 imu, pressure, and magnetometer
 
-bag_name="bw2_dh"
+bag_name="fs_dh"
 path_local=""
 path_media=""
 
@@ -100,7 +100,8 @@ ${lrf_topic[@]}
 ${uwb_topic[@]}
 )
 
-topics_mod1_sensors=${group_mod1_sensors[@]}
+# topics_mod1_sensors=${group_mod1_sensors[@]}
+printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
 
 ### Nodes
 group_mod1_nodes=(
@@ -109,7 +110,8 @@ ${ms_topics[@]}
 ${est_topics[@]}
 )
 
-topics_mod1_nodes=${group_mod1_nodes[@]}
+# topics_mod1_nodes=${group_mod1_nodes[@]}
+printf -v topics_mod1_nodes '%s, ' "${group_mod1_nodes[@]}"
 
 ## Module 2
 ### Sensors
@@ -174,7 +176,9 @@ if [ "$1" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
     echo "  local path: $path_local"
     # echo "  media path: $path_media"
-    rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all1" ${topics_mod1_sensors} ${topics_mod1_nodes} && kill $!
+    # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all1" ${topics_mod1_sensors} ${topics_mod1_nodes} && kill $!
+    # echo "roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:=[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" # && kill $!
+    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:="[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" && kill $!
 
 elif [ "$1" == "dev1_cam" ] ; then
     echo "Recording for device 1 (cam): "

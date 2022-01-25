@@ -3,7 +3,7 @@ missions:
   mission_1:
     description: "Takeoff, hover, land"
     filepaths:
-      - "/home/core/catkin_ws/src/bw2/bw2_bringup/trajectories/dh/toland.csv"
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/toland.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -21,7 +21,7 @@ missions:
   mission_2:
     description: "Square 3x3 - Normal"
     filepaths:
-      - "/home/core/catkin_ws/src/bw2/bw2_bringup/trajectories/dh/square.csv"
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/square.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -39,7 +39,7 @@ missions:
   mission_3:
     description: "Square 3x3 - Failure"
     filepaths:
-      - "/home/core/catkin_ws/src/bw2/bw2_bringup/trajectories/dh_test/uwb_init_trajtest.csv"
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/square.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
