@@ -26,7 +26,7 @@
   <arg name="watchdog_startup_time_s"			            default="10" />
   <arg name="watchdog_heartbeat_timeout_multiplier"	  default="2.0" />
   <arg name="maximum_flight_time_min"                 default="5" />
-  <arg name="fix_timeout_ms"                          default="1500" />
+  <arg name="fix_timeout_ms"                          default="25000" />
   <arg name="mission_id_no_ui"                        default="1" />
 
   <!-- autonomy flags -->

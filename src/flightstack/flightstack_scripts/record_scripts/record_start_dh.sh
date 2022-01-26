@@ -9,8 +9,8 @@ CMD_PI1="$(rospack find flightstack_scripts)/record_scripts/record_full_dh.sh"
 REM_PI2="ssh -t -t core@${PI2_IP}"
 CMD_PI2="$(rospack find flightstack_scripts)/record_scripts/record_full_dh.sh"
 
-PATH_LOCAL="/home/core/rec_local/"
-PATH_MEDIA="/home/core/rec_media/"
+PATH_LOCAL="/home/core/rec_local/systems_paper"
+PATH_MEDIA="/home/core/rec_media/systems_paper"
 
 if [ "${REC_IN}" == "full" ] || [ "${REC_IN}" == "cam" ] || [ "${REC_IN}" == "sensors" ] ; then
   # parallel -u ::: \
