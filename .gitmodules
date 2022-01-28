@@ -88,3 +88,6 @@
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
+[submodule "src/ros_topic_dropper"]
+	path = src/ros_topic_dropper
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/ros_topic_dropper.git
