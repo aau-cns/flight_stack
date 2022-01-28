@@ -2,10 +2,13 @@
 <launch>
   <arg name="dev_id" default="1" />
 
+  <arg name="use_dropper" default="False" />
+
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
   <arg name="watchdog_check_dt"         default="0.5" />
   <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics.ini" />
+  <arg name="watchdog_topics_dropper_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dropper.ini" />
   <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes.ini" />
   <arg name="watchdog_drivers_cfg_file" default="$(find flightstack_bringup)/configs/watchdog/drivers.ini" />
 
@@ -25,7 +28,8 @@
     <include file="$(find watchdog_bringup)/launch/watchdog.launch">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
       <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
-      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
+      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" unless="$(arg use_dropper)" />
+      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_dropper_cfg_file)" if="$(arg use_dropper)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
     </include>

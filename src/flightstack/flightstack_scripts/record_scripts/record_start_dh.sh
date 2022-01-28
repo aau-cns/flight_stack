@@ -13,12 +13,12 @@ PATH_LOCAL="/home/core/rec_local/systems_paper"
 PATH_MEDIA="/home/core/rec_media/systems_paper"
 
 if [ "${REC_IN}" == "full" ] || [ "${REC_IN}" == "cam" ] || [ "${REC_IN}" == "sensors" ] ; then
-  # parallel -u ::: \
-  # "${CMD_PI1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}" \
-  # "${REM_PI2} 'source /home/core/.ros_env.bash; ${CMD_PI2} dev2_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}'"
+  parallel -u ::: \
+  "${CMD_PI1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}" \
+  "${REM_PI2} 'source /home/core/.ros_env.bash; ${CMD_PI2} dev2_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}'"
 
-  ${CMD_PI1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}
+  # ${CMD_PI1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}
 else
-  # parallel -u ::: "${CMD_PI1} ${REC_IN}" "$CMD_PI2 ${REC_IN}"
-  ${CMD_PI1} ${REC_IN}
+  parallel -u ::: "${CMD_PI1} ${REC_IN}" "$CMD_PI2 ${REC_IN}"
+  # ${CMD_PI1} ${REC_IN}
 fi;

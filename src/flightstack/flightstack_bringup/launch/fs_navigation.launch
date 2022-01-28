@@ -24,12 +24,12 @@
   <arg name="takeoff_height_m"        default="1.0" /> -->
 
   <!-- waypoint boundaries -->
-  <!-- <arg name="wp_max"                         default="[2.0, 4.0, 1.5]"/>
-  <arg name="wp_min"                         default="[-2.0, -3.0, 0.0]"/>
-  <arg name="boundary_reference"             default="GLOBAL" /> -->
-  <arg name="wp_max"                         default="[4.0, 2.0, 1.5]"/>
+  <arg name="wp_max"                         default="[2.0, 4.5, 1.5]"/>
+  <arg name="wp_min"                         default="[-2.0, -3.5, 0.0]"/>
+  <arg name="boundary_reference"             default="GLOBAL" />
+  <!-- <arg name="wp_max"                         default="[4.0, 2.0, 1.5]"/>
   <arg name="wp_min"                         default="[-3.0, -2.0, -0.0]"/>
-  <arg name="boundary_reference"             default="LOCAL" />
+  <arg name="boundary_reference"             default="LOCAL" /> -->
 
   <group if="$(eval arg('dev_id') == 1)">
     <!-- <node pkg="amaze_mission_sequencer" type="amaze_mission_sequencer_node" name="amaze_mission_sequencer" output="screen" clear_params="true" required="true">

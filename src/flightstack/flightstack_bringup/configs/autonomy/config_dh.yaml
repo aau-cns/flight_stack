@@ -7,16 +7,12 @@ missions:
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
-      - ["px4_mag", "hold"]
-      - ["px4_bar", "hold"]
-      - ["mission_cam", "failure"]
-      - ["lsm9ds1", "continue"]
-      - ["rtk_gps_1", "continue"]
-      - ["rtk_gps_2", "continue"]
-      - ["realsense", "hold"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "hold"]
       - ["uwb", "hold"]
       - ["lrf", "hold"]
-      - ["optitrack", "hold"]
+      - ["optitrack", "land"]
 
   mission_2:
     description: "Square 3x3 - Normal"
@@ -25,16 +21,12 @@ missions:
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
-      - ["px4_mag", "hold"]
-      - ["px4_bar", "hold"]
-      - ["mission_cam", "failure"]
-      - ["lsm9ds1", "continue"]
-      - ["rtk_gps_1", "continue"]
-      - ["rtk_gps_2", "continue"]
-      - ["realsense", "hold"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "hold"]
       - ["uwb", "hold"]
       - ["lrf", "hold"]
-      - ["optitrack", "hold"]
+      - ["optitrack", "land"]
 
   mission_3:
     description: "Square 3x3 - Failure"
@@ -43,13 +35,23 @@ missions:
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
-      - ["px4_mag", "hold"]
-      - ["px4_bar", "hold"]
-      - ["mission_cam", "failure"]
-      - ["lsm9ds1", "continue"]
-      - ["rtk_gps_1", "continue"]
-      - ["rtk_gps_2", "continue"]
-      - ["realsense", "hold"]
-      - ["uwb", "land"]
-      - ["lrf", "land"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "land"]
+      - ["uwb", "hold"]
+      - ["lrf", "hold"]
+      - ["optitrack", "failure"]
+
+  mission_4:
+    description: "Straight Line 5m"
+    filepaths:
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/line.csv"
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "failure"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "land"]
+      - ["uwb", "hold"]
+      - ["lrf", "hold"]
       - ["optitrack", "land"]
