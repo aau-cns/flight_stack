@@ -69,6 +69,7 @@ uwb_topic=(
 autonomy_topics=(
 "/autonomy/request"
 "/autonomy/response"
+"/autonomy/logger"
 "/toland/is_landed"
 )
 
@@ -91,6 +92,8 @@ est_topics=(
 "/mavros/vision_pose/pose_cov"
 "/mavros/local_position/pose"
 "/mavros/local_position/pose_cov"
+"/mavros/local_position/odom"
+"/mavros/local_position/odom_cov"
 "/uwb_init/anchors"
 "/bw2_ms_msckf/pose"
 )

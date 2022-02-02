@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-  <arg name="img_disable_time"          default="12.0" />
-  <arg name="lrf_disable_time"          default="5.0" />
-  <arg name="uwb_disable_time"          default="1.0" />
-  <arg name="disabled_time"             default="5.0" />
+  <arg name="img_disable_time"          default="14.0" />
+  <arg name="lrf_disable_time"          default="8.0" />
+  <arg name="uwb_disable_time"          default="3.0" />
+  <arg name="disabled_time"             default="3.0" />
 
   <arg name="disable_img"               default="True" />
-  <arg name="disable_lrf"               default="False" />
+  <arg name="disable_lrf"               default="True" />
   <arg name="disable_uwb"               default="True" />
 
 
