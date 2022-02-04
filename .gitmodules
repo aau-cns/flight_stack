@@ -27,7 +27,7 @@
 	url = https://github.com/ethz-asl/vrpn_catkin.git
 [submodule "src/open_vins"]
 	path = src/open_vins
-	url = git@gitlab.aau.at:aau-cns/openvins-based-multi-sensor-fusion.git
+	url = git@gitlab.aau.at:aau-cns/ov_msf.git
 [submodule "src/ueye_cam"]
 	path = src/ueye_cam
 	url = https://github.com/anqixu/ueye_cam.git
