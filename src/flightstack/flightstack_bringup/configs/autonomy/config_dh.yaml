@@ -55,3 +55,17 @@ missions:
       - ["uwb", "hold"]
       - ["lrf", "hold"]
       - ["optitrack", "land"]
+
+  mission_5:
+    description: "Straight Line 3m"
+    filepaths:
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/line_short.csv"
+    entities_actions:
+      - ["px4_gps", "continue"]
+      - ["px4_imu", "failure"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "land"]
+      - ["uwb", "hold"]
+      - ["lrf", "hold"]
+      - ["optitrack", "land"]
