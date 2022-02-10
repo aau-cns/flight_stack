@@ -3,14 +3,20 @@
   <arg name="dev_id" default="1" />
 
   <arg name="use_dropper" default="False" />
+  <arg name="dronehall"   default="True" />
 
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
   <arg name="watchdog_check_dt"         default="0.5" />
-  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics.ini" />
-  <arg name="watchdog_topics_dropper_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dropper.ini" />
-  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes.ini" />
   <arg name="watchdog_drivers_cfg_file" default="$(find flightstack_bringup)/configs/watchdog/drivers.ini" />
+
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dh.ini" if="$(arg dronehall)" />
+  <arg name="watchdog_topics_dropper_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dh_dropper.ini" if="$(arg dronehall)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_dh.ini" if="$(arg dronehall)" />
+
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps.ini" unless="$(arg dronehall)" />
+  <arg name="watchdog_topics_dropper_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps_dropper.ini" unless="$(arg dronehall)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.ini" unless="$(arg dronehall)" />
 
   <!-- Watchdog Parameters -->
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />
@@ -38,7 +44,7 @@
         <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
         <arg name="Supervisor_window_s"       value="$(arg window_s)" />
         <arg name="max_norm_changes"          value="$(arg max_norm)" />
-        <arg name="estiamte_msg_type"                       value="posestamped" />
+        <arg name="estiamte_msg_type"         value="posestamped" />
     </include>
 
     <include file="$(find toland_flight)/launch/toland.launch">
