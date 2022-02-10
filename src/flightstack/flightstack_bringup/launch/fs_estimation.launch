@@ -56,6 +56,9 @@
       <arg name="pose1_in_topic"                value="$(arg mars_pose_in)" />
       <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
       <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+
+      <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_dh.yaml" unless="$(arg use_gps)" />
+      <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_gps.yaml" if="$(arg use_gps)" />
     </include>
     <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
     <!-- <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
