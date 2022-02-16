@@ -39,7 +39,7 @@ fi
 # Operator
 OPLRF="sleep 10; rostopic echo -c /lidar_lite/range/range"
 OPMAV="sleep 10; rostopic echo -c /mavros/vision_pose/pose"
-OPAUT="sleep 1-; rostopic echo -c /autonomy/logger"
+OPAUT="sleep 10; rostopic echo -c /autonomy/logger"
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`

@@ -19,7 +19,7 @@ if [ -z ${type} ]; then
 
 elif [ ${type} = "dualpose_gps" ]; then
 
-  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
+  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2 shutter:=0.0005"
   EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch global_inti_only:=True"
 
 fi
