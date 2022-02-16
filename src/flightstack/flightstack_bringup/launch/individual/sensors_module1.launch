@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-  <arg name="frame_rate" default="20.0" />
+  <arg name="frame_rate"  default="20.0" />
+  <arg name="use_rtk"     default="False" />
 
-  <include file="$(find bw2_bringup)/launch/individual/lrf_xu4.launch"/>
+  <include file="$(find flightstack_bringup)/launch/individual/lrf_xu4.launch"/>
+  <include file="$(find flightstack_bringup)/launch/ublox.launch" if="$(arg use_rtk)">
+    <arg name="node_name"         value="rtk_gps" />
+    <arg name="param_file_name"   value="c94_m8p_rover" />
+  </include>
 </launch>

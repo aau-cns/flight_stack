@@ -3,7 +3,9 @@
   <arg name="dev_id"                    default="1" />
   <arg name="dual_pose"                 default="False" />
   <arg name="use_openvins"              default="True" /> <!-- if False it will use mocap -->
+  <arg name="use_rtk"                   default="False" />
   <arg name="use_gps"                   default="False" />
+  <arg name="use_gps_vel"               default="False" />
   <arg name="use_px4_bridge"            default="False" /> <!-- if False it will setup mars to input into PX4 EKF2 -->
 
   <!-- OV arguments -->
@@ -18,7 +20,10 @@
   <arg name="mars_pose_in"              default="/bw2_ms_msckf/pose" />
   <arg name="mars_pose_out"             default="/mavros/vision_pose/pose" />
   <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
-  <arg name="mars_gps_in"               default="/mavros/global_position/raw/fix" />
+  <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" unless="$(arg use_rtk)" />
+  <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" unless="$(arg use_rtk)" />
+  <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" if="$(arg use_rtk)" />
+  <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" if="$(arg use_rtk)" />
   <arg name="mars_baro_in"              default="/mavros/imu/static_pressure" />
 
   <!-- Camera downsample arguments -->
@@ -43,15 +48,18 @@
       </include>
       <include file="$(find mars_ros)/launch/mars_gps.launch" if="$(arg use_gps)">
         <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-        <arg name="gps_in_topic"                  value="$(arg mars_gps_in)" />
+        <arg name="gps_in_topic"                  value="$(arg mars_gps_pos_in)" />
         <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
         <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
       </include>
     </group>
     <include file="$(find mars_ros)/launch/mars_dualpose_full.launch" if="$(arg dual_pose)">
+      <arg name="use_gps_vel"                   value="$(arg use_gps_vel)" />
+
       <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
       <arg name="transform2_in_topic"           value="$(arg mars_transform_in)" unless="$(arg use_gps)"/>
-      <arg name="gps1_in"                       value="$(arg mars_gps_in)" if="$(arg use_gps)"/>
+      <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" if="$(arg use_gps)"/>
+      <arg name="gps1_vel_in"                   value="$(arg mars_gps_vel_in)" if="$(arg use_gps_vel)"/>
       <arg name="baro_in"                       value="$(arg mars_baro_in)" />
       <arg name="pose1_in_topic"                value="$(arg mars_pose_in)" />
       <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
