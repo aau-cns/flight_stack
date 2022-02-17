@@ -4,14 +4,17 @@
 
 # Framework Settings
 pub_on_prop: false
-use_ros_time_now: false
-gps_ros_time_now: false
+use_ros_time_now: true
+gps_ros_time_now: true
 verbose: false
 verbose_out_of_order: true
 discard_ooo_prop_meas: true
 cov_debug: false
 pub_cov: false
 use_common_gps_reference: true
+
+use_pressure: false
+publish_gps_enu: true
 
 # Yaw initialization
 use_magnetometer: false
@@ -41,8 +44,9 @@ core_init_cov_bw: [0.0076,0.0076,0.0076]
 core_init_cov_ba: [0.01,0.01,0.01]
 
 # Pose1 Settings
-pose1_pos_meas_noise: [0.001,0.001,0.001]
-pose1_att_meas_noise: [0.001,0.001,0.001]
+# pose1_pos_meas_noise: [0.25,0.25,0.25]
+pose1_pos_meas_noise: [1.0,1.0,1.0]
+pose1_att_meas_noise: [0.1,0.1,0.1]
 pose1_cal_p_ip: [0,0,0]
 pose1_cal_q_ip: [1,0,0,0]
 pose1_state_init_cov: [0.000000001,0.000000001,0.000000001,0.000000001,0.000000001,0.000000001]
@@ -56,16 +60,17 @@ pose2_state_init_cov: [0.00001,0.00001,0.00001,0.00001,0.00001,0.00001]
 
 # GPS Settings
 # gps_pos_meas_noise: [1.0,1.0,1.0]
-gps_pos_meas_noise: [0.01,0.01,0.01]
+gps_pos_meas_noise: [0.2,0.2,0.2]
 gps_vel_meas_noise: [0.01,0.01,0.01]
-gps_cal_ig: [0,0,0.21]
+gps_cal_ig: [0-0.25,0,0.21]
 gps_state_init_cov: [0.000000001,0.000000001,0.000000001]
 
 # Baro Settings
-baro_meas_noise: 0.3
+baro_meas_noise: 50000.0
 baro_cal_ip: [0,0,0]
 baro_state_init_cov: [0.00001,0.00001,0.00001]
-pressure_temp_K: 275.15
+pressure_temp_K: 277.15
+pressure_const_temp: false
 
 # Magnetometer Settings
 mag_normalize: true

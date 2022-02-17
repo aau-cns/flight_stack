@@ -57,6 +57,20 @@ missions:
       - ["optitrack", "continue"]
 
   mission_5:
+    description: "Medium Line 25m"
+    filepaths:
+      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_medium.csv"
+    entities_actions:
+      - ["px4_gps", "land"]
+      - ["px4_imu", "failure"]
+      - ["px4_mag", "continue"]
+      - ["px4_bar", "continue"]
+      - ["mission_cam", "hold"]
+      - ["uwb", "continue"]
+      - ["lrf", "hold"]
+      - ["optitrack", "continue"]
+
+  mission_6:
     description: "Long Line 50m"
     filepaths:
       - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_long.csv"
@@ -70,7 +84,7 @@ missions:
       - ["lrf", "hold"]
       - ["optitrack", "continue"]
 
-  mission_6:
+  mission_7:
     description: "Long Line 100m"
     filepaths:
       - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_superlong.csv"

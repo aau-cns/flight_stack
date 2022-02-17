@@ -19,12 +19,12 @@ shift $((OPTIND-1))
 if [ -z ${type} ]; then
 
   BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch global_inti_only:=True"
+  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch"
 
 elif [ ${type} = "dualpose_gps" ]; then
 
   BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2 shutter:=${illu}"
-  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch global_inti_only:=True"
+  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch"
 
 fi
 
