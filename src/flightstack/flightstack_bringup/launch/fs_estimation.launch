@@ -2,6 +2,7 @@
 <launch>
   <arg name="dev_id"                    default="1" />
   <arg name="dual_pose"                 default="False" />
+  <arg name="use_vision"                default="True" />
   <arg name="use_openvins"              default="True" /> <!-- if False it will use mocap -->
   <arg name="use_rtk"                   default="False" />
   <arg name="use_gps"                   default="False" />
@@ -22,9 +23,10 @@
   <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
   <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" unless="$(arg use_rtk)" />
   <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" unless="$(arg use_rtk)" />
-  <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" if="$(arg use_rtk)" />
+  <arg name="mars_gps_pos_in"           default="/rtk_gps/fix" if="$(arg use_rtk)" />
   <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" if="$(arg use_rtk)" />
   <arg name="mars_baro_in"              default="/mavros/imu/static_pressure" />
+  <arg name="mars_mag_in"               default="/mavros/imu/mag" />
 
   <!-- Camera downsample arguments -->
   <arg name="downsample_factor"               default="16" />
@@ -38,48 +40,58 @@
 
   <group if="$(eval arg('dev_id') == 1)">
     <!-- MaRS Estimator -->
-    <group unless="$(arg dual_pose)">
-      <include file="$(find mars_ros)/launch/mars_pose.launch" unless="$(arg use_gps)">
+    <group unless="$(arg use_vision)">
+      <group unless="$(arg dual_pose)">
+        <include file="$(find mars_ros)/launch/mars_pose.launch" unless="$(arg use_gps)">
+          <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
+          <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
+          <arg name="pose_in_topic"                 value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
+          <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
+          <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+        </include>
+        <include file="$(find mars_ros)/launch/mars_gps.launch" if="$(arg use_gps)">
+          <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
+          <arg name="gps_in_topic"                  value="$(arg mars_gps_pos_in)" />
+          <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
+          <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+        </include>
+      </group>
+      <include file="$(find mars_ros)/launch/mars_dualpose_full.launch" if="$(arg dual_pose)">
+        <arg name="use_gps_vel"                   value="$(arg use_gps_vel)" />
+
         <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-        <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
-        <arg name="pose_in_topic"                 value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
+        <arg name="transform2_in_topic"           value="$(arg mars_transform_in)" unless="$(arg use_gps)"/>
+        <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" if="$(arg use_gps)"/>
+        <arg name="gps1_vel_in"                   value="$(arg mars_gps_vel_in)" if="$(arg use_gps_vel)"/>
+        <arg name="baro_in"                       value="$(arg mars_baro_in)" />
+        <arg name="pose1_in_topic"                value="$(arg mars_pose_in)" />
         <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
         <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
-      </include>
-      <include file="$(find mars_ros)/launch/mars_gps.launch" if="$(arg use_gps)">
-        <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-        <arg name="gps_in_topic"                  value="$(arg mars_gps_pos_in)" />
-        <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
-        <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+
+        <group if="$(arg use_gps)">
+          <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_gps.yaml" unless="$(arg use_rtk)"/>
+          <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_gps.yaml" if="$(arg use_rtk)"/>
+        </group>
+        <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_dh.yaml" unless="$(arg use_gps)" />
       </include>
     </group>
-    <include file="$(find mars_ros)/launch/mars_dualpose_full.launch" if="$(arg dual_pose)">
-      <arg name="use_gps_vel"                   value="$(arg use_gps_vel)" />
+    <group if="$(arg use_vision)">
+      <include file="$(find mars_ros)/launch/mars_gps_vision.launch">
+        <arg name="use_gps_vel"                   value="$(arg use_gps_vel)" />
 
-      <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-      <arg name="transform2_in_topic"           value="$(arg mars_transform_in)" unless="$(arg use_gps)"/>
-      <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" if="$(arg use_gps)"/>
-      <arg name="gps1_vel_in"                   value="$(arg mars_gps_vel_in)" if="$(arg use_gps_vel)"/>
-      <arg name="baro_in"                       value="$(arg mars_baro_in)" />
-      <arg name="pose1_in_topic"                value="$(arg mars_pose_in)" />
-      <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
-      <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+        <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
+        <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" />
+        <arg name="gps1_vel_in"                   value="$(arg mars_gps_vel_in)" if="$(arg use_gps_vel)"/>
+        <arg name="baro_in"                       value="$(arg mars_baro_in)" />
+        <arg name="mag_in"                        value="$(arg mars_mag_in)" />
+        <arg name="pose1_in_topic"                value="$(arg mars_pose_in)" />
+        <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
+        <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
 
-      <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_dh.yaml" unless="$(arg use_gps)" />
-      <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/dualpose_config_gps.yaml" if="$(arg use_gps)" />
-    </include>
-    <!-- Camera downsample --> <!-- Remember to set extrinsic and intrinsic into node launch file -->
-    <!-- <include file="$(find camera_downsample)/launch/camera_downsample.launch" >
-      <arg name="downsample_factor"             value="$(arg downsample_factor)" />
-      <arg name="image_raw_topic"               value="$(arg image_raw_topic)" />
-    </include>
-
-    <include file="$(find bw2_bringup)/launch/individual/uwb_init.launch">
-      <arg name="topic_uwb_in" value="$(arg uwb_init_uwb_in)" />
-      <arg name="topic_pose_in" value="$(arg uwb_init_pose_in)" />
-      <arg name="topic_anchor_out" value="$(arg uwb_init_anchor_out)" />
-      <arg name="topic_wp_out" value="$(arg uwb_init_wp_out)" />
-    </include> -->
+        <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/vision_config_gps.yaml" unless="$(arg use_rtk)"/>
+        <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/vision_config_rtk.yaml" if="$(arg use_rtk)"/>
+      </include>
+    </group>
   </group>
 
   <group if="$(eval arg('dev_id') == 2)">

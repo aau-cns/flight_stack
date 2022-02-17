@@ -5,7 +5,7 @@
 # Framework Settings
 pub_on_prop: false
 use_ros_time_now: false
-gps_ros_time_now: true
+gps_ros_time_now: false
 verbose: false
 verbose_out_of_order: true
 discard_ooo_prop_meas: true
@@ -50,10 +50,10 @@ pose2_state_init_cov: [0.00001,0.00001,0.00001,0.00001,0.00001,0.00001]
 
 # GPS Settings
 # gps_pos_meas_noise: [1.0,1.0,1.0]
-gps_pos_meas_noise: [0.1,0.1,1.0]
+gps_pos_meas_noise: [0.01,0.01,1.00]
 gps_vel_meas_noise: [0.1,0.1,0.1]
 gps_cal_ig: [0,0,0.21]
-gps_state_init_cov: [0.000000001,0.000000001,0.000000001]
+gps_state_init_cov: [0.000000000001,0.000000000001,0.000000000001]
 
 # Baro Settings
 baro_meas_noise: 0.3

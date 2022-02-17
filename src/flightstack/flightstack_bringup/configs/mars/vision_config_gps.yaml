@@ -4,14 +4,20 @@
 
 # Framework Settings
 pub_on_prop: false
-use_ros_time_now: false
+use_ros_time_now: true
 gps_ros_time_now: true
-verbose: false
+verbose: true
 verbose_out_of_order: true
 discard_ooo_prop_meas: true
 cov_debug: false
 pub_cov: false
 use_common_gps_reference: true
+
+# Yaw initialization
+use_magnetometer: true
+enable_manual_yaw_init: false
+yaw_init_deg: -30
+auto_mag_init_samples: 30
 
 # Ros Settings
 use_tcpnodelay: true
@@ -60,3 +66,10 @@ baro_meas_noise: 0.3
 baro_cal_ip: [0,0,0]
 baro_state_init_cov: [0.00001,0.00001,0.00001]
 pressure_temp_K: 275.15
+
+# Magnetometer Settings
+mag_normalize: true
+mag_declination: 0.0 #degree
+mag_meas_noise: [0.5,0.5,0.5]
+mag_cal_im: [0, 0, 0] #degree
+mag_state_init_cov: [0.3, 0.3, 0.3, 0.00000076,0.00000076,0.00000076] #v_wm q_im
