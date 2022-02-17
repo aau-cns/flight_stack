@@ -18,6 +18,10 @@ elif [ "${type}" = "dualpose_gps" ]; then
 
   OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_dualpose_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
 
+elif [ "${type}" = "vision" ]; then
+
+  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_vision_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
+
 elif [ "${type}" = "gps" ]; then
 
   echo "TODO"

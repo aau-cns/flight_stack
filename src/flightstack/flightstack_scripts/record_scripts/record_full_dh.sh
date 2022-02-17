@@ -22,7 +22,7 @@
 # - RealSense camera images and imu
 # - PX4 imu, pressure, and magnetometer
 
-bag_name="fs_dh"
+bag_name="fs"
 path_local=""
 path_media=""
 
@@ -66,6 +66,19 @@ uwb_topic=(
 "/TREK1000/tagDistance_raw"
 )
 
+rtk_gps1_topic=(
+"/rtk_gps_1/aidalm"
+"/rtk_gps_1/aideph"
+"/rtk_gps_1/fix"
+"/rtk_gps_1/fix_velocity"
+"/rtk_gps_1/monhw"
+"/rtk_gps_1/navclock"
+"/rtk_gps_1/navpvt"
+"/rtk_gps_1/navsat"
+"/rtk_gps_1/navstatus"
+"/rtk_gps_1/navsvin"
+)
+
 autonomy_topics=(
 "/autonomy/request"
 "/autonomy/response"
@@ -95,6 +108,9 @@ est_topics=(
 "/mavros/local_position/odom"
 "/mavros/local_position/odom_cov"
 "/uwb_init/anchors"
+)
+
+vision_topics=(
 "/bw2_ms_msckf/pose"
 )
 
@@ -106,7 +122,7 @@ group_mod1_sensors=(
 ${mocap_vehicle_topics[@]}
 ${px4_topics[@]}
 ${lrf_topic[@]}
-${uwb_topic[@]}
+${rtk_gps1_topic[@]}
 )
 
 # topics_mod1_sensors=${group_mod1_sensors[@]}
@@ -127,11 +143,17 @@ printf -v topics_mod1_nodes '%s, ' "${group_mod1_nodes[@]}"
 ### Sensors
 
 group_mod2_sensors=(
+${uwb_topic[@]}
+${vision_topics[@]}
+)
+
+group_mod2_cam=(
 ${bluefox_camera_topics[@]}
 )
 
 # topics_mod2_sensors=${group_mod2_sensors[@]}
 printf -v topics_mod2_sensors '%s, ' "${group_mod2_sensors[@]}"
+printf -v topics_mod2_cam '%s, ' "${group_mod2_cam[@]}"
 
 #
 # ### RealSense Camera
@@ -190,7 +212,10 @@ if [ "$1" == "dev1_full" ] ; then
     # echo "  media path: $path_media"
     # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all1" ${topics_mod1_sensors} ${topics_mod1_nodes} && kill $!
     # echo "roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:=[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" # && kill $!
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:="[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" && kill $!
+    rosparam dump "${path_local}${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_sensors" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors rosbag_topics:="[${topics_mod1_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_nodes" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes rosbag_topics:="[${topics_mod1_nodes%,}]" && \
+    kill $!
 
 elif [ "$1" == "dev1_cam" ] ; then
     echo "Recording for device 1 (cam): "
@@ -208,7 +233,9 @@ elif [ "$1" == "dev2_full" ] ; then
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_media$bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
     # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_local$bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
     # roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:="${bag_name}_all2" rosbag_topics:="[/camera/image_raw, /camera/camera_info]" && kill $!
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_all2 rosbag_topics:="[${topics_mod2_sensors%,}]" && kill $!
+    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_sensors" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors rosbag_topics:="[${topics_mod2_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_cams" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam rosbag_topics:="[${topics_mod2_cam%,}]" && \
+    kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "

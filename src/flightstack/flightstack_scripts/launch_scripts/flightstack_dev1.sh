@@ -28,6 +28,37 @@ elif [ "${type}" = "dualpose_gps" ]; then
   REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
   DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
 
+elif [ "${type}" = "dualpose_rtk" ]; then
+
+    sudo chmod 666 /dev/ttyACM0
+
+    SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False use_rtk:=True"
+    SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False use_rtk:=True"
+    EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 dual_pose:=True use_gps:=True use_rtk:=True"
+    NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
+    REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
+    DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
+
+elif [ "${type}" = "vision_gps" ]; then
+
+  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False"
+  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False"
+  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_vision:=True"
+  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
+  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
+  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
+
+elif [ "${type}" = "vision_rtk" ]; then
+
+  sudo chmod 666 /dev/ttyACM0
+
+  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False use_rtk:=True"
+  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False use_rtk:=True"
+  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_vision:=True use_rtk:=True"
+  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
+  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
+  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
+
 elif [ "${type}" = "gps" ]; then
 
   echo "TODO"

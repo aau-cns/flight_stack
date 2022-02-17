@@ -1,10 +1,14 @@
 #!/bin/sh
 
+illu="0.00005"
+
 # parse flags
 while getopts t: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
+    # case "${flag}" in
+    #     i) illu=${OPTARG};;
     esac
 done
 shift $((OPTIND-1))
@@ -19,7 +23,7 @@ if [ -z ${type} ]; then
 
 elif [ ${type} = "dualpose_gps" ]; then
 
-  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2 shutter:=0.0005"
+  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2 shutter:=${illu}"
   EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch global_inti_only:=True"
 
 fi

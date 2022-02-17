@@ -4,6 +4,7 @@
 
   <arg name="use_dropper" default="False" />
   <arg name="dronehall"   default="True" />
+  <arg name="use_rtk"     default="False" />
 
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
@@ -18,6 +19,10 @@
   <arg name="watchdog_topics_dropper_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps_dropper.ini" unless="$(arg dronehall)" />
   <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.ini" unless="$(arg dronehall)" />
 
+  <arg name="watchdog_topics_rtk_file"  value="$(find flightstack_bringup)/configs/watchdog/topics_rtk.ini" if="$(arg use_rtk)" />
+  <arg name="watchdog_topics_dropper_rtk_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_rtk_dropper.ini" if="$(arg use_rtk)" />
+  <arg name="watchdog_nodes_rtk_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_rtk.ini" if="$(arg use_rtk)" />
+
   <!-- Watchdog Parameters -->
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />
   <arg name="toland_lrf"                default="/lidar_lite/range" />
@@ -31,12 +36,20 @@
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('dev_id') == 1)">
-    <include file="$(find watchdog_bringup)/launch/watchdog.launch">
+    <include file="$(find watchdog_bringup)/launch/watchdog.launch" unless="$(arg use_rtk)">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
       <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" unless="$(arg use_dropper)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_dropper_cfg_file)" if="$(arg use_dropper)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
+      <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
+    </include>
+    <include file="$(find watchdog_bringup)/launch/watchdog.launch" if="$(arg use_rtk)">
+      <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
+      <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
+      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_rtk_file)" unless="$(arg use_dropper)" />
+      <arg name="topics_cfg_file"   value="$(arg watchdog_topics_dropper_rtk_file)" if="$(arg use_dropper)" />
+      <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_rtk_file)" />
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
     </include>
 
