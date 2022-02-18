@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <arg name="node_name"     default="/camera_nodelet" />
+  <arg name="wait_time"     default="25" />
+
+
+  <node name="ros_node_killer" pkg="ros_node_killer" type="ros_node_killer" args="" output="screen" respawn="false">
+    <!-- topics remaps -->
+    <param name="node_name"            type="str"     value="$(arg node_name)" />
+    <param name="wait_time_s"          type="double"  value="$(arg wait_time)" />
+  </node>
+</launch>
