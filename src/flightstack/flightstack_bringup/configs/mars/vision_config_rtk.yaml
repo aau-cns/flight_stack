@@ -45,7 +45,7 @@ core_init_cov_ba: [0.01,0.01,0.01]
 
 # Pose1 Settings
 # pose1_pos_meas_noise: [0.25,0.25,0.25]
-pose1_pos_meas_noise: [1.0,1.0,1.0]
+pose1_pos_meas_noise: [0.5,0.5,0.5]
 pose1_att_meas_noise: [0.1,0.1,0.1]
 pose1_cal_p_ip: [0,0,0]
 pose1_cal_q_ip: [1,0,0,0]

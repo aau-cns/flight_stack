@@ -67,16 +67,16 @@ uwb_topic=(
 )
 
 rtk_gps1_topic=(
-"/rtk_gps_1/aidalm"
-"/rtk_gps_1/aideph"
-"/rtk_gps_1/fix"
-"/rtk_gps_1/fix_velocity"
-"/rtk_gps_1/monhw"
-"/rtk_gps_1/navclock"
-"/rtk_gps_1/navpvt"
-"/rtk_gps_1/navsat"
-"/rtk_gps_1/navstatus"
-"/rtk_gps_1/navsvin"
+"/rtk_gps/aidalm"
+"/rtk_gps/aideph"
+"/rtk_gps/fix"
+"/rtk_gps/fix_velocity"
+"/rtk_gps/monhw"
+"/rtk_gps/navclock"
+"/rtk_gps/navpvt"
+"/rtk_gps/navsat"
+"/rtk_gps/navstatus"
+"/rtk_gps/navsvin"
 )
 
 autonomy_topics=(
@@ -110,6 +110,37 @@ est_topics=(
 "/uwb_init/anchors"
 )
 
+mars_vision_topics=(
+"/mars_gps_vision_node/full_state_lite_out"
+"/mars_gps_vision_node/full_state_out"
+"/mars_gps_vision_node/gps1_cal_state_out"
+"/mars_gps_vision_node/gps1_enu"
+"/mars_gps_vision_node/odom_state_out"
+"/mars_gps_vision_node/parameter_descriptions"
+"/mars_gps_vision_node/parameter_updates"
+"/mars_gps_vision_node/pose1_cal_state_out"
+"/mars_gps_vision_node/pose2_cal_state_out"
+)
+
+mars_dual_topics=(
+"/mars_dualpose_node/full_state_lite_out"
+"/mars_dualpose_node/full_state_out"
+"/mars_dualpose_node/gps1_cal_state_out"
+"/mars_dualpose_node/gps1_enu"
+"/mars_dualpose_node/gps1_pos_in"
+"/mars_dualpose_node/odom1_in"
+"/mars_dualpose_node/odom2_in"
+"/mars_dualpose_node/odom_state_out"
+"/mars_dualpose_node/parameter_descriptions"
+"/mars_dualpose_node/parameter_updates"
+"/mars_dualpose_node/pose1_cal_state_out"
+"/mars_dualpose_node/pose1_with_cov_in"
+"/mars_dualpose_node/pose2_cal_state_out"
+"/mars_dualpose_node/pose2_in"
+"/mars_dualpose_node/pose2_with_cov_in"
+"/mars_dualpose_node/transform1_in"
+)
+
 vision_topics=(
 "/bw2_ms_msckf/pose"
 )
@@ -134,6 +165,8 @@ ${autonomy_topics[@]}
 ${ms_topics[@]}
 ${est_topics[@]}
 ${wd_topics[@]}
+${mars_vision_topics[@]}
+${mars_dual_topics[@]}
 )
 
 # topics_mod1_nodes=${group_mod1_nodes[@]}

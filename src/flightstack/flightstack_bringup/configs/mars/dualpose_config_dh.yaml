@@ -57,3 +57,10 @@ gps_state_init_cov: [0.001,0.001,0.001]
 baro_meas_noise: [1.0]
 baro_cal_ip: [0,0,0]
 baro_state_init_cov: [0.00001,0.00001,0.00001]
+
+# Magnetometer Settings
+mag_normalize: true
+mag_declination: 0.0 #degree
+mag_meas_noise: [0.5,0.5,0.5]
+mag_cal_im: [0, 0, 0] #degree
+mag_state_init_cov: [0.3, 0.3, 0.3, 0.00000076,0.00000076,0.00000076] #v_wm q_im

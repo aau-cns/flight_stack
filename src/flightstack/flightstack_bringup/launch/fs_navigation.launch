@@ -25,7 +25,7 @@
   <arg name="boundary_reference"             default="LOCAL" /> -->
   <!-- <arg name="wp_max"                         default="[10.0, 10, 2.0]"/>
   <arg name="wp_min"                         default="[-10.0, -10, -1.0]"/> -->
-  <arg name="wp_max"                         default="[150.0, 50, 3.0]"/>
+  <arg name="wp_max"                         default="[150.0, 50, 6.0]"/>
   <arg name="wp_min"                         default="[-60.0, -60, -1.0]"/>
   <arg name="boundary_reference"             default="LOCAL" />
 
