@@ -111,6 +111,7 @@ est_topics=(
 )
 
 mars_vision_topics=(
+"/mars_gps_vision_node/baro1_height"
 "/mars_gps_vision_node/full_state_lite_out"
 "/mars_gps_vision_node/full_state_out"
 "/mars_gps_vision_node/gps1_cal_state_out"
@@ -123,6 +124,7 @@ mars_vision_topics=(
 )
 
 mars_dual_topics=(
+"/mars_dualpose_node/baro1_height"
 "/mars_dualpose_node/full_state_lite_out"
 "/mars_dualpose_node/full_state_out"
 "/mars_dualpose_node/gps1_cal_state_out"

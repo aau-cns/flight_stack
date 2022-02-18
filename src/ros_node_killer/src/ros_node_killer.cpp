@@ -42,7 +42,8 @@ void RosNodeKiller::killRosNode()
 {
   std::string cmd = "bash -c 'source ~/.bashrc; rosnode kill " + node_name_ + "'";
   ROS_INFO_STREAM("[RosNodeKiller] executing: " << cmd);
-  std::system(cmd.c_str());
+  if(!std::system(cmd.c_str()))
+    ROS_ERROR_STREAM("[RosNodeKiller] Failure in executing system call.");
 }
 
 }  // namespace ros_killer
