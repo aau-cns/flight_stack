@@ -1,6 +1,7 @@
 #!/bin/sh
 
-illu="0.00005"
+# illu="0.00005" # sunny
+illu="0.0005" # cloudy
 
 # parse flags
 while getopts t: flag
