@@ -1,36 +1,15 @@
-[submodule "src/ros_gamepad_teleop"]
-	path = src/ros_gamepad_teleop
-	url = git@gitlab.aau.at:aau-nav/development/ros-nodes/ros_gamepad_teleop.git
 [submodule "src/catkin_simple"]
 	path = src/catkin_simple
 	url = https://github.com/catkin/catkin_simple.git
 [submodule "src/glog_catkin"]
 	path = src/glog_catkin
 	url = https://github.com/ethz-asl/glog_catkin.git
-[submodule "src/matrixvision_camera"]
-	path = src/matrixvision_camera
-	url = git@gitlab.aau.at:aau-cns/matrixvision_camera.git
-[submodule "src/realsense-ros"]
-	path = src/realsense-ros
-	url = https://github.com/IntelRealSense/realsense-ros.git
 [submodule "src/ros_vrpn_client"]
 	path = src/ros_vrpn_client
 	url = git@gitlab.aau.at:aau-cns/ros_vrpn_client.git
-[submodule "src/serial"]
-	path = src/serial
-	url = https://github.com/wjwwood/serial.git
-[submodule "src/ublox"]
-	path = src/ublox
-	url = https://github.com/KumarRobotics/ublox.git
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
-[submodule "src/open_vins"]
-	path = src/open_vins
-	url = git@gitlab.aau.at:aau-cns/ov_msf.git
-[submodule "src/ueye_cam"]
-	path = src/ueye_cam
-	url = https://github.com/anqixu/ueye_cam.git
 [submodule "src/amaze_waypoint_following"]
 	path = src/amaze_waypoint_following
 	url = git@gitlab.aau.at:aau-cns/amaze-waypoint-following.git
@@ -40,21 +19,6 @@
 [submodule "driver/camera/librealsense"]
 	path = driver/camera/librealsense
 	url = https://github.com/IntelRealSense/librealsense.git
-[submodule "src/apriltag"]
-	path = src/apriltag
-	url = https://github.com/AprilRobotics/apriltag.git
-[submodule "src/apriltag_ros"]
-	path = src/apriltag_ros
-	url = https://github.com/AprilRobotics/apriltag_ros.git
-[submodule "src/fiducials"]
-	path = src/fiducials
-	url = https://github.com/UbiquityRobotics/fiducials.git
-[submodule "src/image_undistort"]
-	path = src/image_undistort
-	url = https://github.com/ethz-asl/image_undistort.git
-[submodule "src/uwb_bridge"]
-	path = src/uwb_bridge
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/aaucns_uwb_bridge.git
 [submodule "src/imu_lsm9ds1_sa"]
 	path = src/imu_lsm9ds1_sa
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/imu_lsm9ds1_sa.git
@@ -79,15 +43,6 @@
 [submodule "src/estimator_supervisor"]
 	path = src/estimator_supervisor
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/estimator_supervisor.git
-[submodule "src/camera-downsample"]
-	path = src/camera-downsample
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/camera-downsample.git
-[submodule "src/uwb_init_cpp"]
-	path = src/uwb_init_cpp
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs//uwb_init_cpp.git
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
-[submodule "src/ros_topic_dropper"]
-	path = src/ros_topic_dropper
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/ros_topic_dropper.git
