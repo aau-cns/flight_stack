@@ -34,3 +34,6 @@
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
+[submodule "driver/camera/librealsense"]
+	path = driver/camera/librealsense
+	url = https://github.com/IntelRealSense/librealsense.git
