@@ -25,8 +25,8 @@
 [submodule "src/amaze_autonomy"]
 	path = src/amaze_autonomy
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_autonomy.git
-[submodule "src/aaucns_ros_watchdog"]
-	path = src/aaucns_ros_watchdog
+[submodule "src/ros_watchdog"]
+	path = src/ros_watchdog
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/aaucns_ros_watchdog.git
 [submodule "src/toland_flight"]
 	path = src/toland_flight
