@@ -1,3 +1,0 @@
-<launch>
-  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
-</launch>

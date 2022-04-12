@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<launch>
-  <!-- BUG: DO NOT USE RS UNTIL DRIVER FIX -->
-  <include file="$(find amadee_bringup)/launch/realsense_t265.launch" />
-  <include file="$(find amadee_bringup)/launch/imu_lsm9ds1.launch" />
-</launch>
