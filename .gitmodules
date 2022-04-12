@@ -22,8 +22,8 @@
 [submodule "src/imu_lsm9ds1_sa"]
 	path = src/imu_lsm9ds1_sa
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/imu_lsm9ds1_sa.git
-[submodule "src/amaze_autonomy"]
-	path = src/amaze_autonomy
+[submodule "src/autonomy_engine"]
+	path = src/autonomy_engine
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_autonomy.git
 [submodule "src/ros_watchdog"]
 	path = src/ros_watchdog
