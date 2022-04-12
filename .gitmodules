@@ -10,18 +10,6 @@
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
-[submodule "src/amaze_waypoint_following"]
-	path = src/amaze_waypoint_following
-	url = git@gitlab.aau.at:aau-cns/amaze-waypoint-following.git
-[submodule "src/lidar_lite"]
-	path = src/lidar_lite
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/lidar_lite.git
-[submodule "driver/camera/librealsense"]
-	path = driver/camera/librealsense
-	url = https://github.com/IntelRealSense/librealsense.git
-[submodule "src/imu_lsm9ds1_sa"]
-	path = src/imu_lsm9ds1_sa
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/imu_lsm9ds1_sa.git
 [submodule "src/autonomy_engine"]
 	path = src/autonomy_engine
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_autonomy.git
