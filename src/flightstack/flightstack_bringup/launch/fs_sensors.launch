@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
   <arg name="dev_id"    default="1" />
+  <arg name="dev_type"  default="xu4" /> <!-- or "pi" -->
 
   <!-- Optitrack Arguments -->
   <arg name="use_optitrack"         default="True" />
@@ -17,11 +18,11 @@
 
 
   <group if="$(eval arg('dev_id') == 1)">
-    <include file="$(find flightstack_bringup)/launch/individual/px4_xu4.launch" />
-    <include file="$(find flightstack_bringup)/launch/individual/sensors_module1.launch">
+    <include file="$(find flightstack_bringup)/launch/individual/px4_$(arg dev_type).launch" />
+    <!-- <include file="$(find flightstack_bringup)/launch/individual/sensors_module1.launch">
       <arg name="frame_rate"        value="$(arg frame_rate)" />
       <arg name="use_rtk"           value="$(arg use_rtk)" />
-    </include>
+    </include> -->
     <include file="$(find flightstack_bringup)/launch/individual/optitrack_dronehall.launch" if="$(arg use_optitrack)">
       <arg name="object_name"       value="$(arg optitrack_object_name)" />
       <arg name="throttle"          value="$(arg optitrack_throttle)" />
