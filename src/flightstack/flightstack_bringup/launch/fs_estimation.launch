@@ -28,6 +28,8 @@
   <arg name="mars_baro_in"              default="/mavros/imu/static_pressure" />
   <arg name="mars_mag_in"               default="/mavros/imu/mag" />
 
+  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/pose_config.yaml" />
+
   <!-- Camera downsample arguments -->
   <arg name="downsample_factor"               default="16" />
   <arg name="image_raw_topic"                 default="/camera/image_raw" />
@@ -43,6 +45,8 @@
     <group unless="$(arg use_vision)">
       <group unless="$(arg dual_pose)">
         <include file="$(find mars_ros)/launch/mars_pose.launch" unless="$(arg use_gps)">
+          <arg name="config_file"   value="$(arg mars_config_in)" />
+
           <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
           <arg name="transform_in_topic"            value="$(arg mars_transform_in)" unless="$(arg use_openvins)" />
           <arg name="pose_in_topic"                 value="$(arg mars_pose_in)" if="$(arg use_openvins)" />
