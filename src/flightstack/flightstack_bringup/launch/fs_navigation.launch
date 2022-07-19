@@ -1,8 +1,19 @@
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
 <?xml version="1.0" encoding="UTF-8"?>
+
 <launch>
   <arg name="dev_id"        default="1" />
-  <arg name="use_gps"       default="false" />
-  <arg name="use_vision"    default="false" />
 
   <!-- Mission Sequencer Args -->
   <arg name="threshold_position"    default="0.3" />
@@ -17,21 +28,11 @@
   <arg name="verbose"                 default="True" />
 
   <!-- waypoint boundaries -->
-  <!-- <arg name="wp_max"                         default="[2.0, 4.5, 1.5]"/>
-  <arg name="wp_min"                         default="[-2.0, -3.5, 0.0]"/>
-  <arg name="boundary_reference"             default="LOCAL" /> -->
-  <!-- <arg name="wp_max"                         default="[4.0, 2.0, 1.5]"/>
-  <arg name="wp_min"                         default="[-3.0, -2.0, -0.0]"/>
-  <arg name="boundary_reference"             default="LOCAL" /> -->
-  <!-- <arg name="wp_max"                         default="[10.0, 10, 2.0]"/>
-  <arg name="wp_min"                         default="[-10.0, -10, -1.0]"/> -->
-  <arg name="wp_max"                         default="[150.0, 50, 6.0]"/>
-  <arg name="wp_min"                         default="[-60.0, -60, -1.0]"/>
+  <arg name="wp_max"                         default="[100.0, 100, 10.0]"/>
+  <arg name="wp_min"                         default="[-100.0, -100.0, -1.0]"/>
   <arg name="boundary_reference"             default="LOCAL" />
 
   <group if="$(eval arg('dev_id') == 1)">
-    <!-- <node pkg="amaze_mission_sequencer" type="amaze_mission_sequencer_node" name="amaze_mission_sequencer" output="screen" clear_params="true" required="true">
-    </node> -->
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
         <arg name="use_odom"                value="True" />
 
@@ -49,9 +50,7 @@
         <arg name="bound_min"               value="$(arg wp_min)" />
         <arg name="boundary_reference"      value="$(arg boundary_reference)" />
 
-        <!-- <arg name="topic_odom_in"           value="/mars_pose_node/odom_state_out" /> -->
-        <arg name="topic_odom_in"           value="/mars_dualpose_node/odom_state_out" if="$(arg use_gps)"/>
-        <arg name="topic_odom_in"           value="/mars_gps_vision_node/odom_state_out" if="$(arg use_vision)"/>
+        <arg name="topic_odom_in"           value="/mars_node/odom_state_out" />
     </include>
   </group>
 </launch>
