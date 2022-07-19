@@ -34,3 +34,9 @@
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
 	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
+[submodule "src/mavlink"]
+	path = src/mavlink
+	url = git@gitlab.aau.at:aau-cns/mavlink.git
+[submodule "src/mavros"]
+	path = src/mavros
+	url = git@gitlab.aau.at:aau-cns/px4_mavros.git
