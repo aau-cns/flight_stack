@@ -24,12 +24,12 @@ No express or implied license in any of the Licensor's patents is granted nor
 shall any of the provisions of the License be construed in such way. Any license
 notice or attribution required by the License must also include this notice.
 
-Software: flightstack_cws
+Software: flight_stack
 License: BSD-2-Clause
 Licensor: University of Klagenfurt - Control of Networked Systems (CNS)
 
 
-BSD-2-Clause-License: 
+BSD-2-Clause-License:
 
 Redistribution and use in source and binary forms, with or without modification,
 are permitted provided that the following conditions are met:
@@ -51,5 +51,3 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
 ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-
