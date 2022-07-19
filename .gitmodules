@@ -40,3 +40,6 @@
 [submodule "src/mavros"]
 	path = src/mavros
 	url = git@gitlab.aau.at:aau-cns/px4_mavros.git
+[submodule "src/flightstack/flightstack_comm"]
+	path = src/flightstack/flightstack_comm
+	url = git@gitlab.aau.at:aau-cns/ros_pkgs/cnsfs_comm.git
