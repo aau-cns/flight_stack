@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<launch>
-  <include file="$(find amadee_bringup)/launch/optitrack_dronehall.launch"/>
-  <include file="$(find amadee_bringup)/launch/px4_pi.launch" />
-</launch>
