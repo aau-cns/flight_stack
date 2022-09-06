@@ -6,40 +6,40 @@
 	url = https://github.com/ethz-asl/glog_catkin.git
 [submodule "src/ros_vrpn_client"]
 	path = src/ros_vrpn_client
-	url = git@gitlab.aau.at:aau-cns/ros_vrpn_client.git
+	url = https://github.com/aau-cns/ros_vrpn_client.git
 [submodule "src/vrpn_catkin"]
 	path = src/vrpn_catkin
 	url = https://github.com/ethz-asl/vrpn_catkin.git
 [submodule "src/autonomy_engine"]
 	path = src/autonomy_engine
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_autonomy.git
+	url = https://github.com/aau-cns/autonomy_engine.git
 [submodule "src/ros_watchdog"]
 	path = src/ros_watchdog
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/aaucns_ros_watchdog.git
+	url = https://github.com/aau-cns/ros_watchdog.git
 [submodule "src/toland_flight"]
 	path = src/toland_flight
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/toland_flight.git
+	url = https://github.com/aau-cns/to_landing_detector.git
 [submodule "src/data_recorder"]
 	path = src/data_recorder
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/data_recorder.git
+	url = https://github.com/aau-cns/data_recorder.git
 [submodule "src/mission_sequencer"]
 	path = src/mission_sequencer
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/amaze_mission_sequencer.git
+	url = https://github.com/aau-cns/mission_sequencer.git
 [submodule "src/mars_ros"]
 	path = src/mars_ros
-	url = git@gitlab.aau.at:aau-cns/mars_ros.git
+	url = https://github.com/aau-cns/mars_ros.git
 [submodule "src/estimator_supervisor"]
 	path = src/estimator_supervisor
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/estimator_supervisor.git
+	url = https://github.com/aau-cns/estimator_supervisor.git
 [submodule "src/nodelet_rosbag"]
 	path = src/nodelet_rosbag
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/nodelet_rosbag.git
+	url = https://github.com/aau-cns/nodelet_rosbag.git
 [submodule "src/mavlink"]
 	path = src/mavlink
-	url = git@gitlab.aau.at:aau-cns/mavlink.git
+	url = https://github.com/aau-cns/mavlink.git
 [submodule "src/mavros"]
 	path = src/mavros
-	url = git@gitlab.aau.at:aau-cns/px4_mavros.git
+	url = https://github.com/aau-cns/mavros.git
 [submodule "src/flightstack/flightstack_comm"]
 	path = src/flightstack/flightstack_comm
-	url = git@gitlab.aau.at:aau-cns/ros_pkgs/cnsfs_comm.git
+	url = git@github.com:aau-cns/flight_stack_env.git
