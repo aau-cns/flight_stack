@@ -50,7 +50,7 @@ docker build --network=host -t cns_flight_stack_test_env:latest docker/ # Build 
 
 # The following runs the container, maps the source code (read only)
 # and executes the script in 'docker/docker_application_test.sh'
-$ docker run -it --rm \
+docker run -it --rm \
   --network=host \
   -v "$(pwd)/src":/source:ro \
   cns_flight_stack_test_env:latest
@@ -61,4 +61,4 @@ $ docker run -it --rm \
 | Type | Status|
 |:----:|:-----:|
 | Release | ![noetic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_noetic_Release.json) ![melodic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_melodic_Release.json) ![kinetic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_kinetic_Release.json) |
-| Debug | ![noetic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_noetic_Debug.json) ![melodic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_melodic_Debug.json) ![kinetic_release_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_kinetic_Debug.json) |
+| Debug | ![noetic_debug_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_noetic_Debug.json) ![melodic_debug_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_melodic_Debug.json) ![kinetic_debug_badge](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/ist-cns/d4b4eee830e1c61a17ed35ecf413f8d1/raw/build_ros_kinetic_Debug.json) |
