@@ -43,3 +43,6 @@
 [submodule "src/flightstack/flightstack_comm"]
 	path = src/flightstack/flightstack_comm
 	url = git@github.com:aau-cns/flight_stack_env.git
+[submodule "src/mavlink-gbp-release"]
+	path = src/mavlink-gbp-release
+	url = https://github.com/aau-cns/mavlink-gbp-release.git
