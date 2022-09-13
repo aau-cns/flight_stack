@@ -1,3 +1,15 @@
+# Copyright (C) 2022 Martin Scheiber and Christian Brommer,
+# Control of Networked Systems, University of Klagenfurt, Austria.
+#
+# All rights reserved.
+#
+# This software is licensed under the terms of the BSD-2-Clause-License with
+# no commercial use allowed, the full terms of which are made available
+# in the LICENSE file. No license in patents is granted.
+#
+# You can contact the author at <martin.scheiber@ieee.org> and
+# <christian.brommer@ieee.org>.
+
 name: ROS
 
 on:
@@ -14,11 +26,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ROS_DISTRO: [noetic, melodic]
+        ROS_DISTRO: [noetic, melodic, kinetic]
         BUILD_TYPE: [Release, Debug]
+    env:
+      BADGE_CREATION: ${{ github.event_name == 'push' && github.ref == 'refs/head/main' && github.repository_owner == 'aau-cns' }}
     steps:
     - name: Create Badge (running)
-      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      if: ${{ env.BADGE_CREATION == 'true' }}
       uses: schneegans/dynamic-badges-action@v1.4.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
@@ -41,7 +55,6 @@ jobs:
            libgflags-dev
            libgeographic-dev
            geographiclib-tools
-           python3-catkin-tools
            ros-${{ matrix.ROS_DISTRO }}-dynamic-reconfigure
            ros-${{ matrix.ROS_DISTRO }}-eigen-conversions
            ros-${{ matrix.ROS_DISTRO }}-tf
@@ -53,6 +66,27 @@ jobs:
            ros-${{ matrix.ROS_DISTRO }}-angles
            ros-${{ matrix.ROS_DISTRO }}-diagnostic-updater
            ros-${{ matrix.ROS_DISTRO }}-urdf
+           ros-${{ matrix.ROS_DISTRO }}-control-toolbox
+
+    - name: Install ROS-dependent dependencies
+      if: ${{ matrix.ROS_DISTRO != 'kinetic' }}
+      run: >
+           apt update && apt install --no-install-recommends -y
+           python3-catkin-tools
+           python3-rosdep
+           python3-rosinstall-generator
+           python3-future
+           python3-lxml
+
+    - name: Install ROS-dependent dependencies
+      if: ${{ matrix.ROS_DISTRO == 'kinetic' }}
+      run: >
+           apt update && apt install --no-install-recommends -y
+           python-catkin-tools
+           python-rosdep
+           python-rosinstall-generator
+           python-future
+           python-lxml
 
     - name: Create Catkin Workspace
       run: mkdir -p ${{github.workspace}}/flightstack_cws
@@ -68,7 +102,7 @@ jobs:
       run: /bin/bash -c '. /opt/ros/${{ matrix.ROS_DISTRO }}/setup.bash; catkin build -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }};'
 
     - name: Create Badge (success)
-      if: ${{ success() && github.event_name == 'push' && github.ref_name == 'main' }}
+      if: ${{ success() && env.BADGE_CREATION == 'true' }}
       uses: schneegans/dynamic-badges-action@v1.4.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
@@ -76,11 +110,11 @@ jobs:
         filename: build_ros_${{ matrix.ROS_DISTRO }}_${{ matrix.BUILD_TYPE }}.json
         label: ${{ matrix.ROS_DISTRO }}
         message: passing
-        color: success
+        color: green
         namedLogo: ROS
 
     - name: Create Badge (failure)
-      if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'main' }}
+      if: ${{ failure() && env.BADGE_CREATION == 'true' }}
       uses: schneegans/dynamic-badges-action@v1.4.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
@@ -89,4 +123,16 @@ jobs:
         label: ${{ matrix.ROS_DISTRO }}
         message: failure
         isError: true
+        namedLogo: ROS
+
+    - name: Create Badge (cancelled)
+      if: ${{ cancelled() && env.BADGE_CREATION == 'true' }}
+      uses: schneegans/dynamic-badges-action@v1.4.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: d4b4eee830e1c61a17ed35ecf413f8d1
+        filename: build_ros_${{ matrix.ROS_DISTRO }}_${{ matrix.BUILD_TYPE }}.json
+        label: ${{ matrix.ROS_DISTRO }}
+        message: cancelled
+        color: inactive
         namedLogo: ROS
