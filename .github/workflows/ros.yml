@@ -1,0 +1,92 @@
+name: ROS
+
+on:
+  push:
+    branches: [ "main", "development"]
+  pull_request:
+    branches: [ "main", "development"]
+
+jobs:
+  ros_ci:
+    name: ROS ${{ matrix.ROS_DISTRO }} (${{ matrix.BUILD_TYPE }})
+    runs-on: ubuntu-latest
+    container: ros:${{ matrix.ROS_DISTRO }}-ros-core
+    strategy:
+      fail-fast: false
+      matrix:
+        ROS_DISTRO: [noetic, melodic]
+        BUILD_TYPE: [Release, Debug]
+    steps:
+    - name: Create Badge (running)
+      if: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
+      uses: schneegans/dynamic-badges-action@v1.4.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: d4b4eee830e1c61a17ed35ecf413f8d1
+        filename: build_ros_${{ matrix.ROS_DISTRO }}_${{ matrix.BUILD_TYPE }}.json
+        label: ${{ matrix.ROS_DISTRO }}
+        message: running
+        color: orange
+        namedLogo: ROS
+
+    - name: Install Dependencies
+      run: >
+           apt update && apt install --no-install-recommends -y
+           git
+           doxygen
+           graphviz
+           build-essential
+           libeigen3-dev
+           libgoogle-glog-dev
+           libgflags-dev
+           libgeographic-dev
+           geographiclib-tools
+           python3-catkin-tools
+           ros-${{ matrix.ROS_DISTRO }}-dynamic-reconfigure
+           ros-${{ matrix.ROS_DISTRO }}-eigen-conversions
+           ros-${{ matrix.ROS_DISTRO }}-tf
+           ros-${{ matrix.ROS_DISTRO }}-tf2-ros
+           ros-${{ matrix.ROS_DISTRO }}-tf2-eigen
+           ros-${{ matrix.ROS_DISTRO }}-mavlink
+           ros-${{ matrix.ROS_DISTRO }}-nodelet
+           ros-${{ matrix.ROS_DISTRO }}-geographic-msgs
+           ros-${{ matrix.ROS_DISTRO }}-angles
+           ros-${{ matrix.ROS_DISTRO }}-diagnostic-updater
+           ros-${{ matrix.ROS_DISTRO }}-urdf
+
+    - name: Create Catkin Workspace
+      run: mkdir -p ${{github.workspace}}/flightstack_cws
+
+    - name: Checkout Latest Version
+      uses: actions/checkout@v3
+      with:
+        path: ${{github.workspace}}/flightstack_cws
+        # submodules: recursive
+
+    - name: Build
+      working-directory: ${{github.workspace}}/flightstack_cws
+      run: /bin/bash -c '. /opt/ros/${{ matrix.ROS_DISTRO }}/setup.bash; catkin build -DCMAKE_BUILD_TYPE=${{ matrix.BUILD_TYPE }};'
+
+    - name: Create Badge (success)
+      if: ${{ success() && github.event_name == 'push' && github.ref_name == 'main' }}
+      uses: schneegans/dynamic-badges-action@v1.4.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: d4b4eee830e1c61a17ed35ecf413f8d1
+        filename: build_ros_${{ matrix.ROS_DISTRO }}_${{ matrix.BUILD_TYPE }}.json
+        label: ${{ matrix.ROS_DISTRO }}
+        message: passing
+        color: success
+        namedLogo: ROS
+
+    - name: Create Badge (failure)
+      if: ${{ failure() && github.event_name == 'push' && github.ref_name == 'main' }}
+      uses: schneegans/dynamic-badges-action@v1.4.0
+      with:
+        auth: ${{ secrets.GIST_SECRET }}
+        gistID: d4b4eee830e1c61a17ed35ecf413f8d1
+        filename: build_ros_${{ matrix.ROS_DISTRO }}_${{ matrix.BUILD_TYPE }}.json
+        label: ${{ matrix.ROS_DISTRO }}
+        message: failure
+        isError: true
+        namedLogo: ROS
