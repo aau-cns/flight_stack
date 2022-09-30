@@ -1,5 +1,17 @@
 #!/bin/sh
 
+# Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
+# and others, Control of Networked Systems, University of Klagenfurt, Austria.
+#
+# All rights reserved.
+#
+# This software is licensed under the terms of the BSD-2-Clause-License with
+# no commercial use allowed, the full terms of which are made available
+# in the LICENSE file. No license in patents is granted.
+#
+# You can contact the authors at <alessandro.fornasier@ieee.org>,
+# and <martin.scheiber@ieee.org>.
+
 # parse flags
 while getopts t: flag
 do
@@ -14,19 +26,11 @@ if [ -z ${type} ]; then
 
   OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
 
-elif [ "${type}" = "dualpose_gps" ]; then
-
-  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_dualpose_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
-
-elif [ "${type}" = "vision_gps" ]; then
-
-  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_vision_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
-
-elif [ "${type}" = "vision_rtk" ]; then
-
-  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_vision_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_rtk.yaml'"
-
 elif [ "${type}" = "gps" ]; then
+
+  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
+
+else
 
   echo "TODO"
   exit

@@ -29,7 +29,7 @@ jobs:
         ROS_DISTRO: [noetic, melodic, kinetic]
         BUILD_TYPE: [Release, Debug]
     env:
-      BADGE_CREATION: ${{ github.event_name == 'push' && github.ref == 'refs/head/main' && github.repository_owner == 'aau-cns' }}
+      BADGE_CREATION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'aau-cns' }}
     steps:
     - name: Create Badge (running)
       if: ${{ env.BADGE_CREATION == 'true' }}

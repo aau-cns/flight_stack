@@ -21,13 +21,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="optitrack_object_name" default="twins_five" />
   <arg name="optitrack_throttle"    default="False" />
 
-  <!-- Camera Arguments -->
-  <arg name="frame_rate"            default="15.0" />
-  <arg name="shutter"               default="0.006" />
-  <arg name="shutter_auto"          default="False" />
-
-  <!-- gps args -->
-  <arg name="use_rtk"               default="False" />
 
   <!-- Device 1 -->
   <group if="$(eval arg('dev_id') == 1)">

@@ -1,7 +1,17 @@
 #!/bin/sh
 
-# illu="0.00005" # sunny
-illu="0.0005" # cloudy
+# Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
+# and others, Control of Networked Systems, University of Klagenfurt, Austria.
+#
+# All rights reserved.
+#
+# This software is licensed under the terms of the BSD-2-Clause-License with
+# no commercial use allowed, the full terms of which are made available
+# in the LICENSE file. No license in patents is granted.
+#
+# You can contact the authors at <alessandro.fornasier@ieee.org>,
+# and <martin.scheiber@ieee.org>.
+
 
 # parse flags
 while getopts t: flag
@@ -20,12 +30,12 @@ shift $((OPTIND-1))
 if [ -z ${type} ]; then
 
   BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch"
+  EST="sleep 20; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2"
 
-elif [ ${type} = "dualpose_gps" ]; then
+elif [ ${type} = "gps" ]; then
 
-  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2 shutter:=${illu}"
-  EST="sleep 20; roslaunch bw2_ms_msckf bw2.launch"
+  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
+  EST="sleep 20; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2 use_gps:=True"
 
 fi
 
@@ -40,15 +50,10 @@ export SES_NAME="flightstack_dev2_${CUR_DATE}"
 tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 #-x "$(tput cols)" -y "$(tput lines)"
 
-OP1="sleep 10; rostopic echo -c /bw2_ms_msckf/pose/pose/position"
-OP2="sleep 10; rostopic echo -c /bw2_ms_msckf/pose/pose/rotation"
-
 # BACKGROUND
 tmux rename-window 'background'
 tmux split-window -v -p 60
-tmux split-window -v -p 20
 tmux send-keys -t ${SES_NAME}.1 "${BKG}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${EST}" 'C-m'
-tmux send-keys -t ${SES_NAME}.3 "${OP1}" 'C-m'
 
 tmux attach -t ${SES_NAME}

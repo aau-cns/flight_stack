@@ -1,6 +1,16 @@
 #!/bin/bash
 
-# Author: Christian Brommer
+# Copyright (C) 2022, Christian Brommer, Martin Scheiber,
+# and others, Control of Networked Systems, University of Klagenfurt, Austria.
+#
+# All rights reserved.
+#
+# This software is licensed under the terms of the BSD-2-Clause-License with
+# no commercial use allowed, the full terms of which are made available
+# in the LICENSE file. No license in patents is granted.
+#
+# You can contact the authors at <christian.brommer@ieee.org>
+# and <martin.scheiber@ieee.org>.
 
 # The script records topics to individual bagfiles based on subgroups
 # Subgroups can be choosen for individual recordings (e.g. different devices)
@@ -53,32 +63,6 @@ mocap_vehicle_topics=(
 "/twins_five/vrpn_client/raw_transform"
 )
 
-bluefox_camera_topics=(
-"/camera/image_raw"
-"/camera/camera_info"
-)
-
-lrf_topic=(
-"/lidar_lite/range"
-)
-
-uwb_topic=(
-"/TREK1000/tagDistance_raw"
-)
-
-rtk_gps1_topic=(
-"/rtk_gps/aidalm"
-"/rtk_gps/aideph"
-"/rtk_gps/fix"
-"/rtk_gps/fix_velocity"
-"/rtk_gps/monhw"
-"/rtk_gps/navclock"
-"/rtk_gps/navpvt"
-"/rtk_gps/navsat"
-"/rtk_gps/navstatus"
-"/rtk_gps/navsvin"
-)
-
 autonomy_topics=(
 "/autonomy/request"
 "/autonomy/response"
@@ -107,44 +91,28 @@ est_topics=(
 "/mavros/local_position/pose_cov"
 "/mavros/local_position/odom"
 "/mavros/local_position/odom_cov"
-"/uwb_init/anchors"
 )
 
-mars_vision_topics=(
-"/mars_gps_vision_node/baro1_height"
-"/mars_gps_vision_node/full_state_lite_out"
-"/mars_gps_vision_node/full_state_out"
-"/mars_gps_vision_node/gps1_cal_state_out"
-"/mars_gps_vision_node/gps1_enu"
-"/mars_gps_vision_node/odom_state_out"
-"/mars_gps_vision_node/parameter_descriptions"
-"/mars_gps_vision_node/parameter_updates"
-"/mars_gps_vision_node/pose1_cal_state_out"
-"/mars_gps_vision_node/pose2_cal_state_out"
+mars_pose_topics=(
+"/mars_pose_node/full_state_lite_out"
+"/mars_pose_node/full_state_out"
+"/mars_pose_node/odom_state_out"
+"/mars_pose_node/path_state_out"
+"/mars_pose_node/parameter_descriptions"
+"/mars_pose_node/parameter_updates"
+"/mars_pose_node/pose1_cal_state_out"
 )
 
-mars_dual_topics=(
-"/mars_dualpose_node/baro1_height"
-"/mars_dualpose_node/full_state_lite_out"
-"/mars_dualpose_node/full_state_out"
-"/mars_dualpose_node/gps1_cal_state_out"
-"/mars_dualpose_node/gps1_enu"
-"/mars_dualpose_node/gps1_pos_in"
-"/mars_dualpose_node/odom1_in"
-"/mars_dualpose_node/odom2_in"
-"/mars_dualpose_node/odom_state_out"
-"/mars_dualpose_node/parameter_descriptions"
-"/mars_dualpose_node/parameter_updates"
-"/mars_dualpose_node/pose1_cal_state_out"
-"/mars_dualpose_node/pose1_with_cov_in"
-"/mars_dualpose_node/pose2_cal_state_out"
-"/mars_dualpose_node/pose2_in"
-"/mars_dualpose_node/pose2_with_cov_in"
-"/mars_dualpose_node/transform1_in"
-)
-
-vision_topics=(
-"/bw2_ms_msckf/pose"
+mars_gps_topics=(
+"/mars_gps_node/full_state_lite_out"
+"/mars_gps_node/full_state_out"
+"/mars_gps_node/odom_state_out"
+"/mars_gps_node/path_state_out"
+"/mars_gps_node/gps1_cal_state_out"
+"/mars_gps_node/gps1_enu"
+"/mars_gps_node/gps1_pos_in"
+"/mars_gps_node/parameter_descriptions"
+"/mars_gps_node/parameter_updates"
 )
 
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)
@@ -189,53 +157,6 @@ ${bluefox_camera_topics[@]}
 # topics_mod2_sensors=${group_mod2_sensors[@]}
 printf -v topics_mod2_sensors '%s, ' "${group_mod2_sensors[@]}"
 printf -v topics_mod2_cam '%s, ' "${group_mod2_cam[@]}"
-
-#
-# ### RealSense Camera
-# topics_mod2_rs_img=${real_sense_cam_topics[@]}
-# name_mod2_rs_img="_rs_img"
-#
-# ### MoCap Topics
-#
-# group_modcap_sensors=(
-# ${mocap_vehicle_topics[@]}
-# ${mocap_tags_topics[@]}
-# )
-#
-# name_mocap_sensors="_mocap"
-
-# Generate Topic Strings Grouped by Topics (concatinate string arrays)
-
-## All text/value based sensors
-# topics1_to_record=(
-# ${mocap_vehicle_topics[@]}
-# ${mocap_tags_topics[@]}
-# ${px4_topics[@]}
-# ${real_sense_imu_odom_topics[@]}
-# ${rtk_gps1_topic[@]}
-# ${rtk_gps2_topic[@]}
-# ${lrf_topic[@]}
-# )
-#
-# group1_to_record=${topics1_to_record[@]}
-# name_group1="_sensors"
-#
-# ## All image based sensors
-# ### Realsense
-# topics2_to_record=(
-# ${ids_camera_topics[@]}
-# )
-#
-# group2_to_record=${topics2_to_record[@]}
-# name_group2="_ids"
-#
-# ### IDS Camera
-# topics3_to_record=(
-# ${real_sense_cam_topics[@]}
-# )
-#
-# group3_to_record=${topics3_to_record[@]}
-# name_group3="_realsense"
 
 
 # Record the given group of topics

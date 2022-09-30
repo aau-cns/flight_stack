@@ -17,7 +17,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!--Autonomy Mission Config -->
   <arg name="config_filepath"                         default="$(find flightstack_bringup)/configs/autonomy/config_dh.yaml" />
-  <!-- <arg name="config_filepath"                         default="$(find flightstack_bringup)/configs/autonomy/config_gps.yaml" /> -->
 
   <!-- autonomy topics -->
   <arg name="watchdog_heartbeat_topic"                default="/watchdog/status" />

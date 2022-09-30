@@ -1,5 +1,17 @@
 #!/bin/sh
 
+# Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
+# and others, Control of Networked Systems, University of Klagenfurt, Austria.
+#
+# All rights reserved.
+#
+# This software is licensed under the terms of the BSD-2-Clause-License with
+# no commercial use allowed, the full terms of which are made available
+# in the LICENSE file. No license in patents is granted.
+#
+# You can contact the authors at <alessandro.fornasier@ieee.org>,
+# and <martin.scheiber@ieee.org>.
+
 # parse flags
 while getopts t: flag
 do
@@ -19,47 +31,16 @@ if [ -z ${type} ]; then
   REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
   DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
 
-elif [ "${type}" = "dualpose_gps" ]; then
+elif [ "${type}" = "gps" ]; then
 
   SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False"
-  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False"
-  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 dual_pose:=True use_gps:=True"
+  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 use_optitrack:=False"
+  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_gps:=True"
   NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_gps:=True"
   REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
   DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
 
-elif [ "${type}" = "dualpose_rtk" ]; then
-
-    sudo chmod 666 /dev/ttyACM0
-
-    SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False use_rtk:=True"
-    SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False use_rtk:=True"
-    EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 dual_pose:=True use_gps:=True use_rtk:=True"
-    NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_gps:=True"
-    REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
-    DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
-
-elif [ "${type}" = "vision_gps" ]; then
-
-  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False"
-  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False"
-  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_vision:=True"
-  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_vision:=True"
-  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
-  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
-
-elif [ "${type}" = "vision_rtk" ]; then
-
-  sudo chmod 666 /dev/ttyACM0
-
-  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False use_rtk:=True"
-  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 dronehall:=False use_rtk:=True"
-  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_vision:=True use_rtk:=True"
-  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_vision:=True"
-  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
-  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
-
-elif [ "${type}" = "gps" ]; then
+else
 
   echo "TODO"
   exit
@@ -68,7 +49,6 @@ fi
 
 
 # Operator
-OPLRF="sleep 10; rostopic echo -c /lidar_lite/range/range"
 OPMAV="sleep 10; rostopic echo -c /mavros/vision_pose/pose"
 OPAUT="sleep 10; rostopic echo -c /autonomy/logger"
 
@@ -116,7 +96,6 @@ OP2="roscd flightstack_scripts/system_scripts"
 tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
 tmux send-keys -t ${SES_NAME}.5 "${OPMAV}" 'C-m'
-tmux send-keys -t ${SES_NAME}.3 "${OPLRF}" 'C-m'
 tmux send-keys -t ${SES_NAME}.4 "${OPAUT}" 'C-m'
 
 tmux select-window -t 'operator'
