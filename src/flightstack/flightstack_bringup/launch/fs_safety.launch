@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright (C) 2022 Martin Scheiber, Christian Brommer,
 and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -10,7 +11,6 @@ in the LICENSE file. No license in patents is granted.
 
 You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
 -->
-<?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
   <arg name="dev_id" default="1" />
@@ -28,8 +28,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps.ini" unless="$(arg use_optitrack)" />
   <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.ini" unless="$(arg use_optitrack)" />
 
-  <!-- Watchdog Parameters -->
+  <!-- TOLand Parameters -->
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />
+  <arg name="toland_agl"                default="/lidar_lite/range" />
   <arg name="angle_threshold"           default="10.0" />
   <arg name="distance_threshold"        default="0.38" />
 
@@ -55,8 +56,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
         <arg name="estiamte_msg_type"         value="posestamped" />
     </include>
 
-    <include file="$(find toland_flight)/launch/toland.launch">
+    <include file="$(find to_landing_detector)/launch/toland.launch">
       <arg name="imu_topic"           value="$(arg toland_imu)" />
+      <arg name="lrf_topic"           value="$(arg toland_agl)" />
       <arg name="angle_threshold"     value="$(arg angle_threshold)" />
       <arg name="distance_threshold"  value="$(arg distance_threshold)" />
     </include>
