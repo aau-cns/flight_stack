@@ -5,6 +5,8 @@
 
 Maintainers: [Christian Brommer](mailto:christian.brommer@aau.at), [Alessandro Fornasier](mailto:alessandro.fornasier@aau.at), and [Martin Scheiber](mailto:martin.scheiber@aau.at)
 
+**THIS SOFTWARE PACKAGE IS CURRENTLY IN THE BETA TESTING STAGE**
+
 ## License
 This software is made available to the public to use (_source-available_), licensed under the terms of the BSD-2-Clause-License with no commercial use allowed, the full terms of which are made available in the `LICENSE` file. No license in patents is granted.
 
@@ -28,7 +30,7 @@ corresponding paper and consult the `LICENSE` file for a detailed explanation.
 
 ## Tutorial
 
-Coming soon
+Please consult the [Wiki](https://github.com/aau-cns/flight_stack/wiki) for a detailed tutorial on installation, configuration, and usage.
 
 ## Setup and compile the project
 

@@ -33,6 +33,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="takeoff_service_name"                    default="/toland/service/takeoff" />
   <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor_posewithcovariancestamped/service/supervision" />
   <arg name="estimator_init_service_name"             default="/mars_pose_node/init_service" />
+  <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
 
   <!-- other arguments -->
   <arg name="watchdog_rate_Hz"                        default="1.0" />
@@ -46,10 +47,10 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="activate_user_interface"                 default="true" />
   <arg name="activate_watchdog"                       default="true" />
   <arg name="activate_data_recording"                 default="true" />
-  <arg name="estimator_init_service"                  default="true" />
+  <arg name="activate_landing_detection"              default="true" />
   <arg name="perform_takeoff_check"                   default="true" />
   <arg name="perform_estimator_check"                 default="true" />
-  <arg name="activate_landing_detection"              default="true" />
+  <arg name="estimator_init_service"                  default="true" />
   <arg name="inflight_sensors_init_service"           default="false" />
   <arg name="hover_after_mission_completion"          default="false" />
   <arg name="sequence_multiple_in_flight"             default="false" />
@@ -74,6 +75,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
       <arg name="takeoff_service_name"                    value="$(arg takeoff_service_name)" />
       <arg name="estimator_supervisor_service_name"       value="$(arg estimator_supervisor_service_name)" />
       <arg name="estimator_init_service_name"             value="$(arg estimator_init_service_name)" />
+      <arg name="inflight_sensor_init_services_name"      value="$(arg inflight_sensor_init_services_name)" />
 
       <!-- arguments setup -->
       <arg name="watchdog_rate_Hz"                        value="$(arg watchdog_rate_Hz)" />
