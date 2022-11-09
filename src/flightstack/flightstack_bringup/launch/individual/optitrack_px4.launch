@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright (C) 2022 Martin Scheiber, Christian Brommer,
 and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -10,7 +11,6 @@ in the LICENSE file. No license in patents is granted.
 
 You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
 -->
-<?xml version="1.0" encoding="UTF-8"?>
 
 <launch>
   <arg name="platform"    default="pi" />
