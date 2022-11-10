@@ -15,7 +15,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 <launch>
   <arg name="platform"  default="pi" />
 
-  <arg name="device_id" default="AMA0"  unless="$(eval arg('platform') == 'pi')"/>
+  <arg name="device_id" default="AMA0"  unless="$(eval arg('platform') == 'xu4')"/>
   <arg name="device_id" value="SAC0"    if="$(eval arg('platform') == 'xu4')" />
 
   <include file="$(find mavros)/launch/px4.launch">
