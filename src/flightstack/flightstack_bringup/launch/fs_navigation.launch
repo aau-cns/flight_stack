@@ -32,6 +32,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="wp_min"                         default="[-100.0, -100.0, -1.0]"/>
   <arg name="boundary_reference"             default="LOCAL" />
 
+  <!-- odometry in -->
+  <arg name="topic_odom_in"                   default="/mars_node/odom_state_out" />
+
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
         <arg name="use_odom"                value="True" />
@@ -50,7 +53,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
         <arg name="bound_min"               value="$(arg wp_min)" />
         <arg name="boundary_reference"      value="$(arg boundary_reference)" />
 
-        <arg name="topic_odom_in"           value="/mars_node/odom_state_out" />
+        <arg name="topic_odom_in"           value="$(arg topic_odom_in)" />
     </include>
   </group>
 </launch>

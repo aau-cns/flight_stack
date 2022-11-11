@@ -43,7 +43,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find watchdog_bringup)/launch/watchdog.launch">
       <arg name="do_verbose"        value="$(arg watchdog_verbose)" />
-      <arg name="topic_check_dt"    value="$(arg watchdog_check_dt)" />
+      <arg name="entity_check_rate" value="$(arg watchdog_check_dt)" />
       <arg name="topics_cfg_file"   value="$(arg watchdog_topics_cfg_file)" />
       <arg name="nodes_cfg_file"    value="$(arg watchdog_nodes_cfg_file)" />
       <arg name="drivers_cfg_file"  value="$(arg watchdog_drivers_cfg_file)" />
