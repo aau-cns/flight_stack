@@ -24,14 +24,14 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="watchdog_action_topic"     		          default="/watchdog/action" />
   <arg name="mission_sequencer_request_topic"         default="/autonomy/request" />
   <arg name="mission_sequencer_responce_topic"        default="/autonomy/response" />
-  <arg name="landing_detection_topic"                 default="/toland/is_landed" />
+  <arg name="landing_detection_topic"                 default="/toland_detector/is_landed" />
   <arg name="mission_sequencer_waypoints_topic"       default="/mission_sequencer/waypoint_list" />
 
   <!-- autonomy services -->
   <arg name="watchdog_start_service_name"             default="/watchdog/service/start" />
   <arg name="data_recrding_service_name"              default="/data_recorder/record" />
-  <arg name="takeoff_service_name"                    default="/toland/service/takeoff" />
-  <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor_posewithcovariancestamped/service/supervision" />
+  <arg name="takeoff_service_name"                    default="/toland_detector/service/takeoff" />
+  <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor/service/supervision" />
   <arg name="estimator_init_service_name"             default="/mars_pose_node/init_service" />
   <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
 

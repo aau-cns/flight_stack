@@ -15,7 +15,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 <launch>
   <arg name="dev_id"                    default="1" />
 
-  <arg name="use_optitrack"             default="True" />
   <arg name="optitrack_object_name"     default="twins_five" />
 
   <arg name="use_gps"                   default="False" />
@@ -30,27 +29,29 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" />
 
 
-  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/pose_config.yaml" />
+  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/pose_config.yaml" unless="$(arg use_gps)" />
+  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/gps_config.yaml" if="$(arg use_gps)" />
 
     <!-- MaRS Estimator -->
   <group if="$(eval arg('dev_id') == 1)">
 
     <!-- Optitrack -->
-    <group if="$(arg use_optitrack)">
+    <group unless="$(arg use_gps)">
         <include file="$(find mars_ros)/launch/mars_pose.launch">
-          <arg name="config_file"   value="$(arg mars_config_in)" />
+          <arg name="config_file"               value="$(arg mars_config_in)" />
 
-          <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-          <arg name="transform_in_topic"            value="$(arg mars_transform_in)" />
+          <arg name="imu_in_topic"              value="$(arg mars_imu_in)" />
+          <arg name="transform_in_topic"        value="$(arg mars_transform_in)" />
 
-          <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
-          <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
+          <arg name="full_state_lite_out_topic" value="$(arg mars_lite_ext_state_out)"  if="$(arg use_px4_bridge)" />
+          <arg name="pose_state_out_topic"      value="$(arg mars_pose_out)"            unless="$(arg use_px4_bridge)"  />
         </include>
     </group>
 
     <!-- GPS -->
     <group if="$(arg use_gps)">
       <include file="$(find mars_ros)/launch/mars_gps.launch">
+        <arg name="config_file"                   value="$(arg mars_config_in)" />
 
         <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
         <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" />
@@ -58,7 +59,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
         <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
         <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />
 
-        <arg name="config_file"   value="$(find flightstack_bringup)/configs/mars/config_gps.yaml" />
       </include>
     </group>
   </group>

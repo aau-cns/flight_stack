@@ -17,7 +17,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="dev_type"  default="xu4" /> <!-- or "pi" -->
 
   <!-- Optitrack Arguments -->
-  <arg name="use_optitrack"         default="True" />
+  <arg name="use_gps"               default="False" />
   <arg name="optitrack_object_name" default="twins_five" />
   <arg name="optitrack_throttle"    default="False" />
 
@@ -27,7 +27,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <include file="$(find flightstack_bringup)/launch/individual/px4.launch">
       <arg name="platform"          value="$(arg dev_type)" />
     </include>
-    <include file="$(find flightstack_bringup)/launch/individual/optitrack_aau_dronehall.launch" if="$(arg use_optitrack)">
+    <include file="$(find flightstack_bringup)/launch/individual/optitrack_aau_dronehall.launch" unless="$(arg use_gps)">
       <arg name="object_name"       value="$(arg optitrack_object_name)" />
       <arg name="throttle"          value="$(arg optitrack_throttle)" />
     </include>
