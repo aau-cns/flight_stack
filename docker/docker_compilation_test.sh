@@ -13,8 +13,8 @@
 # <christian.brommer@ieee.org>.
 
 echo "Copying Source Files..."
-cp -r /source/ /catkin_build_ws/src
-cp -r /source/ /catkin_make_ws/src
+# cp -r /source/* /catkin_build_ws/src
+# cp -r /source/* /catkin_make_ws/src
 
 # build with catkin build
 echo "Building the Appliaction with 'catkin build' ..."

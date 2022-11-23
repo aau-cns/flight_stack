@@ -43,6 +43,12 @@ jobs:
         color: orange
         namedLogo: ROS
 
+    - name: Get newest Git version
+      run: >
+           apt update && apt install --no-install-recommends -y
+           software-properties-common
+           && add-apt-repository ppa:git-core/ppa
+
     - name: Install Dependencies
       run: >
            apt update && apt install --no-install-recommends -y
@@ -73,6 +79,8 @@ jobs:
       run: >
            apt update && apt install --no-install-recommends -y
            python3-catkin-tools
+           python3-catkin-pkg
+           python3-rospkg
            python3-rosdep
            python3-rosinstall-generator
            python3-future
