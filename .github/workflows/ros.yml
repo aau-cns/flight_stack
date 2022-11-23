@@ -15,8 +15,11 @@ name: ROS
 on:
   push:
     branches: [ "main", "development"]
+    paths:
+      - 'src/**'
   pull_request:
     branches: [ "main", "development"]
+
 
 jobs:
   ros_ci:

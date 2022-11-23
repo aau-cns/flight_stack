@@ -23,9 +23,9 @@ jobs:
     name: Build Test Container (${{ github.ref_name }})
     runs-on: ubuntu-latest
     env:
-      IMAGE_URL: ${{secrets.GITLAB_REGISTRY_IMAGE_URL}}
+      IMAGE_URL: ${{ secrets.GITLAB_REGISTRY_IMAGE_URL }}
       IMAGE_NAME: cns_flight_stack_cws_env
-      COMMIT_HASH: ${{GITHUB_SHA::6}}
+      COMMIT_HASH: ${{ github.sha }}
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -48,9 +48,9 @@ jobs:
       - name: Build Docker Image (latest)
         if: ${{ github.ref_name == 'main' }}
         run: >
-             docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag ${IMAGE_URL}/${IMAGE_NAME}:latest --tag ${IMAGE_URL}/${IMAGE_NAME}:${COMMIT_HASH} --compress --force-rm --push ./docker/
+             docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag ${IMAGE_URL}/${IMAGE_NAME}:latest --tag ${IMAGE_URL}/${IMAGE_NAME}:${COMMIT_HASH::6} --compress --force-rm --push ./docker/
 
       - name: Build Docker Image (dev)
         if: ${{ github.ref_name == 'development' }}
         run: >
-             docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag ${IMAGE_URL}/${IMAGE_NAME}:dev --tag ${IMAGE_URL}/${IMAGE_NAME}:${COMMIT_HASH} --compress --squash --force-rm --push ./docker/
+             docker buildx build --platform=linux/amd64,linux/arm64,linux/arm/v7 --tag ${IMAGE_URL}/${IMAGE_NAME}:dev --tag ${IMAGE_URL}/${IMAGE_NAME}:${COMMIT_HASH::6} --compress --squash --force-rm --push ./docker/
