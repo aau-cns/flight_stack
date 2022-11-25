@@ -23,7 +23,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="watchdog_status_topic"     		          default="/watchdog/log" />
   <arg name="watchdog_action_topic"     		          default="/watchdog/action" />
   <arg name="mission_sequencer_request_topic"         default="/autonomy/request" />
-  <arg name="mission_sequencer_responce_topic"        default="/autonomy/response" />
+  <arg name="mission_sequencer_response_topic"        default="/autonomy/response" />
   <arg name="landing_detection_topic"                 default="/toland_detector/is_landed" />
   <arg name="mission_sequencer_waypoints_topic"       default="/mission_sequencer/waypoint_list" />
 
@@ -42,6 +42,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="maximum_flight_time_min"                 default="5" />
   <arg name="fix_timeout_ms"                          default="25000" />
   <arg name="mission_id_no_ui"                        default="1" />
+  <arg name="logger_filepath"                         default="$(env HOME)/.ros/log/autonomy/" />
+  <arg name="trajectory_dir"                          default="$(find flightstack_bringup)/trajectories/" />
 
   <!-- autonomy flags -->
   <arg name="activate_user_interface"                 default="true" />
@@ -57,15 +59,17 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('dev_id') == 1)">
-    <include file="$(find autonomy)/launch/autonomy.launch">
-      <arg name="config_filepath"     			             value="$(arg config_filepath)" />
+    <include file="$(find autonomy_engine)/launch/autonomy.launch">
+      <arg name="config_filepath"                         value="$(arg config_filepath)" />
+      <arg name="logger_filepath"                         value="$(arg logger_filepath)" />
+      <arg name="trajectory_dir"                          value="$(arg trajectory_dir)" />
 
       <!-- arguments topics -->
       <arg name="watchdog_heartbeat_topic"     		        value="$(arg watchdog_heartbeat_topic)" />
       <arg name="watchdog_status_topic"     		          value="$(arg watchdog_status_topic)" />
       <arg name="watchdog_action_topic"     		          value="$(arg watchdog_action_topic)" />
       <arg name="mission_sequencer_request_topic"		      value="$(arg mission_sequencer_request_topic)" />
-      <arg name="mission_sequencer_responce_topic"        value="$(arg mission_sequencer_responce_topic)" />
+      <arg name="mission_sequencer_response_topic"        value="$(arg mission_sequencer_response_topic)" />
       <arg name="landing_detection_topic"			            value="$(arg landing_detection_topic)" />
       <arg name="mission_sequencer_waypoints_topic"	      value="$(arg mission_sequencer_waypoints_topic)" />
 

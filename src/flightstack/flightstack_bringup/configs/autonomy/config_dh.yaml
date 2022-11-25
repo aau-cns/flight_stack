@@ -3,7 +3,7 @@ missions:
   mission_1:
     description: "Takeoff, hover, land"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/toland.csv"
+      - "dh/toland.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -17,7 +17,7 @@ missions:
   mission_2:
     description: "Square 3x3 - Normal"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/square.csv"
+      - "dh/square.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -31,7 +31,7 @@ missions:
   mission_3:
     description: "Square 3x3 - Failure"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/square.csv"
+      - "dh/square.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -45,7 +45,7 @@ missions:
   mission_4:
     description: "Straight Line 5m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/line.csv"
+      - "dh/line.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]
@@ -59,7 +59,7 @@ missions:
   mission_5:
     description: "Straight Line 3m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/line_short.csv"
+      - "dh/line_short.csv"
     entities_actions:
       - ["px4_gps", "continue"]
       - ["px4_imu", "failure"]

@@ -14,7 +14,7 @@ corresponding paper and consult the `LICENSE` file for a detailed explanation.
 
 ```latex
 @article{cns_flightstack22,
-    title        = {Flight Stack for Reproducible and Customizable Autonomy Applications in Research and Industry},
+    title        = {CNS Flight Stack for Reproducible, Customizable, and Fully Autonomous Applications},
     author       = {Scheiber, Martin and Fornasier, Alessandro and Jung, Roland and Böhm, Christoph and Dhakate, Rohit and Stewart, Christian and Steinbrener, Jan and Weiss, Stephan and Brommer, Christian},
     journal      = {IEEE Robotics and Automation Letters},
     volume       = {7},

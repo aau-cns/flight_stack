@@ -3,7 +3,7 @@ missions:
   mission_1:
     description: "Takeoff, hover, land"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/dh/toland.csv"
+      - "dh/toland.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -17,7 +17,7 @@ missions:
   mission_2:
     description: "Square 3x3 - Normal"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/square.csv"
+      - "gps/square.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -31,7 +31,7 @@ missions:
   mission_3:
     description: "Straight Line 5m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line.csv"
+      - "gps/line.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -45,7 +45,7 @@ missions:
   mission_4:
     description: "Straight Line 3m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_short.csv"
+      - "gps/line_short.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -59,7 +59,7 @@ missions:
   mission_5:
     description: "Medium Line 25m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_medium.csv"
+      - "gps/line_medium.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -73,7 +73,7 @@ missions:
   mission_6:
     description: "Long Line 50m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_long.csv"
+      - "gps/line_long.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
@@ -87,7 +87,7 @@ missions:
   mission_7:
     description: "Long Line 100m"
     filepaths:
-      - "/home/core/catkin_ws/src/flightstack/flightstack_bringup/trajectories/gps/line_superlong.csv"
+      - "gps/line_superlong.csv"
     entities_actions:
       - ["px4_gps", "land"]
       - ["px4_imu", "failure"]
