@@ -14,7 +14,7 @@ name: ROS
 
 on:
   push:
-    branches: [ "main", "development", "release/*"]
+    branches: [ "main", "development" ]
     paths:
       - 'src/**'
       - '.github/workflows/ros.yml'
@@ -37,7 +37,7 @@ jobs:
     steps:
     - name: Create Badge (running)
       if: ${{ env.BADGE_CREATION == 'true' }}
-      uses: schneegans/dynamic-badges-action@v1.4.0
+      uses: schneegans/dynamic-badges-action@v1.6.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: d4b4eee830e1c61a17ed35ecf413f8d1
@@ -115,7 +115,7 @@ jobs:
 
     - name: Create Badge (success)
       if: ${{ success() && env.BADGE_CREATION == 'true' }}
-      uses: schneegans/dynamic-badges-action@v1.4.0
+      uses: schneegans/dynamic-badges-action@v1.6.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: d4b4eee830e1c61a17ed35ecf413f8d1
@@ -127,7 +127,7 @@ jobs:
 
     - name: Create Badge (failure)
       if: ${{ failure() && env.BADGE_CREATION == 'true' }}
-      uses: schneegans/dynamic-badges-action@v1.4.0
+      uses: schneegans/dynamic-badges-action@v1.6.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: d4b4eee830e1c61a17ed35ecf413f8d1
@@ -139,7 +139,7 @@ jobs:
 
     - name: Create Badge (cancelled)
       if: ${{ cancelled() && env.BADGE_CREATION == 'true' }}
-      uses: schneegans/dynamic-badges-action@v1.4.0
+      uses: schneegans/dynamic-badges-action@v1.6.0
       with:
         auth: ${{ secrets.GIST_SECRET }}
         gistID: d4b4eee830e1c61a17ed35ecf413f8d1
