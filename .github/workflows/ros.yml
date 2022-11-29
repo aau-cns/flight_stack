@@ -14,7 +14,7 @@ name: ROS
 
 on:
   push:
-    branches: [ "main", "development"]
+    branches: [ "main", "development", "release/*"]
     paths:
       - 'src/**'
       - '.github/workflows/ros.yml'
@@ -79,7 +79,7 @@ jobs:
            ros-${{ matrix.ROS_DISTRO }}-control-toolbox
 
     - name: Install ROS-dependent dependencies
-      if: ${{ matrix.ROS_DISTRO != 'kinetic' }}
+      if: ${{ matrix.ROS_DISTRO == 'noetic' }}
       run: >
            apt update && apt install --no-install-recommends -y
            python3-catkin-tools
@@ -91,7 +91,7 @@ jobs:
            python3-lxml
 
     - name: Install ROS-dependent dependencies
-      if: ${{ matrix.ROS_DISTRO == 'kinetic' }}
+      if: ${{ matrix.ROS_DISTRO != 'noetic' }}
       run: >
            apt update && apt install --no-install-recommends -y
            python-catkin-tools
