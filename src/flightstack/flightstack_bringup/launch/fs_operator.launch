@@ -20,8 +20,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- autonomy topics -->
   <arg name="watchdog_heartbeat_topic"                default="/watchdog/status" />
-  <arg name="watchdog_status_topic"     		          default="/watchdog/log" />
-  <arg name="watchdog_action_topic"     		          default="/watchdog/action" />
+  <arg name="watchdog_status_topic"                   default="/watchdog/log" />
+  <arg name="watchdog_action_topic"                   default="/watchdog/action" />
   <arg name="mission_sequencer_request_topic"         default="/autonomy/request" />
   <arg name="mission_sequencer_response_topic"        default="/autonomy/response" />
   <arg name="landing_detection_topic"                 default="/toland_detector/is_landed" />
@@ -37,8 +37,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- other arguments -->
   <arg name="watchdog_rate_Hz"                        default="1.0" />
-  <arg name="watchdog_startup_time_s"			            default="10" />
-  <arg name="watchdog_heartbeat_timeout_multiplier"	  default="2.0" />
+  <arg name="watchdog_startup_time_s"                 default="10" />
+  <arg name="watchdog_heartbeat_timeout_multiplier"   default="2.0" />
   <arg name="maximum_flight_time_min"                 default="5" />
   <arg name="fix_timeout_ms"                          default="25000" />
   <arg name="mission_id_no_ui"                        default="1" />
@@ -65,17 +65,17 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
       <arg name="trajectory_dir"                          value="$(arg trajectory_dir)" />
 
       <!-- arguments topics -->
-      <arg name="watchdog_heartbeat_topic"     		        value="$(arg watchdog_heartbeat_topic)" />
-      <arg name="watchdog_status_topic"     		          value="$(arg watchdog_status_topic)" />
-      <arg name="watchdog_action_topic"     		          value="$(arg watchdog_action_topic)" />
-      <arg name="mission_sequencer_request_topic"		      value="$(arg mission_sequencer_request_topic)" />
+      <arg name="watchdog_heartbeat_topic"                value="$(arg watchdog_heartbeat_topic)" />
+      <arg name="watchdog_status_topic"                   value="$(arg watchdog_status_topic)" />
+      <arg name="watchdog_action_topic"                   value="$(arg watchdog_action_topic)" />
+      <arg name="mission_sequencer_request_topic"         value="$(arg mission_sequencer_request_topic)" />
       <arg name="mission_sequencer_response_topic"        value="$(arg mission_sequencer_response_topic)" />
-      <arg name="landing_detection_topic"			            value="$(arg landing_detection_topic)" />
-      <arg name="mission_sequencer_waypoints_topic"	      value="$(arg mission_sequencer_waypoints_topic)" />
+      <arg name="landing_detection_topic"                 value="$(arg landing_detection_topic)" />
+      <arg name="mission_sequencer_waypoints_topic"       value="$(arg mission_sequencer_waypoints_topic)" />
 
       <!-- arguments services -->
       <arg name="watchdog_start_service_name"             value="$(arg watchdog_start_service_name)" />
-      <arg name="data_recrding_service_name"		          value="$(arg data_recrding_service_name)" />
+      <arg name="data_recrding_service_name"              value="$(arg data_recrding_service_name)" />
       <arg name="takeoff_service_name"                    value="$(arg takeoff_service_name)" />
       <arg name="estimator_supervisor_service_name"       value="$(arg estimator_supervisor_service_name)" />
       <arg name="estimator_init_service_name"             value="$(arg estimator_init_service_name)" />
@@ -83,8 +83,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
       <!-- arguments setup -->
       <arg name="watchdog_rate_Hz"                        value="$(arg watchdog_rate_Hz)" />
-      <arg name="watchdog_startup_time_s"			            value="$(arg watchdog_startup_time_s)" />
-      <arg name="watchdog_heartbeat_timeout_multiplier"	  value="$(arg watchdog_heartbeat_timeout_multiplier)" />
+      <arg name="watchdog_startup_time_s"                 value="$(arg watchdog_startup_time_s)" />
+      <arg name="watchdog_heartbeat_timeout_multiplier"   value="$(arg watchdog_heartbeat_timeout_multiplier)" />
       <arg name="maximum_flight_time_min"                 value="$(arg maximum_flight_time_min)" />
       <arg name="fix_timeout_ms"                          value="$(arg fix_timeout_ms)" />
       <arg name="mission_id_no_ui"                        value="$(arg mission_id_no_ui)" />

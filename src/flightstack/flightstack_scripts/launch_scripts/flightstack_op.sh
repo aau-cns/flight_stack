@@ -12,28 +12,73 @@
 # You can contact the authors at <alessandro.fornasier@ieee.org>,
 # and <martin.scheiber@ieee.org>.
 
+################################################################################
+# Global Variables                                                             #
+################################################################################
+
+script_name="${0}"
+
+# command line flags
+debug_on=false
+
+# script VARIABLES
+SLEEP_DURATION=10
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+print_help(){
+    echo "USAGE: ${script_name} [OPTIONS]"
+    echo ""
+    echo "  Options:"
+    echo "    -t TYPE       executes the type of flight, default 'dh'"
+    echo "                  switch between 'gps' or 'dh'"
+    echo "    -d            turns debug output on and switches to debug terminal"
+    echo ""
+    echo "    -h        print this help"
+    echo ""
+    exit 0;
+}
+
+################################################################################
+# Execution Options                                                            #
+################################################################################
+
 # parse flags
-while getopts t: flag
+while getopts dhmnt:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
+
+        d) debug_on=true;;
+        h) print_help;;
+
+        *) echo "Unknown option ${flag}"; print_help;;
     esac
 done
 shift $((OPTIND-1))
 
+################################################################################
+################################################################################
+# MAIN SCRIPT                                                                  #
+################################################################################
+################################################################################
+
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
 
 elif [ "${type}" = "gps" ]; then
 
-  OPS="sleep 10; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
-
+  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
+  
 else
 
-  echo "TODO"
-  exit
+  echo "Unknown flight type: '${type}'"
+  print_help
+  exit 0;
 
 fi
 
@@ -53,15 +98,22 @@ tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 
 # OPERATOR DEBUG WINDOW
 tmux new-window -n 'operator'
-tmux split-window -v -p 90
+# tmux split-window -v -p 90
 
 
 # DEBUG (or operator in manual)
 OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
 OP2="roscd flightstack_scripts/system_scripts"
 
-tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
-tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'
+# tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
+# tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'
+tmux send-keys -t ${SES_NAME}.1 "${OPS}" 'C-m'
 
-tmux select-window -t 'operator'
+# select tmux window
+# if [[ "${debug_on}" = true ]]; then
+  # tmux select-window -t 'debug'
+# else
+  tmux select-window -t 'operator'
+# fi
+
 tmux attach -t ${SES_NAME}

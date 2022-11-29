@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -12,35 +12,82 @@
 # You can contact the authors at <alessandro.fornasier@ieee.org>,
 # and <martin.scheiber@ieee.org>.
 
+################################################################################
+# Global Variables                                                             #
+################################################################################
+
+script_name="${0}"
+
+# command line flags
+debug_on=false
+
+# script VARIABLES
+SLEEP_DURATION_BKG=10
+SLEEP_DURATION_EST=10
+PLATFORM="pi"
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+print_help(){
+    echo "USAGE: ${script_name} [OPTIONS]"
+    echo ""
+    echo "  Options:"
+    echo "    -t TYPE       executes the type of flight, default 'dh'"
+    echo "                  switch between 'gps' or 'dh'"
+    echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
+    echo "                  switch between 'pi' or 'xu4'"
+    echo "    -d            turns debug output on and switches to debug terminal"
+    echo ""
+    echo "    -h        print this help"
+    echo ""
+    exit 0;
+}
+
+################################################################################
+# Execution Options                                                            #
+################################################################################
 
 # parse flags
-while getopts t: flag
+while getopts dht:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
-    # case "${flag}" in
-    #     i) illu=${OPTARG};;
+        p) PLATFORM=${OPTARG};;
+
+        d) debug_on=true;;
+        h) print_help;;
+
+        *) echo "Unknown option ${flag}"; print_help;;
     esac
 done
 shift $((OPTIND-1))
 
-
+################################################################################
+################################################################################
+# MAIN SCRIPT                                                                  #
+################################################################################
+################################################################################
 
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep 20; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2"
+  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
+  EST="sleep ${SLEEP_DURATION_EST}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2"
 
 elif [ ${type} = "gps" ]; then
 
-  BKG="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep 20; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2 use_gps:=True"
+  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
+  EST="sleep ${SLEEP_DURATION_EST}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2 use_gps:=True"
+
+else
+
+  echo "Unknown flight type: '${type}'"
+  print_help
+  exit 0;
 
 fi
-
-# chmod for UWB
-sudo chmod 666 /dev/ttyACM0
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`

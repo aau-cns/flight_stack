@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -12,51 +12,112 @@
 # You can contact the authors at <alessandro.fornasier@ieee.org>,
 # and <martin.scheiber@ieee.org>.
 
+################################################################################
+# Global Variables                                                             #
+################################################################################
+
+script_name="${0}"
+
+# command line flags
+debug_on=false
+manual_flight=false
+dual_platform=false
+
+# script VARIABLES
+SLEEP_DURATION=10
+PLATFORM="pi"
+
+################################################################################
+# Help                                                                         #
+################################################################################
+
+print_help(){
+    echo "USAGE: ${script_name} [OPTIONS]"
+    echo ""
+    echo "  Options:"
+    echo "    -t TYPE       executes the type of flight, default 'dh'"
+    echo "                  switch between 'gps' or 'dh'"
+    echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
+    echo "                  switch between 'pi' or 'xu4'"
+    echo "    -d            turns debug output on and switches to debug terminal"
+    echo "    -m            'manual flight' - does not autostart autonomy/operator"
+    echo "    -n            dual-platform setup (for recording)"
+    echo ""
+    echo "    -h        print this help"
+    echo ""
+    exit 0;
+}
+
+################################################################################
+# Execution Options                                                            #
+################################################################################
+
 # parse flags
-while getopts t: flag
+while getopts dhmnt:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
+        p) PLATFORM=${OPTARG};;
+
+        d) debug_on=true;;
+        m) manual_flight=true;;
+        n) dual_platform=true;;
+        h) print_help;;
+
+        *) echo "Unknown option ${flag}"; print_help;;
     esac
 done
 shift $((OPTIND-1))
 
+################################################################################
+################################################################################
+# MAIN SCRIPT                                                                  #
+################################################################################
+################################################################################
+
+# setup recording args
+REC_ADDITIONAL=""
+if [[ "${dual_platform}" = true ]]; then
+  REC_ADDITIONAL="rec_script_file:=$(rospack find flightstack_scripts)/record_scripts/record_start_dual.sh rec_cmd:=full"
+fi
+
 # Check if flag is provided and define commands
-if [ -z ${type} ]; then
+if [[ -z ${type} || "${type}" = "dh" ]]; then
 
-  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1"
-  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1"
-  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1"
-  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
-  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
-  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
+  SENSOR="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 dev_type:=${PLATFORM}"
+  SAFETY="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_safety.launch dev_id:=1"
+  EST="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1"
+  NAV="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
+  REC="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
 
-elif [ "${type}" = "gps" ]; then
+elif [[ "${type}" = "gps" ]]; then
 
-  SENSOR="sleep 10; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_optitrack:=False"
-  SAFETY="sleep 10; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 use_optitrack:=False"
-  EST="sleep 10; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_gps:=True"
-  NAV="sleep 10; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_gps:=True"
-  REC="sleep 10; roslaunch flightstack_bringup fs_recording.launch dev_id:=1"
-  DROP="sleep 10; roslaunch flightstack_bringup topic_dropper.launch"
+  SENSOR="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_gps:=True dev_type:=${PLATFORM}"
+  SAFETY="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 use_gps:=True"
+  EST="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_gps:=True"
+  NAV="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_gps:=True"
+  REC="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
 
 else
 
-  echo "TODO"
-  exit
+  echo "Unknown flight type: '${type}'"
+  print_help
+  exit 0;
 
 fi
 
 
 # Operator
-OPMAV="sleep 10; rostopic echo -c /mavros/vision_pose/pose"
-OPAUT="sleep 10; rostopic echo -c /autonomy/logger"
+OPMAV="sleep ${SLEEP_DURATION}; rostopic echo -c /mavros/vision_pose/pose"
+OPAUT="sleep ${SLEEP_DURATION}; rostopic echo -c /autonomy/logger"
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`
 export SES_NAME="flightstack_dev1_${CUR_DATE}"
 
-## INFO(martin): use .0 .1 if base index has not been configured
+## INFO(scm): use .0 .1 if base index has not been configured
 tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 
 # ROSCORE
@@ -68,10 +129,8 @@ tmux send-keys -t ${SES_NAME}.2 "${REC}" 'C-m'
 # BACKGROUND
 tmux new-window -n 'background'
 tmux split-window -v
-tmux split-window -v
 tmux send-keys -t ${SES_NAME}.1 "${SENSOR}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${SAFETY}" 'C-m'
-tmux send-keys -t ${SES_NAME}.3 "${DROP}" 'C-m'
 
 # NAVIGATION & CONTROL
 tmux new-window -n 'gnc'
@@ -80,23 +139,46 @@ tmux send-keys -t ${SES_NAME}.1 "${EST}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${NAV}" 'C-m'
 
 # OPERATOR DEBUG WINDOW
-tmux new-window -n 'debug'
-tmux split-window -v
-tmux split-window -h
-tmux select-pane -t 1
-tmux split-window -v
-tmux select-pane -t 3
-tmux split-window -v -p 90
+if [[ "${debug_on}" = true ]]; then
+  tmux new-window -n 'debug'
+  tmux split-window -v
+  tmux split-window -h
+  tmux select-pane -t 1
+  tmux split-window -v
+  tmux select-pane -t 3
+  tmux split-window -v -p 90
+
+  # DEBUG (or operator in manual)
+  OP1="sleep ${SLEEP_DURATION}; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
+  OP2="roscd flightstack_scripts/system_scripts"
+
+  tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.5 "${OPMAV}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.4 "${OPAUT}" 'C-m'
+fi
+
+if [[ "${manual_flight}" != true ]]; then
+  # OPERATOR DEBUG WINDOW
+  tmux new-window -n 'operator'
+  tmux split-window -v -p 90
 
 
-# DEBUG (or operator in manual)
-OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-OP2="roscd flightstack_scripts/system_scripts"
+  # DEBUG (or operator in manual)
+  OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
+  OP2="roscd flightstack_scripts/system_scripts"
 
-tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
-tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
-tmux send-keys -t ${SES_NAME}.5 "${OPMAV}" 'C-m'
-tmux send-keys -t ${SES_NAME}.4 "${OPAUT}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'
+fi
 
-tmux select-window -t 'operator'
+# select tmux window
+if [[ "${debug_on}" = true ]]; then
+  tmux select-window -t 'debug'
+elif [[ "${manual_flight}" != true ]]; then
+  tmux select-window -t 'operator'
+else
+  tmux select-window -t 'gnc'
+fi
+
 tmux attach -t ${SES_NAME}

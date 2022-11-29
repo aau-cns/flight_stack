@@ -19,6 +19,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <arg name="use_gps"                   default="False" />
   <arg name="use_gps_vel"               default="False" />
+  <arg name="use_px4_bridge"            default="False" />
 
   <!-- MaRS arguments -->
   <arg name="mars_imu_in"               default="/mavros/imu/data_raw" />
@@ -54,7 +55,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
         <arg name="config_file"                   value="$(arg mars_config_in)" />
 
         <arg name="imu_in_topic"                  value="$(arg mars_imu_in)" />
-        <arg name="gps1_pos_in"                   value="$(arg mars_gps_pos_in)" />
+        <arg name="gps1_in_topic"                 value="$(arg mars_gps_pos_in)" />
 
         <arg name="full_state_lite_out_topic"     value="$(arg mars_lite_ext_state_out)" if="$(arg use_px4_bridge)" />
         <arg name="pose_state_out_topic"          value="$(arg mars_pose_out)" unless="$(arg use_px4_bridge)"  />

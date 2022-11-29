@@ -16,8 +16,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <arg name="dev_id"    default="1" />
 
     <!-- data recorder paramters -->
-    <arg name="rec_script_file"   default="$(find flightstack_scripts)/record_scripts/record_start_dh.sh" />
-    <arg name="rec_cmd"           default="full" />
+    <arg name="rec_script_file"   default="$(find flightstack_scripts)/record_scripts/record_full.sh" />
+    <arg name="rec_cmd"           default="dev1_full" />
 
     <arg name="store_script_file" default="$(find data_recorder)/scripts/store.sh" />
     <arg name="store_cmd"         default="" />

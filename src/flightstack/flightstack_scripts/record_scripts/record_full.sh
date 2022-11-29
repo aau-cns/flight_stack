@@ -23,29 +23,85 @@
 # First, list all topics specific to a sensor, then concatinate all strings for one group/device,
 # then generate the final string and record ist
 
-# Example to record all non vision sensors and the ids images:
-# ./record_optitrack_full_setup ids
-
 # Script to record the following topics:
 # - MoCap (vrpn optitrack)
 # - IDS camera images
 # - RealSense camera images and imu
 # - PX4 imu, pressure, and magnetometer
 
+echo "arg0: ${0}"
+echo "arg1: ${1}"
+echo "arg2: ${2}"
+
+# setup colors
+COL_ERR='\033[0;31m'  #Red Color
+COL_WARN='\033[0;33m' #Yellow Color
+NC='\033[0m'          #No Color
+
+################################################################################
+# Help                                                                         #
+################################################################################
+print_help(){
+    echo "USAGE: ${script_name} <TOPICS> [OPTIONS]"
+    echo ""
+    echo "  Topics:         details the topics to record"
+    echo "    full_dev1     all rostopics typically on dev1"
+    echo "    full_dev2     all rostopics typically on dev2"
+    echo ""
+    echo "  Options:"
+    echo "    -l PATH       path to internal media"
+    echo "    -m PATH       path to external media device (for images)"
+    echo "    -p NAME       prefix of bagfile, default 'fs'"
+    echo ""
+    echo "    -h        print this help"
+    echo ""
+    exit 0;
+}
+
+# SCRIPT VARIABLES
 bag_name="fs"
 path_local=""
 path_media=""
 
+# parse flags
+while getopts hl:m:p: flag
+do
+    case "${flag}" in
+        l) path_local=${OPTARG};;
+        m) path_media=${OPTARG};;
+        p) bag_name=${OPTARG};;
+
+        h) print_help;;
+
+        *) echo "Unknown option ${flag}"; print_help;;
+    esac
+done
+shift $((OPTIND-1))
+
+
 # check for local/media paths
-if [ ! -z "${2}" ]; then
-  path_local="${2}/"
+if [ -z "${path_local}" ]; then
+  echo "${COL_WARN}No local path provided, recording to home directory: '${HOME}/recordings'${NC}"
+  path_local="${HOME}/recordings"
 fi
-if [ ! -z "${3}" ]; then
-  path_media="${3}/"
+if [ -z "${path_media}" ]; then
+  echo "${COL_WARN}No media path provided, recording to local path: '${path_local}'.${NC}"
+  path_media="${path_local}"
 fi
 
-RED='\033[0;31m' #Red Color
-NC='\033[0m'     #No Color
+# check if directories exist
+if [ ! -d "${path_local}" ]; then
+  echo "${COL_WARN}${path_local} does not exist, creating it... ${NC}"
+  mkdir -p ${path_local}
+fi
+if [ ! -d "${path_media}" ]; then
+  echo "${COL_WARN}${path_media} does not exist, creating it... ${NC}"
+  mkdir -p ${path_media}
+fi
+
+
+# -----------------------------------------------------------------------------
+# SETUP TOPIC GROUPS
 
 px4_topics=(
 "/mavros/imu/data_raw"
@@ -165,9 +221,6 @@ echo "Bagname: ${bag_name}"
 if [ "$1" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
     echo "  local path: $path_local"
-    # echo "  media path: $path_media"
-    # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all1" ${topics_mod1_sensors} ${topics_mod1_nodes} && kill $!
-    # echo "roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_all1 rosbag_topics:=[${topics_mod1_sensors%,} ${topics_mod1_nodes%,}]" # && kill $!
     rosparam dump "${path_local}${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_sensors" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors rosbag_topics:="[${topics_mod1_sensors%,}]" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_nodes" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes rosbag_topics:="[${topics_mod1_nodes%,}]" && \
@@ -184,11 +237,6 @@ elif [ "$1" == "dev1_sensors" ] ; then
 elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2 (full): "
     echo "  local path: $path_local"
-    # echo "  media path: $path_media"
-    # rosbag record --tcpnodelay -b 512 --split --size=500 -o "${path_local}${bag_name}_all2" ${topics_mod2_sensors} && kill $!
-    # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_media$bag_name$name_mod2_rs_img ${topics_mod2_rs_img} & \
-    # rosbag record --tcpnodelay -b 0 --split --size=1000 -o $path_local$bag_name$name_mod2_sensors ${topics_mod2_sensors} && kill $!
-    # roslaunch nodelet_rosbag nodelet_rosbag.launch rosbag_path:=${path_local} rosbag_prefix:="${bag_name}_all2" rosbag_topics:="[/camera/image_raw, /camera/camera_info]" && kill $!
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_sensors" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors rosbag_topics:="[${topics_mod2_sensors%,}]" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_cams" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam rosbag_topics:="[${topics_mod2_cam%,}]" && \
     kill $!
@@ -218,6 +266,6 @@ elif [ "$1" == "sensors" ] ; then
     rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record}
 
 else # Handle error case
-    echo -e "${RED}[ERROR] The given option is not valid! Please add the group of topics you'd like to record.${NC}"
+    echo -e "${COL_ERR}[ERROR] The given option '${1}' is not valid! Please add the group of topics you'd like to record.${NC}"
     exit
 fi;
