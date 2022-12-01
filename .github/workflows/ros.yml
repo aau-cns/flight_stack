@@ -30,7 +30,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ROS_DISTRO: [noetic, melodic, kinetic]
+        ROS_DISTRO: [noetic, melodic]
         BUILD_TYPE: [Release, Debug]
     env:
       BADGE_CREATION: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository_owner == 'aau-cns' }}
