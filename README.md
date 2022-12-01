@@ -43,6 +43,19 @@ catkin init
 catkin build
 ```
 
+After building you can install the launch scripts with
+```bash
+sudo ./scripts/install_scripts.sh
+```
+
+Then, launching the flight stack is possible via
+
+- `fs_remote <USER>@<IP>` to launch the flight stack remotly with user `ID` at device with IP `IP`
+- `fs_dev<1|2>` to launch the flight stack on device 1 or 2
+- `fs_op` to launch the operator window, i.e., autonomy engine only
+
+Please consult `fs_<SCRIPT> -h` for further information.
+
 ## Isolated Build with Docker
 
 ```sh
