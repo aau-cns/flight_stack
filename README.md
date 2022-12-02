@@ -69,6 +69,7 @@ docker run -it --rm \
   -v "$(pwd)/src":/source:ro \
   cns_flight_stack_test_env:latest
 ```
+Please do not forget to build your workspace inside the docker test container, as the source is just linked to your host.
 
 ## Deployment Details
 
