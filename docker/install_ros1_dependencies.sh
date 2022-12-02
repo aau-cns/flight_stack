@@ -18,6 +18,7 @@ apt update && apt install --no-install-recommends -y \
   wget \
   doxygen \
   graphviz \
+  tmux \
   build-essential \
   libeigen3-dev \
   libgoogle-glog-dev \

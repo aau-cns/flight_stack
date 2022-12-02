@@ -27,43 +27,6 @@ WORKDIR /opt/flightstack
 COPY ./install_ros1_dependencies.sh /opt/flightstack/install_ros1_dependencies.sh
 RUN /opt/flightstack/install_ros1_dependencies.sh
 
-# RUN apt update && apt install --no-install-recommends -y \
-#     libeigen3-dev \
-#     libgoogle-glog-dev \
-#     libgflags-dev \
-#     libgeographic-dev \
-#     geographiclib-tools \
-#     && rm -rf /var/lib/apt/lists/*
-#
-# RUN apt update && apt install --no-install-recommends -y \
-#     python3-catkin-tools \
-#     python3-rosdep \
-#     ros-noetic-dynamic-reconfigure \
-#     ros-noetic-eigen-conversions \
-#     ros-noetic-tf \
-#     ros-noetic-tf2-ros \
-#     ros-noetic-tf2-eigen \
-#     ros-noetic-nodelet \
-#     ros-noetic-geographic-msgs \
-#     ros-noetic-angles \
-#     ros-noetic-diagnostic-updater \
-#     ros-noetic-urdf \
-#     ros-noetic-control-toolbox \
-#     && rm -rf /var/lib/apt/lists/*
-#
-#     # ros-noetic-mavlink \
-# RUN apt update && apt install -y \
-#     python3-rosinstall-generator \
-#     python3-future \
-#     python3-lxml \
-#     && rm -rf /var/lib/apt/lists/*
-#
-#
-# WORKDIR /opt/flightstack
-# RUN wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh && \
-#     chmod +x install_geographiclib_datasets.sh
-# RUN ./install_geographiclib_datasets.sh
-
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; rosdep init && rosdep update'
 RUN mkdir -p /source
 
@@ -72,12 +35,16 @@ RUN ln -s /source ./ext_source
 WORKDIR /catkin_build_ws/
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; catkin init'
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; catkin config --extend /opt/ros/noetic'
-#RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; catkin build'
 
 WORKDIR /catkin_make_ws/src
 RUN ln -s /source ./ext_source
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; catkin_init_workspace'
 
+# link scripts although not existent yet
+RUN ln -s /source/flightstack/flightstack_scripts/launch_scripts/flightstack_op.sh /usr/bin/fs_op \
+    && ln -s /source/flightstack/flightstack_scripts/launch_scripts/flightstack_dev1.sh /usr/bin/fs_dev1 \
+    && ln -s /source/flightstack/flightstack_scripts/launch_scripts/flightstack_dev2.sh /usr/bin/fs_dev2 \
+    && ln -s /source/flightstack/flightstack_scripts/launch_scripts/flightstack_remote.sh /usr/bin/fs_remote
 
 COPY ./docker_compilation_test.sh /
 #CMD /docker_compilation_test.sh
