@@ -221,7 +221,7 @@ echo "Bagname: ${bag_name}"
 if [ "$1" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
     echo "  local path: $path_local"
-    rosparam dump "${path_local}${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
+    rosparam dump "${path_local}/${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_sensors" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors rosbag_topics:="[${topics_mod1_sensors%,}]" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_nodes" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes rosbag_topics:="[${topics_mod1_nodes%,}]" && \
     kill $!

@@ -36,7 +36,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
 
   <!-- other arguments -->
-  <arg name="watchdog_rate_Hz"                        default="1.0" />
+  <arg name="watchdog_rate_Hz"                        default="0.5" />
   <arg name="watchdog_startup_time_s"                 default="10" />
   <arg name="watchdog_heartbeat_timeout_multiplier"   default="2.0" />
   <arg name="maximum_flight_time_min"                 default="5" />
