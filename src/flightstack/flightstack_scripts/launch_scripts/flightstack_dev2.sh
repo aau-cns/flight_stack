@@ -25,6 +25,9 @@ debug_on=false
 SLEEP_DURATION_BKG=10
 SLEEP_DURATION_EST=10
 PLATFORM="pi"
+LAUNCH_DIR="flightstack"
+SCRIPTS_DIR="flightstack"
+LAUNCH_PRE="fs"
 
 ################################################################################
 # Help                                                                         #
@@ -38,7 +41,11 @@ print_help(){
     echo "                  switch between 'gps' or 'dh'"
     echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
     echo "                  switch between 'pi' or 'xu4'"
-    echo "    -d            turns debug output on and switches to debug terminal"
+    echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
+    echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
+    echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+    echo ""
+    echo "    -v            turns debug output on and switches to debug terminal"
     echo ""
     echo "    -h        print this help"
     echo ""
@@ -49,14 +56,18 @@ print_help(){
 # Execution Options                                                            #
 ################################################################################
 
+change_scripts=false
 # parse flags
-while getopts dht:p: flag
+while getopts vhd:s:f:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
         p) PLATFORM=${OPTARG};;
+        d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
+        f) LAUNCH_PRE=${OPTARG};;
+        s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
-        d) debug_on=true;;
+        v) debug_on=true;;
         h) print_help;;
 
         *) echo "Unknown option ${flag}"; print_help;;
@@ -73,13 +84,13 @@ shift $((OPTIND-1))
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep ${SLEEP_DURATION_EST}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2"
+  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
+  EST="sleep ${SLEEP_DURATION_EST}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2"
 
 elif [ ${type} = "gps" ]; then
 
-  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=2"
-  EST="sleep ${SLEEP_DURATION_EST}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=2 use_gps:=True"
+  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
+  EST="sleep ${SLEEP_DURATION_EST}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2 use_gps:=True"
 
 else
 

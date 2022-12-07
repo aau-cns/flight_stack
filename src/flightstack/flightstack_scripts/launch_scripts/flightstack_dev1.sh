@@ -26,6 +26,9 @@ dual_platform=false
 # script VARIABLES
 SLEEP_DURATION=10
 PLATFORM="pi"
+LAUNCH_DIR="flightstack"
+SCRIPTS_DIR="flightstack"
+LAUNCH_PRE="fs"
 
 ################################################################################
 # Help                                                                         #
@@ -38,8 +41,12 @@ print_help(){
     echo "    -t TYPE       executes the type of flight, default 'dh'"
     echo "                  switch between 'gps' or 'dh'"
     echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
-    echo "                  switch between 'pi' or 'xu4'"
-    echo "    -d            turns debug output on and switches to debug terminal"
+    echo "                  switch between 'pi', 'xu4', or 'agx'"
+    echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
+    echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
+    echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+    echo ""
+    echo "    -v            turns debug output on and switches to debug terminal"
     echo "    -m            'manual flight' - does not autostart autonomy/operator"
     echo "    -n            dual-platform setup (for recording)"
     echo ""
@@ -52,14 +59,18 @@ print_help(){
 # Execution Options                                                            #
 ################################################################################
 
+change_scripts=false
 # parse flags
-while getopts dhmnt:p: flag
+while getopts hmvnd:f:s:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
         p) PLATFORM=${OPTARG};;
+        d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
+        f) LAUNCH_PRE=${OPTARG};;
+        s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
-        d) debug_on=true;;
+        v) debug_on=true;;
         m) manual_flight=true;;
         n) dual_platform=true;;
         h) print_help;;
@@ -75,30 +86,36 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# check if SCRIPTS_DIR has to be overrriden
+if [[ "${change_scripts}" = true ]]; then
+  #statements
+  SCRIPTS_DIR=${LAUNCH_DIR}
+fi
+
 # setup recording args
 REC_ADDITIONAL=""
 if [[ "${dual_platform}" = true ]]; then
-  REC_ADDITIONAL="rec_script_file:=$(rospack find flightstack_scripts)/record_scripts/record_start_dual.sh rec_cmd:=full"
+  REC_ADDITIONAL="rec_script_file:=$(rospack find ${SCRIPTS_DIR}_scripts)/record_scripts/record_start_dual.sh rec_cmd:=full"
 fi
 
 # Check if flag is provided and define commands
 if [[ -z ${type} || "${type}" = "dh" ]]; then
 
-  SENSOR="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 dev_type:=${PLATFORM}"
-  SAFETY="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_safety.launch dev_id:=1"
-  EST="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1"
-  NAV="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1"
-  REC="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
-  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
+  SENSOR="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 dev_type:=${PLATFORM}"
+  SAFETY="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1"
+  EST="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1"
+  NAV="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1"
+  REC="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
 
 elif [[ "${type}" = "gps" ]]; then
 
-  SENSOR="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_sensors.launch dev_id:=1 use_gps:=True dev_type:=${PLATFORM}"
-  SAFETY="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_safety.launch dev_id:=1 use_gps:=True"
-  EST="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_estimation.launch dev_id:=1 use_gps:=True"
-  NAV="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_navigation.launch dev_id:=1 use_gps:=True"
-  REC="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
-  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
+  SENSOR="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 use_gps:=True dev_type:=${PLATFORM}"
+  SAFETY="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1 use_gps:=True"
+  EST="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1 use_gps:=True"
+  NAV="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1 use_gps:=True"
+  REC="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
 
 else
 
@@ -150,7 +167,7 @@ if [[ "${debug_on}" = true ]]; then
 
   # DEBUG (or operator in manual)
   OP1="sleep ${SLEEP_DURATION}; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-  OP2="roscd flightstack_scripts/system_scripts"
+  OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
 
   tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
@@ -166,7 +183,7 @@ if [[ "${manual_flight}" != true ]]; then
 
   # DEBUG (or operator in manual)
   OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-  OP2="roscd flightstack_scripts/system_scripts"
+  OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
 
   tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'

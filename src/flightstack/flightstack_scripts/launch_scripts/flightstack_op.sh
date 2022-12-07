@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Copyright (C) 2022 Alessandro Fornaiser, Martin Scheiber,
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -23,6 +23,9 @@ debug_on=false
 
 # script VARIABLES
 SLEEP_DURATION=10
+LAUNCH_DIR="flightstack"
+SCRIPTS_DIR="flightstack"
+LAUNCH_PRE="fs"
 
 ################################################################################
 # Help                                                                         #
@@ -34,7 +37,11 @@ print_help(){
     echo "  Options:"
     echo "    -t TYPE       executes the type of flight, default 'dh'"
     echo "                  switch between 'gps' or 'dh'"
-    echo "    -d            turns debug output on and switches to debug terminal"
+    echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
+    echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
+    echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+    echo ""
+    echo "    -v            turns debug output on and switches to debug terminal"
     echo ""
     echo "    -h        print this help"
     echo ""
@@ -45,11 +52,15 @@ print_help(){
 # Execution Options                                                            #
 ################################################################################
 
+change_scripts=false
 # parse flags
-while getopts dhmnt:p: flag
+while getopts vhs:d:f:t: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
+        d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
+        f) LAUNCH_PRE=${OPTARG};;
+        s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
         d) debug_on=true;;
         h) print_help;;
@@ -65,15 +76,21 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# check if SCRIPTS_DIR has to be overrriden
+if [[ "${change_scripts}" = true ]]; then
+  #statements
+  SCRIPTS_DIR=${LAUNCH_DIR}
+fi
+
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1"
+  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
 
 elif [ "${type}" = "gps" ]; then
 
-  OPS="sleep ${SLEEP_DURATION}; roslaunch flightstack_bringup fs_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
-  
+  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find ${LAUNCH_DIR}_bringup)/configs/autonomy/config_gps.yaml'"
+
 else
 
   echo "Unknown flight type: '${type}'"
@@ -103,7 +120,7 @@ tmux new-window -n 'operator'
 
 # DEBUG (or operator in manual)
 OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-OP2="roscd flightstack_scripts/system_scripts"
+OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
 
 # tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
 # tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'

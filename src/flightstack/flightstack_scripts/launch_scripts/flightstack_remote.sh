@@ -25,6 +25,9 @@ automatic_routing=true
 # script VARIABLES
 SLEEP_DURATION=10
 PLATFORM="pi"
+LAUNCH_DIR="flightstack"
+SCRIPTS_DIR="flightstack"
+LAUNCH_PRE="fs"
 LOGIN_DEV1="${1}"
 LOGIN_DEV2=
 
@@ -39,9 +42,13 @@ print_help(){
   echo "    -t TYPE       executes the type of flight, default 'dh'"
   echo "                  switch between 'gps' or 'dh'"
   echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
-  echo "                  switch between 'pi' or 'xu4'"
+  echo "                  switch between 'pi', 'xu4', or 'agx'"
+  echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
+  echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
+  echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
   echo "    -n LOGIN_DEV2 dual-platform setup (for recording)"
-  echo "    -d            turns debug output on and switches to debug terminal"
+  echo ""
+  echo "    -v            turns debug output on and switches to debug terminal"
   echo "    -r            deactivate automatic routing"
   echo ""
   echo "    -h        print this help"
@@ -61,15 +68,19 @@ fi
 # shift index to second place for optional arguments
 OPTIND=2
 
+change_scripts=false
 # parse flags
-while getopts dhrn:t:p: flag
+while getopts vhrd:f:s:n:t:p: flag
 do
   case "${flag}" in
     t) type=${OPTARG};;
     p) PLATFORM=${OPTARG};;
     n) LOGIN_DEV2=${OPTARG};;
+    d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
+    f) LAUNCH_PRE=${OPTARG};;
+    s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
-    d) debug_on=true;;
+    v) debug_on=true;;
     r) automatic_routing=false;;
     h) print_help;;
 
@@ -84,6 +95,12 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# check if SCRIPTS_DIR has to be overrriden
+if [[ "${change_scripts}" = true ]]; then
+  #statements
+  SCRIPTS_DIR=${LAUNCH_DIR}
+fi
+
 # check if connection to targets work
 ssh -q ${LOGIN_DEV1} exit
 if [ $? != 0 ]; then
@@ -94,7 +111,7 @@ if [[ ! -z ${LOGIN_DEV2} ]]; then
   ssh -q ${LOGIN_DEV2} exit
   if [ $? != 0  ]; then
     echo "[ERROR] No connection to ${LOGIN_DEV2}."
-    #exit 0;
+    exit 0;
   fi
 fi
 
@@ -110,7 +127,7 @@ if [[ "${automatic_routing}" = true && ! -z ${LOGIN_DEV2} ]]; then
   else
     echo "[ERROR] Cannot derive IP to connect to ${LOGIN_DEV1}"
     echo "        if this error persists, please deactivate autorouting with option '-r'."
-    exit 0
+    exit 0;
   fi
 
   # make sure DEV1_IP is really an ip and not webadress, e.g. google.com
@@ -128,9 +145,9 @@ if [[ "${debug_on}" = true ]]; then
 fi
 
 # setup recording args
-CMD_ADDITIONAL=""
+CMD_ADDITIONAL="-d ${LAUNCH_DIR} -f ${LAUNCH_PRE} -s ${SCRIPTS_DIR}"
 if [[ "${debug_on}" = true ]]; then
-  CMD_ADDITIONAL="-d"
+  CMD_ADDITIONAL="${CMD_ADDITIONAL} -v"
 fi
 
 # Check if flag is provided and define commands
