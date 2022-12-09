@@ -15,10 +15,14 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 <launch>
   <arg name="platform"  default="pi" />
 
-  <arg name="device_id" default="AMA0"  unless="$(eval arg('platform') == 'xu4')"/>
-  <arg name="device_id" value="SAC0"    if="$(eval arg('platform') == 'xu4')" />
+  <arg name="device_id"         default="AMA0"  if="$(eval arg('platform') == 'pi')"/>
+  <arg name="device_id"         default="SAC0"  if="$(eval arg('platform') == 'xu4')" />
+  <arg name="device_id"         default="THS0"  if="$(eval arg('platform') == 'agx')" />
+  <arg name="device_id"         default="USB0"  if="$(eval arg('platform') == 'pc')" />
+
+  <arg name="conn_baudrate"     default="921600" />
 
   <include file="$(find mavros)/launch/px4.launch">
-    <arg name="fcu_url" default="/dev/tty$(arg device_id):921600" />
+    <arg name="fcu_url" default="/dev/tty$(arg device_id):$(arg conn_baudrate)" />
   </include>
 </launch>

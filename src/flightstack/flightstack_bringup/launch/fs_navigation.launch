@@ -36,12 +36,13 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="boundary_reference"             default="LOCAL" />
 
   <!-- odometry in -->
+  <arg name="use_odom"                        default="True" />
   <arg name="topic_odom_in"                   default="/mars_pose_node/odom_state_out"  unless="$(arg use_gps)" />
   <arg name="topic_odom_in"                   default="/mars_gps_node/odom_state_out"   if="$(arg use_gps)" />
 
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
-        <arg name="use_odom"                value="True" />
+        <arg name="use_odom"                value="$(arg use_odom)" />
 
         <arg name="threshold_position"      value="$(arg threshold_position)" />
         <arg name="threshold_yaw"           value="$(arg threshold_yaw)" />
