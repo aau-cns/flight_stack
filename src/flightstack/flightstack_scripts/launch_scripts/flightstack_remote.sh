@@ -21,6 +21,7 @@ script_name="${0}"
 # command line flags
 debug_on=false
 automatic_routing=true
+start_core=true
 
 # script VARIABLES
 SLEEP_DURATION=10
@@ -48,6 +49,7 @@ print_help(){
   echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
   echo "    -n LOGIN_DEV2 dual-platform setup (for recording)"
   echo ""
+  echo "    -c            disables starting of roscore"
   echo "    -v            turns debug output on and switches to debug terminal"
   echo "    -r            deactivate automatic routing"
   echo ""
@@ -70,7 +72,7 @@ OPTIND=2
 
 change_scripts=false
 # parse flags
-while getopts vhrd:f:s:n:t:p: flag
+while getopts cvhrd:f:s:n:t:p: flag
 do
   case "${flag}" in
     t) type=${OPTARG};;
@@ -80,6 +82,7 @@ do
     f) LAUNCH_PRE=${OPTARG};;
     s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
+    c) start_core=false;;
     v) debug_on=true;;
     r) automatic_routing=false;;
     h) print_help;;
@@ -148,6 +151,9 @@ fi
 CMD_ADDITIONAL="-d ${LAUNCH_DIR} -f ${LAUNCH_PRE} -s ${SCRIPTS_DIR}"
 if [[ "${debug_on}" = true ]]; then
   CMD_ADDITIONAL="${CMD_ADDITIONAL} -v"
+fi
+if [[ "${start_core}" = true ]]; then
+  CMD_ADDITIONAL="${CMD_ADDITIONAL} -c"
 fi
 
 # Check if flag is provided and define commands

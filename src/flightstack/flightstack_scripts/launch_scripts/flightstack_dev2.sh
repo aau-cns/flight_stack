@@ -20,6 +20,7 @@ script_name="${0}"
 
 # command line flags
 debug_on=false
+start_core=true
 
 # script VARIABLES
 SLEEP_DURATION_BKG=10
@@ -45,6 +46,7 @@ print_help(){
     echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
     echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
     echo ""
+    echo "    -c            reserved (by dev_1)"
     echo "    -v            turns debug output on and switches to debug terminal"
     echo ""
     echo "    -h        print this help"
@@ -58,7 +60,7 @@ print_help(){
 
 change_scripts=false
 # parse flags
-while getopts vhd:s:f:t:p: flag
+while getopts cvhd:s:f:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
@@ -67,6 +69,7 @@ do
         f) LAUNCH_PRE=${OPTARG};;
         s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
+        c) start_core=false;;
         v) debug_on=true;;
         h) print_help;;
 

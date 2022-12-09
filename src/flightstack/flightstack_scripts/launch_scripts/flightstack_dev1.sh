@@ -22,6 +22,7 @@ script_name="${0}"
 debug_on=false
 manual_flight=false
 dual_platform=false
+start_core=true
 
 # script VARIABLES
 SLEEP_DURATION=10
@@ -46,9 +47,10 @@ print_help(){
     echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
     echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
     echo ""
-    echo "    -v            turns debug output on and switches to debug terminal"
+    echo "    -c            disables starting of roscore"
     echo "    -m            'manual flight' - does not autostart autonomy/operator"
     echo "    -n            dual-platform setup (for recording)"
+    echo "    -v            turns debug output on and switches to debug terminal"
     echo ""
     echo "    -h        print this help"
     echo ""
@@ -61,7 +63,7 @@ print_help(){
 
 change_scripts=false
 # parse flags
-while getopts hmvnd:f:s:t:p: flag
+while getopts chmvnd:f:s:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
@@ -73,6 +75,7 @@ do
         v) debug_on=true;;
         m) manual_flight=true;;
         n) dual_platform=true;;
+        c) start_core=false;;
         h) print_help;;
 
         *) echo "Unknown option ${flag}"; print_help;;
@@ -140,7 +143,11 @@ tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 # ROSCORE
 tmux rename-window 'roscore_rec'
 tmux split-window -v
-tmux send-keys -t ${SES_NAME}.1 "roscore" 'C-m'
+if [[ "${start_core}" = true ]]; then
+  tmux send-keys -t ${SES_NAME}.1 "roscore" 'C-m'
+else
+  tmux send-keys -t ${SES_NAME}.1 "echo 'NOT STARTING ROSOCRE'" 'C-m'
+fi
 tmux send-keys -t ${SES_NAME}.2 "${REC}" 'C-m'
 
 # BACKGROUND

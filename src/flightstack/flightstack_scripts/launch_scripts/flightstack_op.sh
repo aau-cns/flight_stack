@@ -114,7 +114,7 @@ tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 
 
 # OPERATOR DEBUG WINDOW
-tmux new-window -n 'operator'
+tmux rename-window 'operator'
 # tmux split-window -v -p 90
 
 
