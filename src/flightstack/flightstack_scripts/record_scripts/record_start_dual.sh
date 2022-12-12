@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2022, Martin Scheiber, Christian brommer
+# Copyright (C) 2022, Martin Scheiber, Christian Brommer
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
 #
 # All rights reserved.

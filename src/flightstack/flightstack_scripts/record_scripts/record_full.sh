@@ -29,14 +29,19 @@
 # - RealSense camera images and imu
 # - PX4 imu, pressure, and magnetometer
 
-echo "arg0: ${0}"
-echo "arg1: ${1}"
-echo "arg2: ${2}"
+################################################################################
+# Global Variables                                                             #
+################################################################################
 
 # setup colors
 COL_ERR='\033[0;31m'  #Red Color
 COL_WARN='\033[0;33m' #Yellow Color
 NC='\033[0m'          #No Color
+
+# SCRIPT VARIABLES
+bag_name="fs"
+path_local=""
+path_media=""
 
 ################################################################################
 # Help                                                                         #
@@ -58,10 +63,9 @@ print_help(){
     exit 0;
 }
 
-# SCRIPT VARIABLES
-bag_name="fs"
-path_local=""
-path_media=""
+################################################################################
+# Execution Options                                                            #
+################################################################################
 
 # parse flags
 while getopts hl:m:p: flag
@@ -182,9 +186,6 @@ ${lrf_topic[@]}
 ${rtk_gps1_topic[@]}
 )
 
-# topics_mod1_sensors=${group_mod1_sensors[@]}
-printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
-
 ### Nodes
 group_mod1_nodes=(
 ${autonomy_topics[@]}
@@ -195,7 +196,8 @@ ${mars_vision_topics[@]}
 ${mars_dual_topics[@]}
 )
 
-# topics_mod1_nodes=${group_mod1_nodes[@]}
+# generated comma seperated list, required by nodelet_rosbag in args
+printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
 printf -v topics_mod1_nodes '%s, ' "${group_mod1_nodes[@]}"
 
 ## Module 2
@@ -210,7 +212,7 @@ group_mod2_cam=(
 ${bluefox_camera_topics[@]}
 )
 
-# topics_mod2_sensors=${group_mod2_sensors[@]}
+# generated comma seperated list, required by nodelet_rosbag in args
 printf -v topics_mod2_sensors '%s, ' "${group_mod2_sensors[@]}"
 printf -v topics_mod2_cam '%s, ' "${group_mod2_cam[@]}"
 

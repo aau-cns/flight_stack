@@ -67,7 +67,7 @@ ${bluefox_camera_topics[@]}
 ${px4_topics[@]}
 )
 
-# topics_mod1_sensors=${group_mod1_sensors[@]}
+# generated comma seperated list, required by nodelet_rosbag in args
 printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
 
 
