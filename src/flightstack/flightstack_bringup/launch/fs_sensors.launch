@@ -23,8 +23,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="optitrack_object_name" default="cnsuav" />
   <arg name="optitrack_throttle"    default="False" />
 
-  <param name="/flightstack/object_name" type="string" value="$(arg optitrack_object_name)" />
-
   <!-- Device 1 -->
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find flightstack_bringup)/launch/individual/px4.launch">

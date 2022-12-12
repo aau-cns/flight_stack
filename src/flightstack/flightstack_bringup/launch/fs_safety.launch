@@ -32,7 +32,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />
   <arg name="toland_agl"                default="/lidar_lite/range" />
   <arg name="toland_baro"               default="/mavros/imu/static_pressure" />
-  <arg name="toland_default"            default="baro" />
+  <!-- <arg name="toland_default"            default="baro" /> -->
+  <arg name="toland_default"            default="disabled" /> <!-- baro is too unreliable as AGL sensor for landing detection -->
   <arg name="angle_threshold"           default="10.0" />
   <arg name="distance_threshold"        default="0.38" />
 

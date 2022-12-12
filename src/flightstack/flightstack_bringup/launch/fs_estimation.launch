@@ -15,7 +15,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 <launch>
   <arg name="dev_id"                    default="1" />
 
-  <arg name="optitrack_object_name"     default="twins_five" />
+  <arg name="optitrack_object_name"     default="cnsuav" />
 
   <arg name="use_gps"                   default="False" />
   <arg name="use_gps_vel"               default="False" />
