@@ -1,0 +1,71 @@
+value<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id" default="1" />
+
+  <arg name="use_gps"                   default="False" />
+
+  <!-- Watchdog Parameters -->
+  <arg name="watchdog_verbose"          default="False" />
+  <arg name="watchdog_check_dt"         default="0.5" />
+  <arg name="watchdog_drivers_cfg_file" default="$(find flightstack_bringup)/configs/watchdog/drivers.ini" />
+
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dh.ini" unless="$(arg use_gps)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_dh.ini" unless="$(arg use_gps)" />
+
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps.ini" if="$(arg use_gps)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.ini" if="$(arg use_gps)" />
+
+  <!-- TOLand Parameters -->
+  <arg name="toland_imu"                default="/mavros/imu/data_raw" />
+  <arg name="toland_agl"                default="/lidar_lite/range" />
+  <arg name="toland_baro"               default="/mavros/imu/static_pressure" />
+  <arg name="toland_default"            default="baro" />
+  <arg name="angle_threshold"           default="10.0" />
+  <arg name="distance_threshold"        default="0.38" />
+
+  <!-- Supervisor parameter -->
+  <arg name="topic_to_supervise"        default="/mavros/vision_pose/pose" />
+  <arg name="window_s"                  default="10.0" />
+  <arg name="max_norm"                  default="0.3" />
+
+  <include file="$(find flightstack_bringup)/launch/fs_safety.launch">
+    <arg name="dev_id"                    value="$(arg dev_id)" />
+
+    <arg name="use_gps"                   value="$(arg use_gps)" />
+
+    <!-- Watchdog Parameters -->
+    <arg name="watchdog_verbose"          value="$(arg watchdog_verbose)" />
+    <arg name="watchdog_check_dt"         value="$(arg watchdog_check_dt)" />
+    <arg name="watchdog_drivers_cfg_file" value="$(arg watchdog_drivers_cfg_file)" />
+    <arg name="watchdog_topics_cfg_file"  value="$(arg watchdog_topics_cfg_file)" />
+    <arg name="watchdog_nodes_cfg_file"   value="$(arg watchdog_nodes_cfg_file)" />
+
+
+    <!-- TOLand Parameters -->
+    <arg name="toland_imu"                value="$(arg toland_imu)" />
+    <arg name="toland_agl"                value="$(arg toland_agl)" />
+    <arg name="toland_baro"               value="$(arg toland_baro)" />
+    <arg name="toland_default"            value="$(arg toland_value)" />
+    <arg name="angle_threshold"           value="$(arg angle_threshold)" />
+    <arg name="distance_threshold"        value="$(arg distance_threshold)" />
+
+    <!-- Supervisor parameter -->
+    <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
+    <arg name="window_s"                  value="$(arg window_s)" />
+    <arg name="max_norm"                  value="$(arg max_norm)" />
+  </include>
+
+</launch>

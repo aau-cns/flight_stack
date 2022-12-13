@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id"    default="1" />
+  <arg name="dev_type"  default="xu4" /> <!-- or "pi" -->
+  <arg name="dev_port"  default="" /> <!--ignored if empty -->
+  <arg name="dev_baud"  default="" /> <!--ignored if empty -->
+
+  <!-- Optitrack Arguments -->
+  <arg name="use_gps"               default="False" />
+  <arg name="optitrack_object_name" default="cnsuav" />
+  <arg name="optitrack_throttle"    default="False" />
+
+  <include file="$(find flightstack_bringup)/launch/fs_sensors.launch">
+    <arg name="dev_id"    value="1" />
+    <arg name="dev_type"  value="xu4" /> <!-- or "pi" -->
+    <arg name="dev_port"  value="" /> <!--ignored if empty -->
+    <arg name="dev_baud"  value="" /> <!--ignored if empty -->
+
+    <!-- Optitrack Arguments -->
+    <arg name="use_gps"               value="False" />
+    <arg name="optitrack_object_name" value="cnsuav" />
+    <arg name="optitrack_throttle"    value="False" />
+  </include>
+
+
+</launch>

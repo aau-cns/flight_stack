@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+    <arg name="dev_id"    default="1" />
+
+    <!-- data recorder paramters -->
+    <arg name="rec_script_file"   default="$(find template_scripts)/record_scripts/record_full.sh" />
+    <arg name="rec_cmd"           default="dev1_full" />
+
+    <arg name="store_script_file" default="$(find data_recorder)/scripts/store.sh" />
+    <arg name="store_cmd"         default="" />
+
+    <arg name="rec_verbose"       default="False" />
+
+
+    <include file="$(find flightstack_bringup)/launch/fs_recording.launch">
+      <arg name="dev_id"            value="$(arg dev_id)" />
+
+      <!-- data recorder paramters -->
+      <arg name="rec_script_file"   value="$(arg rec_script_file)" />
+      <arg name="rec_cmd"           value="$(arg rec_cmd)" />
+
+      <arg name="store_script_file" value="$(arg store_script_file)" />
+      <arg name="store_cmd"         value="$(arg store_cmd)" />
+
+      <arg name="rec_verbose"       value="$(arg rec_verbose)" />
+    </include>
+
+</launch>

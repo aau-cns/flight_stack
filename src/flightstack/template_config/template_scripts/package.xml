@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package format="2">
+    <name>template_scripts</name>
+    <version>1.0.0</version>
+    <description>Scripts for modified CNS Flight Stack Config</description>
+    <author email="martin.scheiber@ieee.org">Martin Scheiber</author>
+    <author email="christian.brommer@ieee.org">Christian Brommer</author>
+    <author email="alessandro.fornasier@ieee.org">Alessandro Fornasier</author>
+    <maintainer email="martin.scheiber@ieee.org">Martin Scheiber</maintainer>
+
+    <license>AAU-CNS</license>
+
+    <buildtool_depend>catkin</buildtool_depend>
+</package>

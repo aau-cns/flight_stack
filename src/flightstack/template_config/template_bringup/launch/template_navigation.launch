@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id"                  default="1" />
+
+  <!-- system args -->
+  <arg name="use_gps"                 default="False" />
+
+  <!-- Mission Sequencer Args -->
+  <arg name="threshold_position"      default="0.3" />
+  <arg name="threshold_yaw"           default="0.1" />
+
+  <!-- mission sequencer flags -->
+  <arg name="automatic_sequencing"    default="False" /> <!-- if 'True', this parameter overwrites the auto land and disarm function -->
+  <arg name="automatic_landing"       default="False" />
+  <arg name="automatic_disarming"     default="False" />
+  <arg name="relative_waypoints"      default="True" />
+  <arg name="waypoint_from_file"      default="False" />
+  <arg name="verbose"                 default="False" />
+
+  <!-- waypoint boundaries -->
+  <arg name="wp_max"                  default="[100.0, 100, 10.0]"/>
+  <arg name="wp_min"                  default="[-100.0, -100.0, -1.0]"/>
+  <arg name="boundary_reference"      default="LOCAL" />
+
+  <!-- odometry in -->
+  <arg name="use_odom"                default="True" />
+  <arg name="topic_odom_in"           default="/mars_pose_node/odom_state_out"  unless="$(arg use_gps)" />
+  <arg name="topic_odom_in"           default="/mars_gps_node/odom_state_out"   if="$(arg use_gps)" />
+
+  <include file="$(find flightstack_bringup)/launch/fs_navigation.launch">
+    <arg name="dev_id"                  value="$(arg dev_id)" />
+
+    <!-- system args -->
+    <arg name="use_gps"                 value="$(arg use_gps)" />
+
+    <!-- Mission Sequencer Args -->
+    <arg name="threshold_position"      value="$(arg threshold_position)" />
+    <arg name="threshold_yaw"           value="$(arg threshold_yaw)" />
+
+    <!-- mission sequencer flags -->
+    <arg name="automatic_sequencing"    value="$(arg automatic_sequencing)" />
+    <arg name="automatic_landing"       value="$(arg automatic_landing)" />
+    <arg name="automatic_disarming"     value="$(arg automatic_disarming)" />
+    <arg name="relative_waypoints"      value="$(arg relative_waypoints)" />
+    <arg name="waypoint_from_file"      value="$(arg waypoint_from_file)" />
+    <arg name="verbose"                 value="$(arg verbose)" />
+
+    <!-- waypoint boundaries -->
+    <arg name="wp_max"                  value="$(arg wp_max)"/>
+    <arg name="wp_min"                  value="$(arg wp_min)"/>
+    <arg name="boundary_reference"      value="$(arg boundary_reference)" />
+
+    <!-- odometry in -->
+    <arg name="use_odom"                value="$(arg use_odom)" />
+    <arg name="topic_odom_in"           value="$(arg topic_odom_in)" />
+  </include>
+</launch>

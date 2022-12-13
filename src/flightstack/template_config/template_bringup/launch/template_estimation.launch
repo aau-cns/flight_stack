@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id"                    default="1" />
+
+  <arg name="optitrack_object_name"     default="uav" />
+
+  <arg name="use_gps"                   default="False" />
+  <arg name="use_gps_vel"               default="False" />
+  <arg name="use_px4_bridge"            default="False" />
+
+  <!-- MaRS arguments -->
+  <arg name="mars_transform_in"         default="/$(arg optitrack_object_name)/vrpn_client/raw_transform" />
+  <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" />
+  <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" />
+
+
+  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/pose_config.yaml" unless="$(arg use_gps)" />
+  <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/gps_config.yaml" if="$(arg use_gps)" />
+
+  <!-- Launch Flight Stack Estimator -->
+  <include file="$(flightstack_bringup)/launch/fs_estimation.launch">
+    <arg name="dev_id"                    value="$(arg dev_id)" />
+
+    <arg name="optitrack_object_name"     value="$(arg optitrack_object_name)" />
+
+    <arg name="use_gps"                   value="$(arg use_gps)" />
+    <arg name="use_gps_vel"               value="$(arg use_gps_vel)" />
+    <arg name="use_px4_bridge"            value="$(arg use_px4_bridge)" />
+
+    <!-- MaRS arguments -->
+    <arg name="mars_transform_in"         value="$(arg mars_transform_in)" />
+    <arg name="mars_gps_pos_in"           value="$(arg mars_gps_pos_in)" />
+    <arg name="mars_gps_vel_in"           value="$(arg mars_gps_vel_in)" />
+
+    <arg name="mars_config_in"            value="$(arg mars_config_in)" />
+  </include>
+
+</launch>

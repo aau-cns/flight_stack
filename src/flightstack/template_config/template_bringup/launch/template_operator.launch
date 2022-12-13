@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id" default="1" />
+
+  <!-- system args -->
+  <arg name="use_gps"                                 default="False" />
+
+  <!--Autonomy Mission Config -->
+  <arg name="config_filepath"                         default="$(find template_bringup)/configs/autonomy/config_template.yaml" />
+  <arg name="logger_filepath"                         default="$(env HOME)/.ros/log/autonomy/" />
+  <arg name="trajectory_dir"                          default="$(find template_bringup)/trajectories/" />
+
+  <!-- autonomy services -->
+  <arg name="estimator_init_service_name"             default="/mars_pose_node/init_service" unless="$(arg use_gps)" />
+  <arg name="estimator_init_service_name"             default="/mars_gps_node/init_service" if="$(arg use_gps)" />
+  <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
+
+  <!-- other arguments -->
+  <arg name="watchdog_rate_Hz"                        default="0.5" />
+  <arg name="watchdog_startup_time_s"                 default="10" />
+  <arg name="watchdog_heartbeat_timeout_multiplier"   default="2.0" />
+  <arg name="maximum_flight_time_min"                 default="5" />
+  <arg name="fix_timeout_ms"                          default="25000" />
+  <arg name="mission_id_no_ui"                        default="1" />
+
+  <!-- autonomy flags -->
+  <arg name="activate_user_interface"                 default="true" />
+  <arg name="activate_watchdog"                       default="true" />
+  <arg name="activate_data_recording"                 default="true" />
+  <arg name="activate_landing_detection"              default="true" />
+  <arg name="perform_takeoff_check"                   default="true" />
+  <arg name="perform_estimator_check"                 default="true" />
+  <arg name="estimator_init_service"                  default="true" />
+  <arg name="inflight_sensors_init_service"           default="false" />
+  <arg name="hover_after_mission_completion"          default="false" />
+  <arg name="sequence_multiple_in_flight"             default="false" />
+
+  <include file="$(find flightstack_bringup)/launch/fs_operator.launch">
+    <arg name="config_filepath"                         value="$(arg config_filepath)" />
+    <arg name="logger_filepath"                         value="$(arg logger_filepath)" />
+    <arg name="trajectory_dir"                          value="$(arg trajectory_dir)" />
+
+    <!-- arguments services -->
+    <arg name="estimator_init_service_name"             value="$(arg estimator_init_service_name)" />
+    <arg name="inflight_sensor_init_services_name"      value="$(arg inflight_sensor_init_services_name)" />
+
+    <!-- arguments setup -->
+    <arg name="watchdog_rate_Hz"                        value="$(arg watchdog_rate_Hz)" />
+    <arg name="watchdog_startup_time_s"                 value="$(arg watchdog_startup_time_s)" />
+    <arg name="watchdog_heartbeat_timeout_multiplier"   value="$(arg watchdog_heartbeat_timeout_multiplier)" />
+    <arg name="maximum_flight_time_min"                 value="$(arg maximum_flight_time_min)" />
+    <arg name="fix_timeout_ms"                          value="$(arg fix_timeout_ms)" />
+    <arg name="mission_id_no_ui"                        value="$(arg mission_id_no_ui)" />
+
+    <!-- arguments flags -->
+    <arg name="activate_user_interface"                 value="$(arg activate_user_interface)" />
+    <arg name="activate_watchdog"                       value="$(arg activate_watchdog)" />
+    <arg name="activate_data_recording"                 value="$(arg activate_data_recording)" />
+    <arg name="estimator_init_service"                  value="$(arg estimator_init_service)" />
+    <arg name="perform_takeoff_check"                   value="$(arg perform_takeoff_check)" />
+    <arg name="perform_estimator_check"                 value="$(arg perform_estimator_check)" />
+    <arg name="inflight_sensors_init_service"           value="$(arg inflight_sensors_init_service)" />
+    <arg name="activate_landing_detection"              value="$(arg activate_landing_detection)" />
+    <arg name="hover_after_mission_completion"          value="$(arg hover_after_mission_completion)" />
+    <arg name="sequence_multiple_in_flight"             value="$(arg sequence_multiple_in_flight)" />
+  </include>
+
+</launch>
