@@ -12,7 +12,7 @@
 # You can contact the author at <martin.scheiber@ieee.org> and
 # <christian.brommer@ieee.org>.
 
-set +x
+set -x
 
 apt update && apt install --no-install-recommends -y \
   wget \
@@ -48,4 +48,4 @@ wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/inst
 chmod +x install_geographiclib_datasets.sh
 ./install_geographiclib_datasets.sh
 
-set -x
+set +x

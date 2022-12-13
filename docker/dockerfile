@@ -12,9 +12,9 @@
 
 FROM ros:noetic-ros-core
 
-LABEL author="Christian Brommer <christian.brommer@aau.at>"
-LABEL author="Martin Scheiber <martin.scheiber@aau.at>"
-LABEL maintainer="Martin Scheiber <martin.scheiber@aau.at>"
+LABEL author="Christian Brommer <christian.brommer@ieee.org>"
+LABEL author="Martin Scheiber <martin.scheiber@ieee.org>"
+LABEL maintainer="Martin Scheiber <martin.scheiber@ieee.org>"
 LABEL description="CNS Flight Stack Test Environment (Noetic)"
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -24,8 +24,8 @@ RUN apt update && apt install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /opt/flightstack
-COPY ./install_ros1_dependencies.sh /opt/flightstack/install_ros1_dependencies.sh
-RUN /opt/flightstack/install_ros1_dependencies.sh
+COPY ./install_ros1_noetic_dependencies.sh /opt/flightstack/install_ros1_noetic_dependencies.sh
+RUN /opt/flightstack/install_ros1_noetic_dependencies.sh
 
 RUN /bin/bash -c 'source /opt/ros/noetic/setup.sh; rosdep init && rosdep update'
 RUN mkdir -p /source
