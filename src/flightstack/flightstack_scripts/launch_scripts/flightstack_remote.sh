@@ -47,6 +47,8 @@ print_help(){
   echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
   echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
   echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+  echo "    -a PREFIX     selects the prefix for all of the above"
+  echo "                  same as -d PREFIX -s PREFIX -f PREFIX"
   echo "    -n LOGIN_DEV2 dual-platform setup (for recording)"
   echo ""
   echo "    -c            disables starting of roscore"
@@ -72,7 +74,7 @@ OPTIND=2
 
 change_scripts=false
 # parse flags
-while getopts cvhrd:f:s:n:t:p: flag
+while getopts cvhra:d:f:s:n:t:p: flag
 do
   case "${flag}" in
     t) type=${OPTARG};;
@@ -81,6 +83,7 @@ do
     d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
     f) LAUNCH_PRE=${OPTARG};;
     s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
+    a) LAUNCH_DIR=${OPTARG};LAUNCH_PRE=${OPTARG};SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
     c) start_core=false;;
     v) debug_on=true;;

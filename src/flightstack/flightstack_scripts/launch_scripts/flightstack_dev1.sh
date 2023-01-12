@@ -23,6 +23,7 @@ debug_on=false
 manual_flight=false
 dual_platform=false
 start_core=true
+uart_permission=false
 
 # script VARIABLES
 SLEEP_DURATION=10
@@ -46,10 +47,13 @@ print_help(){
     echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
     echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
     echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+    echo "    -a PREFIX     selects the prefix for all of the above"
+    echo "                  same as -d PREFIX -s PREFIX -f PREFIX"
     echo ""
     echo "    -c            disables starting of roscore"
     echo "    -m            'manual flight' - does not autostart autonomy/operator"
     echo "    -n            dual-platform setup (for recording)"
+    echo "    -u            change permission for UART device '/dev/DEV_ID' based on platform (-p)"
     echo "    -v            turns debug output on and switches to debug terminal"
     echo ""
     echo "    -h        print this help"
@@ -63,7 +67,7 @@ print_help(){
 
 change_scripts=false
 # parse flags
-while getopts chmvnd:f:s:t:p: flag
+while getopts chmvnua:d:f:s:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
@@ -71,14 +75,16 @@ do
         d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
         f) LAUNCH_PRE=${OPTARG};;
         s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
+        a) LAUNCH_DIR=${OPTARG};LAUNCH_PRE=${OPTARG};SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
         v) debug_on=true;;
         m) manual_flight=true;;
         n) dual_platform=true;;
         c) start_core=false;;
+        u) uart_permission=true;;
         h) print_help;;
 
-        *) echo "Unknown option ${flag}"; print_help;;
+        *) echo "Unknown option ${flag}"; print_help; exit 1;;
     esac
 done
 shift $((OPTIND-1))
@@ -128,6 +134,21 @@ else
 
 fi
 
+# chamge permission for UART serial
+if [ "${uart_permission}" = true ]; then
+  dev_id=""
+  # select dev_id based on platform
+  case "${PLATFORM}" in 
+    "pi") dev_id="/dev/ttyAMA*";;
+    "xu4") dev_id="/dev/ttySAC*";;
+    "agx") dev_id="/dev/ttyTHS*";;
+    "pc") dev_id="/dev/ttyUSB*";;
+
+    *) echo "Unknown platform ${PLATFORM}"; print_help; exit 1;;
+  esac
+
+  sudo chmod 666 ${dev_id}
+fi
 
 # Operator
 OPMAV="sleep ${SLEEP_DURATION}; rostopic echo -c /mavros/vision_pose/pose"

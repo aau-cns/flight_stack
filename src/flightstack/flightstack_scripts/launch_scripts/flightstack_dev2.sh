@@ -45,6 +45,8 @@ print_help(){
     echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
     echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
     echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
+    echo "    -a PREFIX     selects the prefix for all of the above"
+    echo "                  same as -d PREFIX -s PREFIX -f PREFIX"
     echo ""
     echo "    -c            reserved (by dev_1)"
     echo "    -v            turns debug output on and switches to debug terminal"
@@ -60,7 +62,7 @@ print_help(){
 
 change_scripts=false
 # parse flags
-while getopts cvhd:s:f:t:p: flag
+while getopts cvha:d:s:f:t:p: flag
 do
     case "${flag}" in
         t) type=${OPTARG};;
@@ -68,6 +70,7 @@ do
         d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
         f) LAUNCH_PRE=${OPTARG};;
         s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
+        a) LAUNCH_DIR=${OPTARG};LAUNCH_PRE=${OPTARG};SCRIPTS_DIR=${OPTARG};change_scripts=false;;
 
         c) start_core=false;;
         v) debug_on=true;;
