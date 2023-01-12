@@ -1,5 +1,6 @@
 #!/bin/sh
-# Copyright (C) 2021 Martin Scheiber, Control of Networked Systems, University of Klagenfurt, Austria.
+# Copyright (C) 2023 Martin Scheiber and Christian Brommer, 
+# Control of Networked Systems, University of Klagenfurt, Austria.
 #
 # All rights reserved.
 #
@@ -8,6 +9,7 @@
 # in the LICENSE file. No license in patents is granted.
 #
 # You can contact the author at <martin.scheiber@ieee.org>
+# and <christian.brommer@ieee.org>
 
 # this bash script adheres to linux exit codes
 # see https://tldp.org/LDP/abs/html/exitcodes.html for further information

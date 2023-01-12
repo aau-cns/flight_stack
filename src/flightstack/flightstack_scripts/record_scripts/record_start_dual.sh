@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2022, Martin Scheiber, Christian Brommer
+# Copyright (C) 2023, Martin Scheiber, Christian Brommer
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
 #
 # All rights reserved.
@@ -25,8 +25,8 @@ PATH_MEDIA="/home/core/rec_media/${DIR_NAME}"
 
 if [ "${REC_IN}" == "full" ] || [ "${REC_IN}" == "cam" ] || [ "${REC_IN}" == "sensors" ] ; then
   parallel -u ::: \
-  "${CMD_DEV1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}" \
-  "${REM_DEV2} 'source /home/core/.ros_env.bash; ${CMD_DEV2} dev2_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}'"
+  "${CMD_DEV1} dev1_${REC_IN} -l ${PATH_LOCAL} -m ${PATH_MEDIA}" \
+  "${REM_DEV2} 'source /home/core/.ros_env.bash; ${CMD_DEV2} dev2_${REC_IN} -l ${PATH_LOCAL} -m ${PATH_MEDIA}'"
 
   # ${CMD_DEV1} dev1_${REC_IN} ${PATH_LOCAL} ${PATH_MEDIA}
 else

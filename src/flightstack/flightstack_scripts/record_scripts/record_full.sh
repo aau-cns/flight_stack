@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright (C) 2022, Christian Brommer, Martin Scheiber,
+# Copyright (C) 2023, Christian Brommer, Martin Scheiber,
 # and others, Control of Networked Systems, University of Klagenfurt, Austria.
 #
 # All rights reserved.
@@ -42,6 +42,9 @@ NC='\033[0m'          #No Color
 bag_name="fs"
 path_local=""
 path_media=""
+
+CAM_NODELET_MANAGER=record_dev2_manager
+B_DEV_2_START_MANAGER=true
 
 ################################################################################
 # Help                                                                         #
@@ -175,8 +178,16 @@ mars_gps_topics=(
 "/mars_gps_node/parameter_updates"
 )
 
+# these topics require the installation of the matrixvision driver
+# eg https://github.com/ethz-asl/matrixvision_camera
+bluefox_camera_topics=(
+"/camera/image_raw"
+"/camera/camera_info"
+)
+
 # Generate Topic Strings Grouped by Platform Devices (concatinate string arrays)
 
+#-------------------
 ## Module 1
 ### Sensors
 group_mod1_sensors=(
@@ -200,12 +211,13 @@ ${mars_dual_topics[@]}
 printf -v topics_mod1_sensors '%s, ' "${group_mod1_sensors[@]}"
 printf -v topics_mod1_nodes '%s, ' "${group_mod1_nodes[@]}"
 
+#-------------------
 ## Module 2
 ### Sensors
 
 group_mod2_sensors=(
-${uwb_topic[@]}
-${vision_topics[@]}
+# ${uwb_topic[@]}
+# ${vision_topics[@]}
 )
 
 group_mod2_cam=(
@@ -216,56 +228,134 @@ ${bluefox_camera_topics[@]}
 printf -v topics_mod2_sensors '%s, ' "${group_mod2_sensors[@]}"
 printf -v topics_mod2_cam '%s, ' "${group_mod2_cam[@]}"
 
+#-------------------
+## Module Independent
+### Calibration Topics (cam+imu)
+group_calib=(
+${px4_topics}
+${bluefox_camera_topics[@]}
+)
+
+# generated comma seperated list, required by nodelet_rosbag in args
+printf -v topics_calib '%s, ' "${group_calib[@]}"
 
 # Record the given group of topics
 echo "Bagname: ${bag_name}"
 
 if [ "$1" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
-    echo "  local path: $path_local"
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    echo "    - sensors1"
+    echo "    - nodes1"
     rosparam dump "${path_local}/${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=True nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_sensors" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors rosbag_topics:="[${topics_mod1_sensors%,}]" & \
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="record_od1_manager" nodelet_name:="record_od1_nodes" rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes rosbag_topics:="[${topics_mod1_nodes%,}]" && \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_sensors" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors \
+        rosbag_topics:="[${topics_mod1_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=False nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_nodes" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes \
+        rosbag_topics:="[${topics_mod1_nodes%,}]" && \
     kill $!
 
 elif [ "$1" == "dev1_cam" ] ; then
     echo "Recording for device 1 (cam): "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod1_ids_img ${topics_mod1_ids_img}
+    echo "  paths:"
+    echo "    media: ${path_media}"
+    echo "    - cam"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=${B_DEV_2_START_MANAGER} nodelet_manager_name:="${CAM_NODELET_MANAGER}" nodelet_name:="record_dev2_cams" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_cam \
+        rosbag_topics:="[${topics_mod2_cam%,}]"
 
 elif [ "$1" == "dev1_sensors" ] ; then
-    rosbag record --tcpnodelay -b 512 --split --size=500 -o $bag_name$name_mod1_sensors ${topics_mod1_sensors}
 	echo "Recording for device 1 (sensors): "
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    echo "    - sensors1"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_sensors" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors \
+        rosbag_topics:="[${topics_mod1_sensors%,}]"
+
+elif [ "$1" == "dev1_calib" ] ; then
+	echo "Recording for device 1 (calib): "
+    echo "  paths:"
+    echo "    media: ${path_media}"
+    echo "    - calib"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_calib" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_calib \
+        rosbag_topics:="[${topics_calib%,}]"
 
 elif [ "$1" == "dev2_full" ] ; then
     echo "Recording for device 2 (full): "
-    echo "  local path: $path_local"
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_sensors" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors rosbag_topics:="[${topics_mod2_sensors%,}]" & \
-    roslaunch nodelet_rosbag nodelet_rosbag.launch start_manager:=False nodelet_manager_name:="nodelet_manager" nodelet_name:="record_od2_cams" rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam rosbag_topics:="[${topics_mod2_cam%,}]" && \
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    echo "    - sensors2"
+    echo "    media: ${path_media}"
+    echo "    - cam"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=${B_DEV_2_START_MANAGER} nodelet_manager_name:="record_dev2_manager" nodelet_name:="record_dev2_sensors" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors \
+        rosbag_topics:="[${topics_mod2_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=False nodelet_manager_name:="${CAM_NODELET_MANAGER}" nodelet_name:="record_od2_cams" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam \
+        rosbag_topics:="[${topics_mod2_cam%,}]" && \
     kill $!
 
 elif [ "$1" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_rs_img ${topics_mod2_rs_img}
+    echo "  paths:"
+    echo "    media: ${path_media}"
+    echo "    - cam"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=${B_DEV_2_START_MANAGER} nodelet_manager_name:="${CAM_NODELET_MANAGER}" nodelet_name:="record_dev2_cams" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam \
+        rosbag_topics:="[${topics_mod2_cam%,}]"
 
 elif [ "$1" == "dev2_sensors" ] ; then
     echo "Recording for device 2 (sensors): "
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_mod2_sensors ${topics_mod2_sensors}
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    echo "    - sensors2"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev2_manager" nodelet_name:="record_dev2_sensors" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors \
+        rosbag_topics:="[${topics_mod2_sensors%,}]" 
 
+elif [ "$1" == "dev2_calib" ] ; then
+	echo "Recording for device 2 (calib): "
+    echo "  paths:"
+    echo "    media: ${path_media}"
+    echo "    - calib"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev2_manager" nodelet_name:="record_dev2_calib" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_calib \
+        rosbag_topics:="[${topics_calib%,}]"
+
+# the following are single entity only and will always use path local
 elif [ "$1" == "mocap" ] ; then
     echo "Recording MoCap Data: "
-    rosbag record --tcpnodelay -b 512 --split --size=1000 -o $bag_name$name_mocap_sensors ${group_modcap_sensors[@]}
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    printf -v topics_mocap '%s, ' "${mocap_vehicle_topics[@]}"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_manager" nodelet_name:="record_mocap" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mocap \
+        rosbag_topics:="[${topics_mocap%,}]" 
 
-elif [ "$1" == "ids" ] ; then
-    echo "Group 1 topics to record: " ${group2_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group2_to_record}
-
-elif [ "$1" == "realsense" ] ; then
-    echo "Group 3 topics to record: " ${group3_to_record}
-    rosbag record --tcpnodelay -b 0 --split --size=1000 -o $bag_name$name_group3 ${group3_to_record}
-
-elif [ "$1" == "sensors" ] ; then
-    echo "Group 1 topics to record: " ${group1_to_record}
-    rosbag record --split --size=500 --buffsize=2048 -o $bag_name$name_group1 ${group1_to_record}
+elif [ "$1" == "px4" ] ; then
+    echo "Recording MoCap Data: "
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    printf -v topics_px4 '%s, ' "${px4_topics[@]}"
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_manager" nodelet_name:="record_px4" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_px4 \
+        rosbag_topics:="[${topics_px4%,}]"
 
 else # Handle error case
     echo -e "${COL_ERR}[ERROR] The given option '${1}' is not valid! Please add the group of topics you'd like to record.${NC}"
