@@ -34,11 +34,7 @@ B_CREATE_TARBALL=false
 # Help                                                                         #
 ################################################################################
 print_help(){
-    echo "USAGE: ${script_name} <TOPICS> [OPTIONS]"
-    echo ""
-    echo "  Topics:         details the topics to record"
-    echo "    full_dev1     all rostopics typically on dev1"
-    echo "    full_dev2     all rostopics typically on dev2"
+    echo "USAGE: ${script_name} [OPTIONS]"
     echo ""
     echo "  Options:"
     echo "    -l PATH       path to internal recordings media"
@@ -86,7 +82,7 @@ if [ -z "${REC_MEDIA}" ]; then
   REC_MEDIA="${REC_LOCAL}"
 fi
 
-# check if destination directories exist
+# check if local/media directories exist
 if [ ! -d "${REC_LOCAL}" ]; then
   echo "${COL_ERR}[ERROR] ${REC_LOCAL} does not exist ${NC}"
   exit 1;
@@ -99,6 +95,8 @@ if [ ! -d "${REC_LOGS}" ]; then
   echo "${COL_ERR}[ERROR] ${REC_LOGS} does not exist ${NC}"
   exit 1;
 fi
+
+# check if destination directories exist
 if [ ! -d "${DEST_DIR}" ]; then
   echo "${COL_WARN}${DEST_DIR} does not exist, creating it... ${NC}"
   mkdir -p ${DEST_DIR}
