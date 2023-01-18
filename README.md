@@ -1,6 +1,5 @@
 # CNS Flight Stack
 
-<!-- [![Release](https://img.shields.io/github/v/release/aau-cns/flight_stack?logo=github)](https://github.com/aau-cns/flight_stack/releases) [![ROS](https://img.shields.io/github/workflow/status/aau-cns/flight_stack/ROS/main?logo=ROS&label=ROS1%20build)](https://github.com/aau-cns/flight_stack/actions/workflows/ros.yml) [![Dependencies](https://img.shields.io/librariesio/github/aau-cns/flight_stack)](https://github.com/aau-cns/flight_stack/blob/main/src/) -->
 [![Release](https://img.shields.io/github/v/release/aau-cns/flight_stack?include_prereleases&logo=github)](https://github.com/aau-cns/flight_stack/releases)
 [![ROS](https://img.shields.io/github/actions/workflow/status/aau-cns/flight_stack/ros.yml?branch=main&logo=ROS&label=ROS1%20build)](https://github.com/aau-cns/flight_stack/actions/workflows/ros.yml)
 [![License](https://img.shields.io/badge/License-AAUCNS-336B81.svg)](https://github.com/aau-cns/flight_stack/blob/main/LICENSE)
