@@ -38,6 +38,8 @@ COL_ERR='\033[0;31m'  #Red Color
 COL_WARN='\033[0;33m' #Yellow Color
 NC='\033[0m'          #No Color
 
+TOPIC_TYPE=full_dev1
+
 # SCRIPT VARIABLES
 bag_name="fs"
 path_local=""
@@ -52,7 +54,7 @@ B_DEV_2_START_MANAGER=true
 print_help(){
     echo "USAGE: ${script_name} <TOPICS> [OPTIONS]"
     echo ""
-    echo "  Topics:         details the topics to record"
+    echo "  Topics:         details the topics to record, choose one from below"
     echo "    full_dev1     all rostopics typically on dev1"
     echo "    full_dev2     all rostopics typically on dev2"
     echo ""
@@ -69,6 +71,24 @@ print_help(){
 ################################################################################
 # Execution Options                                                            #
 ################################################################################
+
+# parse TOPICS
+if [ -z ${1} ]; then
+  echo "${COL_ERR}[ERROR] TOPICS missing"
+  print_help;
+  exit 1;
+elif [[ -n "${1%-}" ]]; then
+  echo "${COL_ERR}[ERROR] '${1}' is an option - not a valid string"
+  print_help;
+  exit 1;
+else
+  TOPICS=${1}
+fi
+# shift optind to next value
+OPTIND=$((OPTIND+1));
+
+echo $TOPICS
+exit
 
 # parse flags
 while getopts hl:m:p: flag
@@ -242,7 +262,7 @@ printf -v topics_calib '%s, ' "${group_calib[@]}"
 # Record the given group of topics
 echo "Bagname: ${bag_name}"
 
-if [ "$1" == "dev1_full" ] ; then
+if [ "${TOPICS}" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -259,7 +279,7 @@ if [ "$1" == "dev1_full" ] ; then
         rosbag_topics:="[${topics_mod1_nodes%,}]" && \
     kill $!
 
-elif [ "$1" == "dev1_cam" ] ; then
+elif [ "${TOPICS}" == "dev1_cam" ] ; then
     echo "Recording for device 1 (cam): "
     echo "  paths:"
     echo "    media: ${path_media}"
@@ -269,7 +289,7 @@ elif [ "$1" == "dev1_cam" ] ; then
         rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_cam \
         rosbag_topics:="[${topics_mod2_cam%,}]"
 
-elif [ "$1" == "dev1_sensors" ] ; then
+elif [ "${TOPICS}" == "dev1_sensors" ] ; then
 	echo "Recording for device 1 (sensors): "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -279,7 +299,7 @@ elif [ "$1" == "dev1_sensors" ] ; then
         rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors \
         rosbag_topics:="[${topics_mod1_sensors%,}]"
 
-elif [ "$1" == "dev1_calib" ] ; then
+elif [ "${TOPICS}" == "dev1_calib" ] ; then
 	echo "Recording for device 1 (calib): "
     echo "  paths:"
     echo "    media: ${path_media}"
@@ -289,7 +309,7 @@ elif [ "$1" == "dev1_calib" ] ; then
         rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_calib \
         rosbag_topics:="[${topics_calib%,}]"
 
-elif [ "$1" == "dev2_full" ] ; then
+elif [ "${TOPICS}" == "dev2_full" ] ; then
     echo "Recording for device 2 (full): "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -306,7 +326,7 @@ elif [ "$1" == "dev2_full" ] ; then
         rosbag_topics:="[${topics_mod2_cam%,}]" && \
     kill $!
 
-elif [ "$1" == "dev2_cam" ] ; then
+elif [ "${TOPICS}" == "dev2_cam" ] ; then
     echo "Recording for device 2 (cam): "
     echo "  paths:"
     echo "    media: ${path_media}"
@@ -316,7 +336,7 @@ elif [ "$1" == "dev2_cam" ] ; then
         rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_cam \
         rosbag_topics:="[${topics_mod2_cam%,}]"
 
-elif [ "$1" == "dev2_sensors" ] ; then
+elif [ "${TOPICS}" == "dev2_sensors" ] ; then
     echo "Recording for device 2 (sensors): "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -326,7 +346,7 @@ elif [ "$1" == "dev2_sensors" ] ; then
         rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod2_sensors \
         rosbag_topics:="[${topics_mod2_sensors%,}]" 
 
-elif [ "$1" == "dev2_calib" ] ; then
+elif [ "${TOPICS}" == "dev2_calib" ] ; then
 	echo "Recording for device 2 (calib): "
     echo "  paths:"
     echo "    media: ${path_media}"
@@ -337,7 +357,7 @@ elif [ "$1" == "dev2_calib" ] ; then
         rosbag_topics:="[${topics_calib%,}]"
 
 # the following are single entity only and will always use path local
-elif [ "$1" == "mocap" ] ; then
+elif [ "${TOPICS}" == "mocap" ] ; then
     echo "Recording MoCap Data: "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -347,7 +367,7 @@ elif [ "$1" == "mocap" ] ; then
         rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mocap \
         rosbag_topics:="[${topics_mocap%,}]" 
 
-elif [ "$1" == "px4" ] ; then
+elif [ "${TOPICS}" == "px4" ] ; then
     echo "Recording MoCap Data: "
     echo "  paths:"
     echo "    local: ${path_local}"
@@ -358,6 +378,6 @@ elif [ "$1" == "px4" ] ; then
         rosbag_topics:="[${topics_px4%,}]"
 
 else # Handle error case
-    echo -e "${COL_ERR}[ERROR] The given option '${1}' is not valid! Please add the group of topics you'd like to record.${NC}"
+    echo -e "${COL_ERR}[ERROR] The given option '${TOPICS}' is not valid! Please add the group of topics you'd like to record.${NC}"
     exit
 fi;

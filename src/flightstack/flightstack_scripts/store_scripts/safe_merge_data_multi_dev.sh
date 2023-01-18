@@ -12,11 +12,7 @@
 # You can contact the authors at <christian.brommer@ieee.org>
 # and <martin.scheiber@ieee.org>.
 
-# This script assumes two devices with two folders each. In this particular case
-# one folder is for local recodring on a device and the second folder
-# is for recording on a media device.
-# This script merges the two folder from a remote device and the local folder on
-# the current host, to the media folder of the current host
+# This script syncs multiple devices to the destination directory
 
 ################################################################################
 # Global Variables                                                             #
@@ -31,6 +27,8 @@ NC='\033[0m'          #No Color
 REC_LOCAL="${HOME}/recordings"    # default local path of record_full.sh
 REC_MEDIA="${HOME}/recordings"    # default media path of record_full.sh
 REC_LOGS="${HOME}/.ros/log"       # default logging path of autonomy/ros
+
+DEST_DIR="${REC_MEDIA}/final" # default destination path (media device)
 
 SSH_REMOTES=(
 "localhost",
@@ -174,13 +172,43 @@ for ((n=0; n<${NUM_DEVICES}; n++)); do
     remote_ssh="${remote_ssh}:"
   fi
 
-  # get source directories
+  # set source directories
   var_local="REC_LOCAL_${n}"
   var_media="REC_MEDIA_${n}"
   var_logs="REC_LOGS_${n}"
+
+  # check if variables are set, otherwise use default
+  if [ -z "${!var_local}" ]; then
+    echo "${COL_WARN}No local path provided for dev ${n}, using default directory: '${REC_LOCAL}'${NC}"
+    declare ${!var_local}=${REC_LOCAL}
+  fi
+  if [ -z "${!var_media}" ]; then
+    echo "${COL_WARN}No media path provided for dev ${n}, using default directory: '${REC_MEDIA}'${NC}"
+    declare ${!var_media}=${REC_MEDIA}
+  fi
+  if [ -z "${!var_logs}" ]; then
+    echo "${COL_WARN}No logs path provided for dev ${n}, using default directory: '${REC_LOGS}'${NC}"
+    declare ${!var_logs}=${REC_LOGS}
+  fi
+
+  # set source destinations
   local_src_dir="${remote_ssh}${!var_local}"
   media_src_dir="${remote_ssh}${!var_media}"
   logs_src_dir="${remote_ssh}${!var_logs}"
+
+  # check if dirrectories exits
+  # if [ ! -d "${local_src_dir}" ]; then
+  #   echo "${COL_ERR}[ERROR] ${local_src_dir} does not exist ${NC}"
+  #   exit 1;
+  # fi
+  # if [ ! -d "${media_src_dir}" ]; then
+  #   echo "${COL_ERR}[ERROR] ${media_src_dir} does not exist ${NC}"
+  #   exit 1;
+  # fi
+  # if [ ! -d "${logs_src_dir}" ]; then
+  #   echo "${COL_ERR}[ERROR] ${logs_src_dir} does not exist ${NC}"
+  #   exit 1;
+  # fi
 
   # ensure all data is written before copy
   sync && "${sync_cmd}"

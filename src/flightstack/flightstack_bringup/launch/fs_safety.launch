@@ -54,7 +54,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
     <include file="$(find estimator_supervisor)/launch/supervisor.launch">
         <arg name="topic_to_supervise"        value="$(arg topic_to_supervise)" />
-        <arg name="Supervisor_window_s"       value="$(arg window_s)" />
+        <arg name="supervisor_window_s"       value="$(arg window_s)" />
         <arg name="max_norm_changes"          value="$(arg max_norm)" />
         <arg name="estiamte_msg_type"         value="posestamped" />
     </include>

@@ -26,9 +26,10 @@ REC_LOCAL="${HOME}/recordings"    # default local path of record_full.sh
 REC_MEDIA="${HOME}/recordings"    # default media path of record_full.sh
 REC_LOGS="${HOME}/.ros/log"       # default logging path of autonomy/ros
 
-DEST_DIR='/data/recordings/final' # default destination path (media device)
+DEST_DIR="${REC_MEDIA}/final" # default destination path (media device)
 
 B_CREATE_TARBALL=false
+B_DEBUG_ON=false
 
 ################################################################################
 # Help                                                                         #
@@ -40,10 +41,11 @@ print_help(){
     echo "    -l PATH       path to internal recordings media"
     echo "    -m PATH       path to external recordings media device (for images)"
     echo "    -r PATH       path to ROS logs (default \${HOME}/.ros/log)"
-    echo "    -d NAME       path to destination storage (default: /data/recordings/final)"
+    echo "    -d NAME       path to destination storage (default: /<MEDIA_PATH>/final)"
     echo ""
     echo "    -z            create tarball of all files in dest dir"
     echo "                  instead of copying raw files"
+    echo "    -v            enable detailed debug output"
     echo ""
     echo "    -h        print this help"
     echo ""
@@ -57,17 +59,18 @@ print_help(){
 # parse flags
 while getopts hzd:l:m:r: flag
 do
-    case "${flag}" in
-        l) REC_LOCAL=${OPTARG};;
-        m) REC_MEDIA=${OPTARG};;
-        r) REC_LOGS=${OPTARG};;
-        d) DEST_DIR=${OPTARG};;
+  case "${flag}" in
+    l) REC_LOCAL=${OPTARG};;
+    m) REC_MEDIA=${OPTARG};;
+    r) REC_LOGS=${OPTARG};;
+    d) DEST_DIR=${OPTARG};;
 
-        z) B_CREATE_TARBALL=true;;
-        h) print_help;;
+    v) B_DEBUG_ON=true;;
+    z) B_CREATE_TARBALL=true;;
+    h) print_help;;
 
-        *) echo "Unknown option ${flag}"; print_help;;
-    esac
+    *) echo "Unknown option ${flag}"; print_help;;
+  esac
 done
 shift $((OPTIND-1))
 
@@ -108,7 +111,9 @@ fi
 ################################################################################
 ################################################################################
 
-set -x
+if [ ${B_DEBUG_ON} = true ]; then
+  set -x
+fi
 
 # setup directory name (timestamp)
 TIMESTAMP=$(date +%Y%d%m-%H%M%S)
@@ -123,11 +128,14 @@ if [ ${B_CREATE_TARBALL} = true ]; then
   tmp_dir=/tmp/recordings/${TIMESTAMP}
   rm -rf ${tmp_dir}
   mkdir -p ${tmp_dir}/logs/ros
+  mkdir -p ${TAR_TMP_DIR}/logs/autonomy
+  
+  # link the files to the corresponding directories
   ln -s ${REC_LOCAL}/* ${tmp_dir}/
   rm -rf ${tmp_dir}/final
   ln -s ${REC_MEDIA}/* ${tmp_dir}/
   rm -rf ${tmp_dir}/final
-  ln -s ${REC_LOGS}/autonomy  ${tmp_dir}/logs/
+  ln -s ${REC_LOGS}/autonomy/*  ${tmp_dir}/logs/autonomy/
   ln -s ${REC_LOGS}/latest/*  ${tmp_dir}/logs/ros/
 
   # create tarball from tmp dir
@@ -166,4 +174,6 @@ else
   sync
 fi
 
-set +x
+if [ ${B_DEBUG_ON} = true ]; then
+  set +x
+fi
