@@ -17,6 +17,7 @@ on:
     branches: [ "main", "development" ]
     paths:
       - 'src/**'
+      - 'docker/install_ros1_*.sh'
       - '.github/workflows/ros.yml'
   pull_request:
     branches: [ "main", "development"]
