@@ -63,6 +63,8 @@ print_help(){
     echo "    -m PATH       path to external media device (for images)"
     echo "    -p NAME       prefix of bagfile, default 'fs'"
     echo ""
+    echo "    -c            use mv_camera_nodelet for standard recording settings"
+    echo ""
     echo "    -h        print this help"
     echo ""
     exit 0;
@@ -74,11 +76,11 @@ print_help(){
 
 # parse TOPICS
 if [ -z ${1} ]; then
-  echo "${COL_ERR}[ERROR] TOPICS missing"
+  echo -e "${COL_ERR}[ERROR] TOPICS missing${NC}"
   print_help;
   exit 1;
-elif [[ -n "${1%-}" ]]; then
-  echo "${COL_ERR}[ERROR] '${1}' is an option - not a valid string"
+elif [[ ! -n "${1%%-*}" ]]; then
+  echo -e "${COL_ERR}[ERROR] '${1}' is an option - not a valid string${NC}"
   print_help;
   exit 1;
 else
@@ -87,16 +89,16 @@ fi
 # shift optind to next value
 OPTIND=$((OPTIND+1));
 
-echo $TOPICS
-exit
-
 # parse flags
-while getopts hl:m:p: flag
+while getopts hcl:m:p: flag
 do
     case "${flag}" in
         l) path_local=${OPTARG};;
         m) path_media=${OPTARG};;
         p) bag_name=${OPTARG};;
+        
+        c) CAM_NODELET_MANAGER=nodelet_manager;
+           B_DEV_2_START_MANAGER=false;;
 
         h) print_help;;
 
@@ -104,7 +106,6 @@ do
     esac
 done
 shift $((OPTIND-1))
-
 
 # check for local/media paths
 if [ -z "${path_local}" ]; then
@@ -252,7 +253,7 @@ printf -v topics_mod2_cam '%s, ' "${group_mod2_cam[@]}"
 ## Module Independent
 ### Calibration Topics (cam+imu)
 group_calib=(
-${px4_topics}
+${px4_topics[@]}
 ${bluefox_camera_topics[@]}
 )
 
@@ -273,6 +274,29 @@ if [ "${TOPICS}" == "dev1_full" ] ; then
         start_manager:=True nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_sensors" \
         rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors \
         rosbag_topics:="[${topics_mod1_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=False nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_nodes" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes \
+        rosbag_topics:="[${topics_mod1_nodes%,}]" && \
+    kill $!
+
+if [ "${TOPICS}" == "dev1_all" ] ; then
+    echo "Recording for device 1 (full): "
+    echo "  paths:"
+    echo "    local: ${path_local}"
+    echo "    - sensors1"
+    echo "    - nodes1"
+    echo "    media: ${path_media}"
+    echo "    - cam"
+    rosparam dump "${path_local}/${bag_name}_params_$(date +%Y-%m-%d-%H-%M).yaml" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=True nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_sensors" \
+        rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_sensors \
+        rosbag_topics:="[${topics_mod1_sensors%,}]" & \
+    roslaunch nodelet_rosbag nodelet_rosbag.launch \
+        start_manager:=${B_DEV_2_START_MANAGER} nodelet_manager_name:="${CAM_NODELET_MANAGER}" nodelet_name:="record_dev1_cams" \
+        rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_cam \
+        rosbag_topics:="[${topics_mod2_cam%,}]" & \
     roslaunch nodelet_rosbag nodelet_rosbag.launch \
         start_manager:=False nodelet_manager_name:="record_dev1_manager" nodelet_name:="record_dev1_nodes" \
         rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_nodes \

@@ -21,16 +21,17 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
     <arg name="store_script_file" default="$(find flightstack_scripts)/store_scripts/safe_merge_data_single_dev.sh" />
     <arg name="store_cmd"         default="-z" />
+    <!-- for empty use https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/ -->
 
     <arg name="rec_verbose"       default="False" />
 
     <group if="$(eval arg('dev_id') == 1)">
       <include file="$(find data_recorder)/launch/recorder.launch">
-        <arg name="record_script"   default="$(arg rec_script_file)" />
-        <arg name="record_cmd"      default="$(arg rec_cmd)" />
-        <arg name="store_script"    default="$(arg store_script_file)" />
-        <arg name="store_cmd"       default="$(arg store_cmd)" />
-        <arg name="verbose"         default="$(arg rec_verbose)" />
+        <arg name="record_script"   value="$(arg rec_script_file)" />
+        <arg name="record_cmd"      value="$(arg rec_cmd)" />
+        <arg name="store_script"    value="$(arg store_script_file)" />
+        <arg name="store_cmd"       value="$(arg store_cmd)" />
+        <arg name="verbose"         value="$(arg rec_verbose)" />
       </include>
     </group>
 </launch>

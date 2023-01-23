@@ -116,7 +116,7 @@ if [ ${B_DEBUG_ON} = true ]; then
 fi
 
 # setup directory name (timestamp)
-TIMESTAMP=$(date +%Y%d%m-%H%M%S)
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DIR_NAME="${DEST_DIR}/${TIMESTAMP}"
 
 # Ensure all data is written before copy
@@ -148,19 +148,21 @@ if [ ${B_CREATE_TARBALL} = true ]; then
   rm -rf $(find ${REC_LOCAL} -type f -not -path "*/final/*") $(find ${REC_MEDIA} -type f -not -path "*/final/*") ${REC_LOGS}/autonomy/
   rm -rf ${tmp_dir}
 else
+  # create folder structure
+  mkdir -p ${DIR_NAME}/logs/autonomy ${DIR_NAME}/logs/ros
 
   # Copy data
   ${RSYNC_CMD} ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
     --exclude='final/'
-  ${RSYNC_CMD} ${REC_LOGS}/autonomy ${DIR_NAME}/logs/
-  ${RSYNC_CMD} ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros
+  ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+  ${RSYNC_CMD} ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
   sync
 
   # Copy data and ensure the checksum is correct
   ${RSYNC_CMD} -c ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
     --exclude='final/'
-  ${RSYNC_CMD} -c ${REC_LOGS}/autonomy ${DIR_NAME}/logs/
-  ${RSYNC_CMD} -c ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros
+  ${RSYNC_CMD} -c ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+  ${RSYNC_CMD} -c ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
   # sync
 
   # Store autonomy logfile with ROS logs for later usage
@@ -169,8 +171,8 @@ else
   # Copy data and delete the source
   ${RSYNC_CMD} -c --remove-source-files ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
     --exclude='final/'
-  ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/autonomy ${DIR_NAME}/logs/
-  ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros
+  ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+  # ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros
   sync
 fi
 

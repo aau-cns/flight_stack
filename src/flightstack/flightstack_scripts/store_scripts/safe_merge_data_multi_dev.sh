@@ -72,11 +72,11 @@ print_help(){
 
 # parse NUM
 if [ -z ${1} ]; then
-  echo "${COL_ERR}[ERROR] number of devices missing"
+  echo -e "${COL_ERR}[ERROR] number of devices missing${NC}"
   print_help;
   exit 1;
 elif [[ ${1} =~ '^[0-9]+$' ]]; then
-  echo "${COL_ERR}[ERROR] '${1}' is not an integer number"
+  echo -e "${COL_ERR}[ERROR] '${1}' is not an integer number${NC}"
   print_help;
   exit 1;
 else
@@ -119,7 +119,7 @@ shift "$((OPTIND-1))"
 
 # check if destination directories exist
 if [ ! -d "${DEST_DIR}" ]; then
-  echo "${COL_WARN}${DEST_DIR} does not exist, creating it... ${NC}"
+  echo -e "${COL_WARN}${DEST_DIR} does not exist, creating it... ${NC}"
   mkdir -p ${DEST_DIR}
 fi
 
@@ -147,7 +147,7 @@ if [ ${B_DEBUG_ON} = true ]; then
 fi
 
 # setup directory name (timestamp)
-TIMESTAMP=$(date +%Y%d%m-%H%M%S)
+TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DIR_NAME="${DEST_DIR}/${TIMESTAMP}"
 
 # create folder structure with symlinks and files(to then compress)
