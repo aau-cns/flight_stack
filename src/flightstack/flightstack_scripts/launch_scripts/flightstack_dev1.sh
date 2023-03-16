@@ -72,7 +72,7 @@ do
     case "${flag}" in
         t) type=${OPTARG};;
         p) PLATFORM=${OPTARG};;
-        d) LAUNCH_DIR=${OPTARG};change_scripts=true;;
+        d) LAUNCH_DIR=${OPTARG};change_scripts=false;;
         f) LAUNCH_PRE=${OPTARG};;
         s) SCRIPTS_DIR=${OPTARG};change_scripts=false;;
         a) LAUNCH_DIR=${OPTARG};LAUNCH_PRE=${OPTARG};SCRIPTS_DIR=${OPTARG};change_scripts=false;;
@@ -195,7 +195,7 @@ if [[ "${debug_on}" = true ]]; then
 
   # DEBUG (or operator in manual)
   OP1="sleep ${SLEEP_DURATION}; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-  OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
+  OP2="roscd ${SCRIPTS_DIR}_scripts/"
 
   tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
@@ -211,7 +211,7 @@ if [[ "${manual_flight}" != true ]]; then
 
   # DEBUG (or operator in manual)
   OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
-  OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
+  OP2="roscd ${SCRIPTS_DIR}_scripts/"
 
   tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'

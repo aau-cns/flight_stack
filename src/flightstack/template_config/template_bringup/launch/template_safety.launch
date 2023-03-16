@@ -1,4 +1,4 @@
-value<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 Copyright (C) 2022 Martin Scheiber, Christian Brommer,
 and others, Control of Networked Systems, University of Klagenfurt, Austria.
@@ -58,7 +58,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <arg name="toland_imu"                value="$(arg toland_imu)" />
     <arg name="toland_agl"                value="$(arg toland_agl)" />
     <arg name="toland_baro"               value="$(arg toland_baro)" />
-    <arg name="toland_default"            value="$(arg toland_value)" />
+    <arg name="toland_default"            value="$(arg toland_default)" />
     <arg name="angle_threshold"           value="$(arg angle_threshold)" />
     <arg name="distance_threshold"        value="$(arg distance_threshold)" />
 

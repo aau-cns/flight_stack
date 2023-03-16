@@ -38,7 +38,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <!-- odometry in -->
   <arg name="use_odom"                        default="True" />
   <arg name="topic_odom_in"                   default="/mars_pose_node/odom_state_out"  unless="$(arg use_gps)" />
+  <arg name="topic_pose_in"                   default="/mars_pose_node/pose_state_out"  unless="$(arg use_gps)" />
   <arg name="topic_odom_in"                   default="/mars_gps_node/odom_state_out"   if="$(arg use_gps)" />
+  <arg name="topic_pose_in"                   default="/mars_gps_node/pose_state_out"   if="$(arg use_gps)" />
 
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
@@ -58,6 +60,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
         <arg name="bound_min"               value="$(arg wp_min)" />
         <arg name="boundary_reference"      value="$(arg boundary_reference)" />
 
+        <arg name="topic_pose_in"           value="$(arg topic_pose_in)" />
         <arg name="topic_odom_in"           value="$(arg topic_odom_in)" />
     </include>
   </group>

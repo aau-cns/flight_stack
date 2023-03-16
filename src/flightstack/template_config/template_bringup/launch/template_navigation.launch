@@ -38,7 +38,10 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <!-- odometry in -->
   <arg name="use_odom"                default="True" />
   <arg name="topic_odom_in"           default="/mars_pose_node/odom_state_out"  unless="$(arg use_gps)" />
+  <arg name="topic_pose_in"           default="/mars_pose_node/pose_state_out"  unless="$(arg use_gps)" />
   <arg name="topic_odom_in"           default="/mars_gps_node/odom_state_out"   if="$(arg use_gps)" />
+  <arg name="topic_pose_in"           default="/mars_gps_node/pose_state_out"   if="$(arg use_gps)" />
+
 
   <include file="$(find flightstack_bringup)/launch/fs_navigation.launch">
     <arg name="dev_id"                  value="$(arg dev_id)" />
@@ -66,5 +69,6 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <!-- odometry in -->
     <arg name="use_odom"                value="$(arg use_odom)" />
     <arg name="topic_odom_in"           value="$(arg topic_odom_in)" />
+    <arg name="topic_pose_in"           value="$(arg topic_pose_in)" />
   </include>
 </launch>
