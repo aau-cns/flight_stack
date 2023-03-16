@@ -89,6 +89,7 @@ fi
 # shift optind to next value
 OPTIND=$((OPTIND+1));
 
+
 # parse flags
 while getopts hcl:m:p: flag
 do
@@ -96,7 +97,7 @@ do
         l) path_local=${OPTARG};;
         m) path_media=${OPTARG};;
         p) bag_name=${OPTARG};;
-        
+
         c) CAM_NODELET_MANAGER=nodelet_manager;
            B_DEV_2_START_MANAGER=false;;
 
@@ -107,23 +108,24 @@ do
 done
 shift $((OPTIND-1))
 
+
 # check for local/media paths
 if [ -z "${path_local}" ]; then
-  echo "${COL_WARN}No local path provided, recording to home directory: '${HOME}/recordings'${NC}"
+  echo -e "${COL_WARN}No local path provided, recording to home directory: '${HOME}/recordings'${NC}"
   path_local="${HOME}/recordings"
 fi
 if [ -z "${path_media}" ]; then
-  echo "${COL_WARN}No media path provided, recording to local path: '${path_local}'.${NC}"
+  echo -e "${COL_WARN}No media path provided, recording to local path: '${path_local}'.${NC}"
   path_media="${path_local}"
 fi
 
 # check if directories exist
 if [ ! -d "${path_local}" ]; then
-  echo "${COL_WARN}${path_local} does not exist, creating it... ${NC}"
+  echo -e "${COL_WARN}${path_local} does not exist, creating it... ${NC}"
   mkdir -p ${path_local}
 fi
 if [ ! -d "${path_media}" ]; then
-  echo "${COL_WARN}${path_media} does not exist, creating it... ${NC}"
+  echo -e "${COL_WARN}${path_media} does not exist, creating it... ${NC}"
   mkdir -p ${path_media}
 fi
 
@@ -261,7 +263,7 @@ ${bluefox_camera_topics[@]}
 printf -v topics_calib '%s, ' "${group_calib[@]}"
 
 # Record the given group of topics
-echo "Bagname: ${bag_name}"
+echo "Bag Prefix: ${bag_name}"
 
 if [ "${TOPICS}" == "dev1_full" ] ; then
     echo "Recording for device 1 (full): "
@@ -280,8 +282,8 @@ if [ "${TOPICS}" == "dev1_full" ] ; then
         rosbag_topics:="[${topics_mod1_nodes%,}]" && \
     kill $!
 
-if [ "${TOPICS}" == "dev1_all" ] ; then
-    echo "Recording for device 1 (full): "
+elif [ "${TOPICS}" == "dev1_all" ] ; then
+    echo "Recording for device 1 (all): "
     echo "  paths:"
     echo "    local: ${path_local}"
     echo "    - sensors1"

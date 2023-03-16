@@ -9,9 +9,6 @@ missions:
       - ["px4_imu", "failure"]
       - ["px4_mag", "continue"]
       - ["px4_bar", "continue"]
-      - ["mission_cam", "hold"]
-      - ["uwb", "hold"]
-      - ["lrf", "hold"]
       - ["optitrack", "land"]
 
   mission_2:
@@ -23,9 +20,6 @@ missions:
       - ["px4_imu", "failure"]
       - ["px4_mag", "continue"]
       - ["px4_bar", "continue"]
-      - ["mission_cam", "hold"]
-      - ["uwb", "hold"]
-      - ["lrf", "hold"]
       - ["optitrack", "land"]
 
   mission_3:
@@ -37,9 +31,6 @@ missions:
       - ["px4_imu", "failure"]
       - ["px4_mag", "continue"]
       - ["px4_bar", "continue"]
-      - ["mission_cam", "land"]
-      - ["uwb", "hold"]
-      - ["lrf", "hold"]
       - ["optitrack", "failure"]
 
   mission_4:
@@ -51,9 +42,6 @@ missions:
       - ["px4_imu", "failure"]
       - ["px4_mag", "continue"]
       - ["px4_bar", "continue"]
-      - ["mission_cam", "land"]
-      - ["uwb", "hold"]
-      - ["lrf", "hold"]
       - ["optitrack", "land"]
 
   mission_5:
@@ -65,7 +53,4 @@ missions:
       - ["px4_imu", "failure"]
       - ["px4_mag", "continue"]
       - ["px4_bar", "continue"]
-      - ["mission_cam", "land"]
-      - ["uwb", "hold"]
-      - ["lrf", "hold"]
       - ["optitrack", "land"]

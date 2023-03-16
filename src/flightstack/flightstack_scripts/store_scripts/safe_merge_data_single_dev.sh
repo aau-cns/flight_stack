@@ -57,7 +57,7 @@ print_help(){
 ################################################################################
 
 # parse flags
-while getopts hzd:l:m:r: flag
+while getopts vhzd:l:m:r: flag
 do
   case "${flag}" in
     l) REC_LOCAL=${OPTARG};;
@@ -77,31 +77,31 @@ shift $((OPTIND-1))
 
 # check for local/media paths
 if [ -z "${REC_LOCAL}" ]; then
-  echo "${COL_WARN}No local path provided, recording to home directory: '${HOME}/recordings'${NC}"
+  echo -e "${COL_WARN}No local path provided, recording to home directory: '${HOME}/recordings'${NC}"
   REC_LOCAL="${HOME}/recordings"
 fi
 if [ -z "${REC_MEDIA}" ]; then
-  echo "${COL_WARN}No media path provided, recording to local path: '${REC_MEDIA}'.${NC}"
+  echo -e "${COL_WARN}No media path provided, recording to local path: '${REC_MEDIA}'.${NC}"
   REC_MEDIA="${REC_LOCAL}"
 fi
 
 # check if local/media directories exist
 if [ ! -d "${REC_LOCAL}" ]; then
-  echo "${COL_ERR}[ERROR] ${REC_LOCAL} does not exist ${NC}"
+  echo -e "${COL_ERR}[ERROR] ${REC_LOCAL} does not exist ${NC}"
   exit 1;
 fi
 if [ ! -d "${REC_MEDIA}" ]; then
-  echo "${COL_ERR}[ERROR] ${REC_MEDIA} does not exist ${NC}"
+  echo -e "${COL_ERR}[ERROR] ${REC_MEDIA} does not exist ${NC}"
   exit 1;
 fi
 if [ ! -d "${REC_LOGS}" ]; then
-  echo "${COL_ERR}[ERROR] ${REC_LOGS} does not exist ${NC}"
+  echo -e "${COL_ERR}[ERROR] ${REC_LOGS} does not exist ${NC}"
   exit 1;
 fi
 
 # check if destination directories exist
 if [ ! -d "${DEST_DIR}" ]; then
-  echo "${COL_WARN}${DEST_DIR} does not exist, creating it... ${NC}"
+  echo -e "${COL_WARN}${DEST_DIR} does not exist, creating it... ${NC}"
   mkdir -p ${DEST_DIR}
 fi
 
@@ -111,8 +111,13 @@ fi
 ################################################################################
 ################################################################################
 
+# setup rsync basic command
+RSYNC_CMD="rsync -rptgoDL"
+
 if [ ${B_DEBUG_ON} = true ]; then
   set -x
+  # update rsync cmd to include verbose output
+  RSYNC_CMD="${RSYNC_CMD} -vPh"
 fi
 
 # setup directory name (timestamp)
@@ -122,26 +127,32 @@ DIR_NAME="${DEST_DIR}/${TIMESTAMP}"
 # Ensure all data is written before copy
 sync
 
-RSYNC_CMD="rsync -rptgoDvPhL"
+
 if [ ${B_CREATE_TARBALL} = true ]; then
   # create folder structure with symlinks (to then compress)
   tmp_dir=/tmp/recordings/${TIMESTAMP}
   rm -rf ${tmp_dir}
   mkdir -p ${tmp_dir}/logs/ros
-  mkdir -p ${TAR_TMP_DIR}/logs/autonomy
+  mkdir -p ${tmp_dir}/logs/autonomy
   
   # link the files to the corresponding directories
   ln -s ${REC_LOCAL}/* ${tmp_dir}/
   rm -rf ${tmp_dir}/final
-  ln -s ${REC_MEDIA}/* ${tmp_dir}/
-  rm -rf ${tmp_dir}/final
+  if [ "${REC_LOCAL}" != "${REC_MEDIA}" ]; then
+    # only link rec_media if it is not the same as rec_local
+    ln -s ${REC_MEDIA}/* ${tmp_dir}/
+    rm -rf ${tmp_dir}/final
+  fi
   ln -s ${REC_LOGS}/autonomy/*  ${tmp_dir}/logs/autonomy/
   ln -s ${REC_LOGS}/latest/*  ${tmp_dir}/logs/ros/
 
   # create tarball from tmp dir
   tar --dereference -czvf ${DIR_NAME}.tar.gz -C ${tmp_dir}/.. ${TIMESTAMP}
-
-  # Store autonomy logfile with ROS logs for later usage
+  
+  # ensure all data is written before deletions
+  sync
+  
+  # store autonomy logfile with ROS logs for later usage
   ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${REC_LOGS}/latest/
 
   # remove source files

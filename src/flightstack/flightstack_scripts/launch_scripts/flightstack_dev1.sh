@@ -105,7 +105,12 @@ fi
 REC_ADDITIONAL=""
 if [[ "${dual_platform}" = true ]]; then
   REC_ADDITIONAL="rec_script_file:=$(rospack find ${SCRIPTS_DIR}_scripts)/record_scripts/record_start_dual.sh rec_cmd:=full"
+  REC_ADDITIONAL="${REC_ADDITIONAL} store_script_file:=$(rospack find ${SCRIPTS_DIR}_scripts)/store_scripts/safe_merge_data_multi_dev.sh"
+elif [ "${SCRIPTS_DIR}" != "${LAUNCH_DIR}" ]; then
+  REC_ADDITIONAL="rec_script_file:=$(rospack find ${SCRIPTS_DIR}_scripts)/record_scripts/record_full.sh"
+  REC_ADDITIONAL="${REC_ADDITIONAL} store_script_file:=$(rospack find ${SCRIPTS_DIR}_scripts)/store_scripts/safe_merge_data_single_dev.sh"
 fi
+
 
 # Check if flag is provided and define commands
 if [[ -z ${type} || "${type}" = "dh" ]]; then

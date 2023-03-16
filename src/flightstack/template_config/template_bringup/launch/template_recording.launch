@@ -20,7 +20,10 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <arg name="rec_cmd"           default="dev1_full" />
 
     <arg name="store_script_file" default="$(find data_recorder)/scripts/store.sh" />
-    <arg name="store_cmd"         default="" />
+    <arg name="store_cmd"         default="-z" />
+    <!--  for cmdline empty use 
+          https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/?answer=317185#post-id-317185 
+    -->
 
     <arg name="rec_verbose"       default="False" />
 

@@ -21,8 +21,10 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
     <arg name="store_script_file" default="$(find flightstack_scripts)/store_scripts/safe_merge_data_single_dev.sh" />
     <arg name="store_cmd"         default="-z" />
-    <!-- for empty use https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/ -->
-
+    <!--  for cmdline empty use 
+          https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/?answer=317185#post-id-317185 
+    -->
+    
     <arg name="rec_verbose"       default="False" />
 
     <group if="$(eval arg('dev_id') == 1)">
