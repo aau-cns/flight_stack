@@ -146,7 +146,7 @@ px4_topics=(
 )
 
 mocap_vehicle_topics=(
-"/cnsuav/vrpn_client/raw_transform"
+"/${FS_OPTITRACK_OBJECT_NAME}/vrpn_client/raw_transform"
 )
 
 autonomy_topics=(
@@ -179,26 +179,18 @@ est_topics=(
 "/mavros/local_position/odom_cov"
 )
 
-mars_pose_topics=(
-"/mars_pose_node/full_state_lite_out"
-"/mars_pose_node/full_state_out"
-"/mars_pose_node/odom_state_out"
-"/mars_pose_node/path_state_out"
-"/mars_pose_node/parameter_descriptions"
-"/mars_pose_node/parameter_updates"
-"/mars_pose_node/pose1_cal_state_out"
-)
-
-mars_gps_topics=(
-"/mars_gps_node/full_state_lite_out"
-"/mars_gps_node/full_state_out"
-"/mars_gps_node/odom_state_out"
-"/mars_gps_node/path_state_out"
-"/mars_gps_node/gps1_cal_state_out"
-"/mars_gps_node/gps1_enu"
-"/mars_gps_node/gps1_pos_in"
-"/mars_gps_node/parameter_descriptions"
-"/mars_gps_node/parameter_updates"
+mars_topics=(
+"/${FS_ESTIMATOR_NODE_NAME}/full_state_lite_out"
+"/${FS_ESTIMATOR_NODE_NAME}/full_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/pose_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/odom_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/path_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/gps1_cal_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/gps1_enu"
+"/${FS_ESTIMATOR_NODE_NAME}/gps1_pos_in"
+"/${FS_ESTIMATOR_NODE_NAME}/pose1_cal_state_out"
+"/${FS_ESTIMATOR_NODE_NAME}/parameter_descriptions"
+"/${FS_ESTIMATOR_NODE_NAME}/parameter_updates"
 )
 
 # these topics require the installation of the matrixvision driver
@@ -218,6 +210,7 @@ ${mocap_vehicle_topics[@]}
 ${px4_topics[@]}
 ${lrf_topic[@]}
 ${rtk_gps1_topic[@]}
+${FS_RECORD_ADD_DEV1_SENSOR[@]}
 )
 
 ### Nodes
@@ -226,8 +219,8 @@ ${autonomy_topics[@]}
 ${ms_topics[@]}
 ${est_topics[@]}
 ${wd_topics[@]}
-${mars_pose_node[@]}
-${mars_gps_node[@]}
+${mars_topics[@]}
+${FS_RECORD_ADD_DEV1_ESTIMATOR[@]}
 )
 
 # generated comma seperated list, required by nodelet_rosbag in args

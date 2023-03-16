@@ -77,20 +77,20 @@ shift $((OPTIND-1))
 
 # check for local/media paths
 if [ -z "${REC_LOCAL}" ]; then
-  echo -e "${COL_WARN}No local path provided, using home directory: '${HOME}/recordings'${NC}"
   REC_LOCAL="${HOME}/recordings"
+  echo -e "${COL_WARN}No local path provided, using home directory: '${REC_LOCAL}'${NC}"
 fi
 if [ -z "${REC_MEDIA}" ]; then
-  echo -e "${COL_WARN}No media path provided, using local path: '${REC_MEDIA}'.${NC}"
   REC_MEDIA="${REC_LOCAL}"
+  echo -e "${COL_WARN}No media path provided, using local path: '${REC_MEDIA}'.${NC}"
 fi
 if [ -z "${REC_LOGS}" ]; then
-  echo -e "${COL_WARN}No ros log path provided, using home directory: '${HOME}/.ros/log'${NC}"
   REC_LOGS="${HOME}/.ros/log"
+  echo -e "${COL_WARN}No ros log path provided, using home directory: '${REC_LOGS}'.${NC}"
 fi
-if [ -z "${REC_LOGS}" ]; then
-  echo -e "${COL_WARN}No destination path provided, using media path: '${REC_MEDIA}/final'${NC}"
+if [ -z "${DEST_DIR}" ]; then
   DEST_DIR="${REC_MEDIA}/final"
+  echo -e "${COL_WARN}No destination path provided, using media path: '${DEST_DIR}'.${NC}"
 fi
 
 
