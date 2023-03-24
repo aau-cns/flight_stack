@@ -11,29 +11,36 @@
 #
 # You can contact the authors at <martin.scheiber@ieee.org>.
 
-if [[ -f "/usr/bin/fs_op" || -f "/usr/bin/fs_dev1" || -f "/usr/bin/fs_dev2" || -f "/usr/bin/fs_remote" ]]; then
-  #statements
+override=false
+
+# check if input is -f --> override forcefully
+if [ ! -z ${1} ] && [ ${1} == '-f' ]; then
+  override=true
+# otherwise check if files exist already
+elif [[ -f "/usr/bin/fs_op" || -f "/usr/bin/fs_dev1" || -f "/usr/bin/fs_dev2" || -f "/usr/bin/fs_remote" ]]; then
+  # they do, so perform user check
   echo "[WARN] files already exist at '/usr/bin/'"
   read -p "       Do you want to override (yN)?" -n 1 -r
   echo
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    override=true;
+    override=true
   else
-    override=false;
+    override=false
   fi
 else
-  override=true;
+  override=true
 fi
 
-if [[ "${override}" = true ]]; then
-  set +x
+if [[ "${override}" == true ]]; then
+  set -x
 
   # install the flightstack scripts
-  echo "Linking flightstack scripts to /usr/bin/"
-  sudo ln -sf $(pwd)/src/flightstack/flightstack_scripts/launch_scripts/flightstack_op.sh /usr/bin/fs_op
-  sudo ln -sf $(pwd)/src/flightstack/flightstack_scripts/launch_scripts/flightstack_dev1.sh /usr/bin/fs_dev1
-  sudo ln -sf $(pwd)/src/flightstack/flightstack_scripts/launch_scripts/flightstack_dev2.sh /usr/bin/fs_dev2
-  sudo ln -sf $(pwd)/src/flightstack/flightstack_scripts/launch_scripts/flightstack_remote.sh /usr/bin/fs_remote
+  FS_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+  # link scripts, and remove 'scripts' from directory name
+  sudo ln -sf ${FS_DIR:0:-8}/src/flightstack/flightstack_scripts/launch_scripts/flightstack_op.sh /usr/bin/fs_op
+  sudo ln -sf ${FS_DIR:0:-8}/src/flightstack/flightstack_scripts/launch_scripts/flightstack_dev1.sh /usr/bin/fs_dev1
+  sudo ln -sf ${FS_DIR:0:-8}/src/flightstack/flightstack_scripts/launch_scripts/flightstack_dev2.sh /usr/bin/fs_dev2
+  sudo ln -sf ${FS_DIR:0:-8}/src/flightstack/flightstack_scripts/launch_scripts/flightstack_remote.sh /usr/bin/fs_remote
 
-  set -x
+  set +x
 fi
