@@ -56,7 +56,7 @@ print_help(){
 ################################################################################
 
 # parse flags
-while getopts vhn:d: flag
+while getopts vhgn:d: flag
 do
     case "${flag}" in
         d) PATH_WS=${OPTARG}; PATH_PROVIDED=true;;
