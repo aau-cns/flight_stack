@@ -19,8 +19,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
     <arg name="rec_script_file"   default="$(find template_scripts)/record_scripts/record_full.sh" />
     <arg name="rec_cmd"           default="dev1_full" />
 
-    <arg name="store_script_file" default="$(find data_recorder)/scripts/store.sh" />
+    <arg name="store_script_file" default="$(find flightstack_scripts)/store_scripts/safe_merge_data_single_dev.sh" />
     <arg name="store_cmd"         default="-z" />
+    <!-- if media (-m) contains the destination (equal or subfolder), make sure that destination path contains 'final' -->
     <!--  for cmdline empty use 
           https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/?answer=317185#post-id-317185 
     -->
