@@ -24,15 +24,15 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="optitrack_throttle"    default="False" />
 
   <include file="$(find flightstack_bringup)/launch/fs_sensors.launch">
-    <arg name="dev_id"    value="1" />
-    <arg name="dev_type"  value="xu4" /> <!-- or "pi" -->
-    <arg name="dev_port"  value="" /> <!--ignored if empty -->
-    <arg name="dev_baud"  value="" /> <!--ignored if empty -->
+    <arg name="dev_id"    value="$(arg dev_id)" />
+    <arg name="dev_type"  value="$(arg dev_type)" /> <!-- or "pi" -->
+    <arg name="dev_port"  value="$(arg dev_port)" /> <!--ignored if empty -->
+    <arg name="dev_baud"  value="$(arg dev_baud)" /> <!--ignored if empty -->
 
     <!-- Optitrack Arguments -->
-    <arg name="use_gps"               value="False" />
-    <arg name="optitrack_object_name" value="cnsuav" />
-    <arg name="optitrack_throttle"    value="False" />
+    <arg name="use_gps"               value="$(arg use_gps)" />
+    <arg name="optitrack_object_name" value="$(arg optitrack_object_name)" />
+    <arg name="optitrack_throttle"    value="$(arg optitrack_throttle)" />
   </include>
 
 
