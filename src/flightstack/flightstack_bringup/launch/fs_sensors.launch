@@ -20,7 +20,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- Optitrack Arguments -->
   <arg name="use_gps"               default="False" />
-  <arg name="optitrack_object_name" default="cnsuav" />
+  <arg name="optitrack_object_name" default="$(env FS_OPTITRACK_OBJECT_NAME)" />
   <arg name="optitrack_throttle"    default="False" />
 
   <!-- Device 1 -->

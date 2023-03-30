@@ -20,13 +20,13 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
   <arg name="watchdog_check_dt"         default="0.5" />
-  <arg name="watchdog_drivers_cfg_file" default="$(find flightstack_bringup)/configs/watchdog/drivers.ini" />
+  <arg name="watchdog_drivers_cfg_file" default="$(find flightstack_bringup)/configs/watchdog/drivers.yaml" />
 
-  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dh.ini" unless="$(arg use_gps)" />
-  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_dh.ini" unless="$(arg use_gps)" />
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_dh.yaml" unless="$(arg use_gps)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_dh.yaml" unless="$(arg use_gps)" />
 
-  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps.ini" if="$(arg use_gps)" />
-  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.ini" if="$(arg use_gps)" />
+  <arg name="watchdog_topics_cfg_file"  default="$(find flightstack_bringup)/configs/watchdog/topics_gps.yaml" if="$(arg use_gps)" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find flightstack_bringup)/configs/watchdog/nodes_gps.yaml" if="$(arg use_gps)" />
 
   <!-- TOLand Parameters -->
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />

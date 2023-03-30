@@ -20,9 +20,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <!-- Watchdog Parameters -->
   <arg name="watchdog_verbose"          default="False" />
   <arg name="watchdog_check_dt"         default="0.5" />
-  <arg name="watchdog_drivers_cfg_file" default="$(find template_bringup)/configs/watchdog/drivers_template.ini" />
-  <arg name="watchdog_topics_cfg_file"  default="$(find template_bringup)/configs/watchdog/topics_template.ini" />
-  <arg name="watchdog_nodes_cfg_file"   default="$(find template_bringup)/configs/watchdog/nodes_template.ini" />
+  <arg name="watchdog_drivers_cfg_file" default="$(find template_bringup)/configs/watchdog/drivers_template.yaml" />
+  <arg name="watchdog_topics_cfg_file"  default="$(find template_bringup)/configs/watchdog/topics_template.yaml" />
+  <arg name="watchdog_nodes_cfg_file"   default="$(find template_bringup)/configs/watchdog/nodes_template.yaml" />
 
   <!-- TOLand Parameters -->
   <arg name="toland_imu"                default="/mavros/imu/data_raw" />

@@ -95,6 +95,13 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# source global vars
+SOURCE_CMD="$(rospack find ${LAUNCH_DIR}_bringup)/configs/global/${LAUNCH_PRE}_vars.env"
+source ${SOURCE_CMD}
+
+# setup sleep cmd
+SLEEP_CMD="sleep ${SLEEP_DURATION}"
+
 # check if SCRIPTS_DIR has to be overrriden
 if [[ "${change_scripts}" = true ]]; then
   #statements
@@ -115,21 +122,21 @@ fi
 # Check if flag is provided and define commands
 if [[ -z ${type} || "${type}" = "dh" ]]; then
 
-  SENSOR="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 dev_type:=${PLATFORM}"
-  SAFETY="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1"
-  EST="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1"
-  NAV="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1"
-  REC="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
-  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
+  SENSOR="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 dev_type:=${PLATFORM}"
+  SAFETY="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1"
+  EST="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1"
+  NAV="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1"
+  REC="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
 
 elif [[ "${type}" = "gps" ]]; then
 
-  SENSOR="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 use_gps:=True dev_type:=${PLATFORM}"
-  SAFETY="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1 use_gps:=True"
-  EST="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1 use_gps:=True"
-  NAV="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1 use_gps:=True"
-  REC="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
-  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
+  SENSOR="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=1 use_gps:=True dev_type:=${PLATFORM}"
+  SAFETY="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_safety.launch dev_id:=1 use_gps:=True"
+  EST="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=1 use_gps:=True"
+  NAV="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_navigation.launch dev_id:=1 use_gps:=True"
+  REC="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_recording.launch dev_id:=1 ${REC_ADDITIONAL}"
+  OPS="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find flightstack_bringup)/configs/autonomy/config_gps.yaml'"
 
 else
 
@@ -156,8 +163,8 @@ if [ "${uart_permission}" = true ]; then
 fi
 
 # Operator
-OPMAV="sleep ${SLEEP_DURATION}; rostopic echo -c /mavros/vision_pose/pose"
-OPAUT="sleep ${SLEEP_DURATION}; rostopic echo -c /autonomy/logger"
+OPMAV="rostopic echo -c /mavros/vision_pose/pose"
+OPAUT="rostopic echo -c /autonomy/logger"
 
 # Create Tmux Session
 CUR_DATE=`date +%F-%H-%M-%S`
@@ -166,25 +173,51 @@ export SES_NAME="flightstack_dev1_${CUR_DATE}"
 ## INFO(scm): use .0 .1 if base index has not been configured
 tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 
+# set base index to 1 (in case different .tmux.conf is used)
+tmux set -g -t ${SES_NAME} base-index 1
+tmux set -g -t ${SES_NAME} pane-base-index 1
+
 # ROSCORE
 tmux rename-window 'roscore_rec'
 tmux split-window -v
+# source
+tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+# sleep
+tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
+
+# roscore
 if [[ "${start_core}" = true ]]; then
   tmux send-keys -t ${SES_NAME}.1 "roscore" 'C-m'
 else
   tmux send-keys -t ${SES_NAME}.1 "echo 'NOT STARTING ROSOCRE'" 'C-m'
 fi
+# roslaunch
 tmux send-keys -t ${SES_NAME}.2 "${REC}" 'C-m'
 
 # BACKGROUND
 tmux new-window -n 'background'
 tmux split-window -v
+# source
+tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+# sleep
+tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
+# roslaunch
 tmux send-keys -t ${SES_NAME}.1 "${SENSOR}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${SAFETY}" 'C-m'
 
 # NAVIGATION & CONTROL
 tmux new-window -n 'gnc'
 tmux split-window -v
+# source
+tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+# sleep
+tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
+# roslaunch
 tmux send-keys -t ${SES_NAME}.1 "${EST}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${NAV}" 'C-m'
 
@@ -197,11 +230,23 @@ if [[ "${debug_on}" = true ]]; then
   tmux split-window -v
   tmux select-pane -t 3
   tmux split-window -v -p 90
+  # source
+  tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.3 "source ${SOURCE_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.4 "source ${SOURCE_CMD}" 'C-m'
+  # sleep
+  tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.3 "${SLEEP_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.4 "${SLEEP_CMD}" 'C-m'
+
 
   # DEBUG (or operator in manual)
-  OP1="sleep ${SLEEP_DURATION}; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
+  OP1="rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
   OP2="roscd ${SCRIPTS_DIR}_scripts/"
 
+  # ros stuff
   tmux send-keys -t ${SES_NAME}.1 "${OP1}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OP2}" 'C-m'
   tmux send-keys -t ${SES_NAME}.5 "${OPMAV}" 'C-m'
@@ -212,12 +257,19 @@ if [[ "${manual_flight}" != true ]]; then
   # OPERATOR DEBUG WINDOW
   tmux new-window -n 'operator'
   tmux split-window -v -p 90
+  # source
+  tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+  # sleep
+  tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD}" 'C-m'
+  tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
 
 
   # DEBUG (or operator in manual)
   OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
   OP2="roscd ${SCRIPTS_DIR}_scripts/"
 
+  # ros stuff
   tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
   tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'
 fi

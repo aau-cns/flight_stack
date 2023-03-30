@@ -16,7 +16,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="dev_id"        default="1" />
 
   <!-- system args -->
-  <arg name="use_gps"               default="False" />
+  <arg name="use_gps"               default="False" /> <!-- INFO(scm): kept for legacy reasons -->
 
   <!-- Mission Sequencer Args -->
   <arg name="threshold_position"    default="0.3" />
@@ -37,10 +37,8 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- odometry in -->
   <arg name="use_odom"                        default="True" />
-  <arg name="topic_odom_in"                   default="/mars_pose_node/odom_state_out"  unless="$(arg use_gps)" />
-  <arg name="topic_pose_in"                   default="/mars_pose_node/pose_state_out"  unless="$(arg use_gps)" />
-  <arg name="topic_odom_in"                   default="/mars_gps_node/odom_state_out"   if="$(arg use_gps)" />
-  <arg name="topic_pose_in"                   default="/mars_gps_node/pose_state_out"   if="$(arg use_gps)" />
+  <arg name="topic_odom_in"                   default="/$(env FS_ESTIMATOR_NODE_NAME)/odom_state_out" />
+  <arg name="topic_pose_in"                   default="/$(env FS_ESTIMATOR_NODE_NAME)/pose_state_out" />
 
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">
