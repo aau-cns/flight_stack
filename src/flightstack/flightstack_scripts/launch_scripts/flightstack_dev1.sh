@@ -99,7 +99,7 @@ shift $((OPTIND-1))
 SOURCE_CMD="$(rospack find ${LAUNCH_DIR}_bringup)/configs/global/${LAUNCH_PRE}_vars.env"
 source ${SOURCE_CMD}
 
-# setup sleep cnd
+# setup sleep cmd
 SLEEP_CMD="sleep ${SLEEP_DURATION}"
 
 # check if SCRIPTS_DIR has to be overrriden

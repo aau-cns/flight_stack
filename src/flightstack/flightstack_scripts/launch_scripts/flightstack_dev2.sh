@@ -87,16 +87,30 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# source global vars
+SOURCE_CMD="$(rospack find ${LAUNCH_DIR}_bringup)/configs/global/${LAUNCH_PRE}_vars.env"
+source ${SOURCE_CMD}
+
+# setup sleep cmd
+SLEEP_CMD_BKG="sleep ${SLEEP_DURATION_BKG}"
+SLEEP_CMD_EST="sleep ${SLEEP_DURATION_EST}"
+
+# check if SCRIPTS_DIR has to be overrriden
+if [[ "${change_scripts}" = true ]]; then
+  #statements
+  SCRIPTS_DIR=${LAUNCH_DIR}
+fi
+
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
-  EST="sleep ${SLEEP_DURATION_EST}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2"
+  BKG="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
+  EST="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2"
 
 elif [ ${type} = "gps" ]; then
 
-  BKG="sleep ${SLEEP_DURATION_BKG}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
-  EST="sleep ${SLEEP_DURATION_EST}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2 use_gps:=True"
+  BKG="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_sensors.launch dev_id:=2"
+  EST="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_estimation.launch dev_id:=2 use_gps:=True"
 
 else
 
@@ -114,9 +128,20 @@ export SES_NAME="flightstack_dev2_${CUR_DATE}"
 tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 #-x "$(tput cols)" -y "$(tput lines)"
 
+# set base index to 1 (in case different .tmux.conf is used)
+tmux set -g -t ${SES_NAME} base-index 1
+tmux set -g -t ${SES_NAME} pane-base-index 1
+
 # BACKGROUND
 tmux rename-window 'background'
 tmux split-window -v -p 60
+# source
+tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+# sleep
+tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD_BKG}" 'C-m'
+tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD_EST}" 'C-m'
+# roslaunch
 tmux send-keys -t ${SES_NAME}.1 "${BKG}" 'C-m'
 tmux send-keys -t ${SES_NAME}.2 "${EST}" 'C-m'
 

@@ -79,6 +79,13 @@ shift $((OPTIND-1))
 ################################################################################
 ################################################################################
 
+# source global vars
+SOURCE_CMD="$(rospack find ${LAUNCH_DIR}_bringup)/configs/global/${LAUNCH_PRE}_vars.env"
+source ${SOURCE_CMD}
+
+# setup sleep cmd
+SLEEP_CMD="sleep ${SLEEP_DURATION}"
+
 # check if SCRIPTS_DIR has to be overrriden
 if [[ "${change_scripts}" = true ]]; then
   #statements
@@ -88,11 +95,11 @@ fi
 # Check if flag is provided and define commands
 if [ -z ${type} ]; then
 
-  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
+  OPS="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1"
 
 elif [ "${type}" = "gps" ]; then
 
-  OPS="sleep ${SLEEP_DURATION}; roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find ${LAUNCH_DIR}_bringup)/configs/autonomy/config_gps.yaml'"
+  OPS="roslaunch ${LAUNCH_DIR}_bringup ${LAUNCH_PRE}_operator.launch dev_id:=1 estimator_init_service_name:='/mars_gps_node/init_service' 'config_filepath:=\$(find ${LAUNCH_DIR}_bringup)/configs/autonomy/config_gps.yaml'"
 
 else
 
@@ -115,16 +122,26 @@ export SES_NAME="flightstack_ops_${CUR_DATE}"
 ## INFO(martin): use .0 .1 if base index has not been configured
 tmux new -d -s "${SES_NAME}" -x "$(tput cols)" -y "$(tput lines)"
 
+# set base index to 1 (in case different .tmux.conf is used)
+tmux set -g -t ${SES_NAME} base-index 1
+tmux set -g -t ${SES_NAME} pane-base-index 1
 
 # OPERATOR DEBUG WINDOW
 tmux rename-window 'operator'
 # tmux split-window -v -p 90
 
+# source
+tmux send-keys -t ${SES_NAME}.1 "source ${SOURCE_CMD}" 'C-m'
+# tmux send-keys -t ${SES_NAME}.2 "source ${SOURCE_CMD}" 'C-m'
+# sleep
+tmux send-keys -t ${SES_NAME}.1 "${SLEEP_CMD}" 'C-m'
+# tmux send-keys -t ${SES_NAME}.2 "${SLEEP_CMD}" 'C-m'
 
 # DEBUG (or operator in manual)
 OP1="sleep 10; rostopic hz -w 100 /camera/camera_info /mavros/imu/data_raw"
 OP2="roscd ${SCRIPTS_DIR}_scripts/system_scripts"
 
+# roslaunch
 # tmux send-keys -t ${SES_NAME}.1 "${OP2}" 'C-m'
 # tmux send-keys -t ${SES_NAME}.2 "${OPS}" 'C-m'
 tmux send-keys -t ${SES_NAME}.1 "${OPS}" 'C-m'
