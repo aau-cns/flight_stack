@@ -43,7 +43,7 @@ print_help(){
     echo "    -t TYPE       executes the type of flight, default 'dh'"
     echo "                  switch between 'gps' or 'dh'"
     echo "    -p PLATFORM   selects the platform for sensors, default 'pi'"
-    echo "                  switch between 'pi', 'xu4', or 'agx'"
+    echo "                  switch between 'pi', 'xu4', 'agx', or 'pc'"
     echo "    -d PREFIX     selects the prefix for the launch package, default 'flightstack'"
     echo "    -s PREFIX     selects the prefix for the scripts package, default value of '-d PREFIX'"
     echo "    -f PREFIX     selects the prefix for the launch files, default 'fs'"
