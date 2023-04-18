@@ -4,6 +4,7 @@
 [![ROS](https://img.shields.io/github/actions/workflow/status/aau-cns/flight_stack/ros.yml?branch=main&logo=ROS&label=ROS1%20build)](https://github.com/aau-cns/flight_stack/actions/workflows/ros.yml)
 [![License](https://img.shields.io/badge/License-AAUCNS-336B81.svg)](https://github.com/aau-cns/flight_stack/blob/main/LICENSE)
 [![Paper](https://img.shields.io/badge/IEEEXplore-10.1109/LRA.2022.3196117-00629B.svg?logo=ieee)](https://doi.org/10.1109/LRA.2022.3196117)
+[![Youtube](https://img.shields.io/badge/YT-Explanatory%20Video-FF0000.svg?logo=youtube)](https://youtu.be/VlLSCGWQHW8)
 
 A ROS1 workspace to use the CNS Flight Stack: a UAV flight stack to autonomously perform reproducible and customizable missions.
 
@@ -32,6 +33,8 @@ corresponding [academic paper] and consult the `LICENSE` file for a detailed exp
     pages        = {11283--11290}
 }
 ```
+
+[![Watch the video](https://img.youtube.com/vi/VlLSCGWQHW8/maxresdefault.jpg)](https://youtu.be/VlLSCGWQHW8)
 
 ## Tutorial
 
