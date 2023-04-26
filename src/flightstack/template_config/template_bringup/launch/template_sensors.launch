@@ -14,13 +14,13 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
 <launch>
   <arg name="dev_id"    default="1" />
-  <arg name="dev_type"  default="xu4" /> <!-- or "pi" -->
+  <arg name="dev_type"  default="xu4" /> <!-- or "pi", "agx", or "pc" - otherwise set values below manually -->
   <arg name="dev_port"  default="" /> <!--ignored if empty -->
   <arg name="dev_baud"  default="" /> <!--ignored if empty -->
 
   <!-- Optitrack Arguments -->
   <arg name="use_gps"               default="False" />
-  <arg name="optitrack_object_name" default="cnsuav" />
+  <arg name="optitrack_object_name" default="$(env FS_OPTITRACK_OBJECT_NAME)" />
   <arg name="optitrack_throttle"    default="False" />
 
   <include file="$(find flightstack_bringup)/launch/fs_sensors.launch">

@@ -24,8 +24,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="trajectory_dir"                          default="$(find template_bringup)/trajectories/" />
 
   <!-- autonomy services -->
-  <arg name="estimator_init_service_name"             default="/mars_pose_node/init_service" unless="$(arg use_gps)" />
-  <arg name="estimator_init_service_name"             default="/mars_gps_node/init_service" if="$(arg use_gps)" />
+  <arg name="estimator_init_service_name"             default="/$(env FS_ESTIMATOR_NODE_NAME)/init_service" />
   <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
 
   <!-- other arguments -->
