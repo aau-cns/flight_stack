@@ -120,18 +120,35 @@ fi
 ################################################################################
 ################################################################################
 
-# setup rsync basic command
-RSYNC_CMD="rsync -rptgoDL"
-
 if [ ${B_DEBUG_ON} = true ]; then
   set -x
-  # update rsync cmd to include verbose output
-  RSYNC_CMD="${RSYNC_CMD} -vPh"
 fi
 
 # setup directory name (timestamp)
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DIR_NAME="${DEST_DIR}/${TIMESTAMP}"
+
+# setup rsync basic command
+RSYNC_CMD="rsync -rptgoDL"
+
+# check if rsync is permited with these options to destdir
+echo "testing rsync" >> /tmp/rsync_test.log 
+${RSYNC_CMD} /tmp/rsync_test.log ${DIR_NAME}/
+if [ $? -eq 0 ]; then
+  # rsync succeeded, remove test file
+  rm -rf ${DIR_NAME}/rsync_test.log
+else
+  # failed rsync, change to simpler version, fewer permitions
+  RSYNC_CMD="rsync -rpDL -A --no-perms"
+
+  # remove test file, if exists
+  rm -rf ${DIR_NAME}/rsync_test.log
+fi
+
+if [ ${B_DEBUG_ON} = true ]; then
+  # update rsync cmd to include verbose output
+  RSYNC_CMD="${RSYNC_CMD} -vPh"
+fi
 
 # Ensure all data is written before copy
 sync
