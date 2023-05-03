@@ -37,6 +37,7 @@ SSH_REMOTES=(
 
 NUM_DEVICES=2
 
+B_FAST_SYNC=false
 B_CREATE_TARBALL=false
 B_DEBUG_ON=false
 
@@ -57,6 +58,7 @@ print_help(){
     echo "    -r ID PATH    paths to ROS logs (default \${HOME}/.ros/log)"
     echo "    -d NAME       paths to destination storage (default: /data/recordings/final)"
     echo ""
+    echo "    -f            fast syncing (skips checksum test and immediatly deletes files)"
     echo "    -z            create tarball of all files in dest dir"
     echo "                  instead of copying raw files"
     echo "    -v            enable detailed debug output"
@@ -86,7 +88,7 @@ fi
 OPTIND=$((OPTIND+1));
 
 # parse flags
-while getopts :hzvi:d:l::m:r: flag
+while getopts :hzfvi:d:l::m:r: flag
 do
   case "${flag}" in
     i) 
@@ -108,6 +110,7 @@ do
       OPTIND=$((OPTIND+1));;
     d) DEST_DIR=${OPTARG};;
 
+    f) B_FAST_SYNC=true;;
     v) B_DEBUG_ON=true;;
     z) B_CREATE_TARBALL=true;;
     h) print_help;;
@@ -142,6 +145,7 @@ fi
 # MAIN SCRIPT                                                                  #
 ################################################################################
 ################################################################################
+
 if [ ${B_DEBUG_ON} = true ]; then
   set -x
 fi
@@ -157,7 +161,23 @@ rm -rf ${TAR_TMP_DIR}
 mkdir -p ${TAR_TMP_DIR}/logs/ros
 mkdir -p ${TAR_TMP_DIR}/logs/autonomy
 
+# setup rsync basic command
 RSYNC_CMD="rsync -rptgoDvPhL"
+
+# check if rsync is permited with these options to destdir
+echo "testing rsync" >> /tmp/rsync_test.log 
+${RSYNC_CMD} /tmp/rsync_test.log ${DIR_NAME}/
+if [ $? -eq 0 ]; then
+  # rsync succeeded, remove test file
+  rm -rf ${DIR_NAME}/rsync_test.log
+else
+  # failed rsync, change to simpler version, fewer permitions
+  RSYNC_CMD="rsync -rpDL -A --no-perms"
+
+  # remove test file, if exists
+  rm -rf ${DIR_NAME}/rsync_test.log
+fi
+
 RM_CMD="rm -rf ${TAR_TMP_DIR}"
 for ((n=0; n<${NUM_DEVICES}; n++)); do
   # get ssh command
@@ -216,67 +236,89 @@ for ((n=0; n<${NUM_DEVICES}; n++)); do
   if [ ${B_CREATE_TARBALL} = true ]; then
     # if localhost, create symlinks to files
     if [ ${on_localhost} = true ]; then
-      # link local files accordingly
-      ln -s ${local_src_dir}/* ${TAR_TMP_DIR}/
-      rm -rf ${TAR_TMP_DIR}/final
-      ln -s ${media_src_dir}/* ${TAR_TMP_DIR}/
-      rm -rf ${TAR_TMP_DIR}/final
-      ln -s ${logs_src_dir}/autonomy/*  ${TAR_TMP_DIR}/logs/autonomy/
-      ln -s ${logs_src_dir}/latest/*  ${TAR_TMP_DIR}/logs/ros/
-
-      # Store autonomy logfile with ROS logs for later usage
-      ${RSYNC_CMD} ${logs_src_dir}/autonomy/ ${logs_src_dir}/latest/
+      # link the files to the corresponding directories, if they are not empty
+      if [ -n "$(ls -A ${local_src_dir} 2> /dev/null)" ]; then
+        ln -s ${local_src_dir}/* ${TAR_TMP_DIR}/
+        rm -rf ${TAR_TMP_DIR}/final
+      fi
+      if [ "${local_src_dir}" != "${media_src_dir}" ]; then
+        # only link rec_media if it is not the same as rec_local
+        if [ -n "$(ls -A ${media_src_dir} 2> /dev/null)" ]; then
+          ln -s ${media_src_dir}/* ${TAR_TMP_DIR}/
+          rm -rf ${TAR_TMP_DIR}/final
+        fi
+      fi
+      if [ -n "$(ls -A ${logs_src_dir}/autonomy 2> /dev/null)" ]; then
+        ln -s ${logs_src_dir}/autonomy/*  ${TAR_TMP_DIR}/logs/autonomy/
+        # Store autonomy logfile with ROS logs for later usage
+        ${RSYNC_CMD} ${logs_src_dir}/autonomy/ ${logs_src_dir}/latest/
+      fi
+      if [ -n "$(ls -A ${logs_src_dir}/latest 2> /dev/null)" ]; then
+        ln -s ${logs_src_dir}/latest/*  ${TAR_TMP_DIR}/logs/ros/
+      fi
 
       # remove source files
       RM_CMD="$RM_CMD $(find ${local_src_dir} -type f -not -path "*/final/*") $(find ${media_src_dir} -type f -not -path "*/final/*") ${logs_src_dir}/autonomy/"
     else
-      # copy remote data to local tmp directory
-      ${RSYNC_CMD} ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
-        --exclude='final/'
-      ${RSYNC_CMD} ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
-      ${RSYNC_CMD} ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
-      ${sync_cmd}
-
-      # Copy data with checks
-      ${RSYNC_CMD} -c ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
-        --exclude='final/'
-      ${RSYNC_CMD} -c ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
-      ${RSYNC_CMD} -c ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
-      ${sync_cmd}
-
       # Store autonomy logfile with ROS logs for later usage
       ${RSYNC_CMD} ${logs_src_dir}/autonomy/ ${logs_src_dir}/latest/
+      l_rsync_cmd=${RSYNC_CMD}
+
+      if [ ${B_FAST_SYNC} != true ]; then
+        # copy remote data to local tmp directory
+        ${l_rsync_cmd} ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
+          --exclude='final/'
+        ${l_rsync_cmd} ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
+        ${l_rsync_cmd} ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
+        ${sync_cmd}
+
+        # add rsync -c option
+        l_rsync_cmd="${l_rsync_cmd} -c"
+
+        # Copy data with checks
+        ${l_rsync_cmd} ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
+          --exclude='final/'
+        ${l_rsync_cmd} ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
+        ${l_rsync_cmd} ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
+        ${sync_cmd}
+      fi
 
       # Copy and delete data
-      ${RSYNC_CMD} -c --remove-source-files ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
+      ${l_rsync_cmd} --remove-source-files ${local_src_dir}/ ${media_src_dir}/ ${TAR_TMP_DIR} \
         --exclude='final/'
-      ${RSYNC_CMD} -c --remove-source-files ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
-      ${RSYNC_CMD} -c --remove-source-files ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
+      ${l_rsync_cmd} --remove-source-files ${logs_src_dir}/autonomy ${TAR_TMP_DIR}/logs/
+      ${l_rsync_cmd} --remove-source-files ${logs_src_dir}/latest/ ${TAR_TMP_DIR}/logs/ros
       ${sync_cmd}
     fi
   else
-    # Copy data
-    ${RSYNC_CMD} ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
-      --exclude='final/'
-    ${RSYNC_CMD} ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
-    ${RSYNC_CMD} ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
-    ${sync_cmd}
-
-    # Copy data with checks
-    ${RSYNC_CMD} -c ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
-      --exclude='final/'
-    ${RSYNC_CMD} -c ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
-    ${RSYNC_CMD} -c ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
-    ${sync_cmd}
-
     # Store autonomy logfile with ROS logs for later usage
     ${RSYNC_CMD} ${logs_src_dir}/autonomy/ ${logs_src_dir}/latest/
 
+    l_rsync_cmd=${RSYNC_CMD}
+    if [ ${B_FAST_SYNC} != true ]; then
+      # Copy data
+      ${l_rsync_cmd} ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
+        --exclude='final/'
+      ${l_rsync_cmd} ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
+      ${l_rsync_cmd} ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
+      ${sync_cmd}
+
+      # add rsync -c option
+      l_rsync_cmd="${l_rsync_cmd} -c"
+
+      # Copy data with checks
+      ${l_rsync_cmd} ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
+        --exclude='final/'
+      ${l_rsync_cmd} ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
+      ${l_rsync_cmd} ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
+      ${sync_cmd}
+    fi
+
     # Copy and delete data
-    ${RSYNC_CMD} -c --remove-source-files ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
+    ${l_rsync_cmd} --remove-source-files ${local_src_dir}/ ${media_src_dir}/ ${DIR_NAME} \
       --exclude='final/'
-    ${RSYNC_CMD} -c --remove-source-files ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
-    ${RSYNC_CMD} -c --remove-source-files ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
+    ${l_rsync_cmd} --remove-source-files ${logs_src_dir}/autonomy ${DIR_NAME}/logs/
+    ${l_rsync_cmd} --remove-source-files ${logs_src_dir}/latest/ ${DIR_NAME}/logs/ros
     ${sync_cmd}
   fi
 done
@@ -291,3 +333,5 @@ $RM_CMD
 if [ ${B_DEBUG_ON} = true ]; then
   set +x
 fi
+
+echo -e "    --> data stored in: ${DIR_NAME}"
