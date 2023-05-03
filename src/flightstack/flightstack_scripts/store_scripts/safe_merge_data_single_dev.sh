@@ -28,6 +28,7 @@ NC='\033[0m'          #No Color
 
 # DEST_DIR="${REC_MEDIA}/final" # default destination path (media device)
 
+B_FAST_SYNC=false
 B_CREATE_TARBALL=false
 B_DEBUG_ON=false
 
@@ -43,6 +44,7 @@ print_help(){
     echo "    -r PATH       path to ROS logs (default \${HOME}/.ros/log)"
     echo "    -d NAME       path to destination storage (default: /<MEDIA_PATH>/final)"
     echo ""
+    echo "    -f            fast syncing (skips checksum test and immediatly deletes files)"
     echo "    -z            create tarball of all files in dest dir"
     echo "                  instead of copying raw files"
     echo "    -v            enable detailed debug output"
@@ -57,7 +59,7 @@ print_help(){
 ################################################################################
 
 # parse flags
-while getopts vhzd:l:m:r: flag
+while getopts vhfzd:l:m:r: flag
 do
   case "${flag}" in
     l) REC_LOCAL=${OPTARG};;
@@ -65,6 +67,7 @@ do
     r) REC_LOGS=${OPTARG};;
     d) DEST_DIR=${OPTARG};;
 
+    f) B_FAST_SYNC=true;;
     v) B_DEBUG_ON=true;;
     z) B_CREATE_TARBALL=true;;
     h) print_help;;
@@ -120,18 +123,35 @@ fi
 ################################################################################
 ################################################################################
 
-# setup rsync basic command
-RSYNC_CMD="rsync -rptgoDL"
-
 if [ ${B_DEBUG_ON} = true ]; then
   set -x
-  # update rsync cmd to include verbose output
-  RSYNC_CMD="${RSYNC_CMD} -vPh"
 fi
 
 # setup directory name (timestamp)
 TIMESTAMP=$(date +%Y%m%d-%H%M%S)
 DIR_NAME="${DEST_DIR}/${TIMESTAMP}"
+
+# setup rsync basic command
+RSYNC_CMD="rsync -rptgoDL"
+
+# check if rsync is permited with these options to destdir
+echo "testing rsync" >> /tmp/rsync_test.log 
+${RSYNC_CMD} /tmp/rsync_test.log ${DIR_NAME}/
+if [ $? -eq 0 ]; then
+  # rsync succeeded, remove test file
+  rm -rf ${DIR_NAME}/rsync_test.log
+else
+  # failed rsync, change to simpler version, fewer permitions
+  RSYNC_CMD="rsync -rpDL -A --no-perms"
+
+  # remove test file, if exists
+  rm -rf ${DIR_NAME}/rsync_test.log
+fi
+
+if [ ${B_DEBUG_ON} = true ]; then
+  # update rsync cmd to include verbose output
+  RSYNC_CMD="${RSYNC_CMD} -vPh"
+fi
 
 # Ensure all data is written before copy
 sync
@@ -181,27 +201,32 @@ else
   # create folder structure
   mkdir -p ${DIR_NAME}/logs/autonomy ${DIR_NAME}/logs/ros
 
-  # Copy data
-  ${RSYNC_CMD} ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
-    --exclude='final/'
-  ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
-  ${RSYNC_CMD} ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
-  sync
-
-  # Copy data and ensure the checksum is correct
-  ${RSYNC_CMD} -c ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
-    --exclude='final/'
-  ${RSYNC_CMD} -c ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
-  ${RSYNC_CMD} -c ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
-  # sync
-
   # Store autonomy logfile with ROS logs for later usage
   ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${REC_LOGS}/latest/
 
+  if [ ${B_FAST_SYNC} != true ]; then
+    # Copy data
+    ${RSYNC_CMD} ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
+      --exclude='final/'
+    ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+    ${RSYNC_CMD} ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
+    sync
+
+    # add rsync -c option
+    RSYNC_CMD="${RSYNC_CMD} -c"
+
+    # Copy data and ensure the checksum is correct
+    ${RSYNC_CMD} ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
+      --exclude='final/'
+    ${RSYNC_CMD} ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+    ${RSYNC_CMD} ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros/
+    # sync
+  fi    
+  
   # Copy data and delete the source
-  ${RSYNC_CMD} -c --remove-source-files ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
+  ${RSYNC_CMD} --remove-source-files ${REC_LOCAL}/ ${REC_MEDIA}/ ${DIR_NAME} \
     --exclude='final/'
-  ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
+  ${RSYNC_CMD} --remove-source-files ${REC_LOGS}/autonomy/ ${DIR_NAME}/logs/autonomy/
   # ${RSYNC_CMD} -c --remove-source-files ${REC_LOGS}/latest/ ${DIR_NAME}/logs/ros
   sync
 fi
@@ -209,3 +234,5 @@ fi
 if [ ${B_DEBUG_ON} = true ]; then
   set +x
 fi
+
+echo -e "    --> data stored in: ${DIR_NAME}"
