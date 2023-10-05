@@ -183,6 +183,8 @@ autonomy_topics=(
 
 ms_topics=(
 "/mission_sequencer/waypoint_list"
+"/mission_sequencer/get_waypoint_list"
+"/mission_sequencer/waypoint_reached"
 "/mavros/setpoint_position/local"
 "/mavros/setpoint_position/global"
 "/mavros/state"
