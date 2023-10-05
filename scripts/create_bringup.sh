@@ -98,6 +98,15 @@ WORKSPACE_SRC=${PATH_WS}/${CONFIG_NAME}_cws/src
 PACKAGE_DIR=${PATH_WS}/${CONFIG_NAME}_cws/src/${CONFIG_NAME}
 BRINGUP_DIR=${PATH_WS}/${CONFIG_NAME}_cws/src/${CONFIG_NAME}/${CONFIG_NAME}_bringup
 
+# check if executed in correct folder
+if [ ! -d 'scripts' ]; then
+  echo "${COL_ERR}No 'scripts' folder found, please execute this script in the root directory of the flightstack_cws.${NC}"
+  exit 1;
+elif [ ! -f 'scripts/create_bringup.sh' ]
+  echo "${COL_ERR}No 'create_bringup' script found within the './scripts' folder, please execute this script in the root directory of the flightstack_cws.${NC}"
+  exit 1;
+fi
+
 # create directory and copy template
 mkdir -p ${PACKAGE_DIR}
 rsync -avPh $(pwd)/src/flightstack/template_config/ ${PACKAGE_DIR}
