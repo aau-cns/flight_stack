@@ -22,21 +22,21 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="config_filepath"                         default="$(find flightstack_bringup)/configs/autonomy/config_dh.yaml" />
 
   <!-- autonomy topics -->
-  <arg name="watchdog_heartbeat_topic"                default="/watchdog/status" />
-  <arg name="watchdog_status_topic"                   default="/watchdog/log" />
-  <arg name="watchdog_action_topic"                   default="/watchdog/action" />
-  <arg name="mission_sequencer_request_topic"         default="/autonomy/request" />
-  <arg name="mission_sequencer_response_topic"        default="/autonomy/response" />
-  <arg name="landing_detection_topic"                 default="/toland_detector/is_landed" />
-  <arg name="mission_sequencer_waypoints_topic"       default="/mission_sequencer/waypoint_list" />
+  <arg name="watchdog_heartbeat_topic"                default="watchdog/status" />
+  <arg name="watchdog_status_topic"                   default="watchdog/log" />
+  <arg name="watchdog_action_topic"                   default="watchdog/action" />
+  <arg name="mission_sequencer_request_topic"         default="autonomy/request" />
+  <arg name="mission_sequencer_response_topic"        default="autonomy/response" />
+  <arg name="landing_detection_topic"                 default="toland_detector/is_landed" />
+  <arg name="mission_sequencer_waypoints_topic"       default="mission_sequencer/waypoint_list" />
 
   <!-- autonomy services -->
-  <arg name="watchdog_start_service_name"             default="/watchdog/service/start" />
-  <arg name="data_recrding_service_name"              default="/data_recorder/record" />
-  <arg name="takeoff_service_name"                    default="/toland_detector/service/takeoff" />
-  <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor/service/supervision" />
-  <arg name="estimator_init_service_name"             default="/$(env FS_ESTIMATOR_NODE_NAME)/init_service" />
-  <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
+  <arg name="watchdog_start_service_name"             default="watchdog/service/start" />
+  <arg name="data_recrding_service_name"              default="data_recorder/record" />
+  <arg name="takeoff_service_name"                    default="toland_detector/service/takeoff" />
+  <arg name="estimator_supervisor_service_name"       default="estimator_supervisor/service/supervision" />
+  <arg name="estimator_init_service_name"             default="$(env FS_ESTIMATOR_NODE_NAME)/init_service" />
+  <arg name="inflight_sensor_init_services_name"      default="[sensor/start]" />
 
   <!-- other arguments -->
   <arg name="watchdog_rate_Hz"                        default="0.5" />
