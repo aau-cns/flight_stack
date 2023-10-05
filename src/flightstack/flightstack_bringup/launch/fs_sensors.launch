@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+Copyright (C) 2022-2023 Martin Scheiber, Christian Brommer,
 and others, Control of Networked Systems, University of Klagenfurt, Austria.
 
 All rights reserved.
@@ -13,10 +13,12 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 -->
 
 <launch>
-  <arg name="dev_id"    default="1" />
-  <arg name="dev_type"  default="xu4" /> <!-- or "pi" -->
-  <arg name="dev_port"  default="" /> <!--ignored if empty -->
-  <arg name="dev_baud"  default="" /> <!--ignored if empty -->
+  <arg name="dev_id"                default="1" />
+  <arg name="dev_type"              default="xu4" /> <!-- or "pi" -->
+  <arg name="dev_port"              default="" /> <!--ignored if empty -->
+  <arg name="dev_baud"              default="" /> <!--ignored if empty -->
+  <arg name="px4_config_file"       default="$(find mavros)/launch/px4_config.yaml" />
+  <arg name="px4_pluginlists_file"  default="$(find mavros)/launch/px4_pluginlists.yaml" />
 
   <!-- Optitrack Arguments -->
   <arg name="use_gps"               default="False" />
@@ -29,6 +31,9 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
       <arg name="platform"          value="$(arg dev_type)" if="$(eval not arg('dev_port'))" />
       <arg name="device_id"         value="$(arg dev_port)" unless="$(eval not arg('dev_port'))"/>
       <arg name="conn_baudrate"     value="$(arg dev_baud)" unless="$(eval not arg('dev_baud'))"/>
+
+      <arg name="config_file"       value="$(arg px4_config_file)" />
+      <arg name="pluginlists_file"  value="$(arg px4_pluginlists_file)" />
     </include>
     <include file="$(find flightstack_bringup)/launch/individual/optitrack_aau_dronehall.launch" unless="$(arg use_gps)">
       <arg name="object_name"       value="$(arg optitrack_object_name)" />
