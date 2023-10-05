@@ -14,12 +14,22 @@
 # this bash script adheres to linux exit codes
 # see https://tldp.org/LDP/abs/html/exitcodes.html for further information
 
-# restart realsense hub
-# ssh core@10.42.0.102 'sudo uhubctl -a off --delay 2 -e -R -l2 -p1'
-# command by chris
-#ssh core@10.42.0.102 'sudo uhubctl --action cycle --location 2'
-ssh core@10.42.0.102 'sudo uhubctl --action cycle --location 2 -R --delay 5'
-sleep 5
-ssh core@10.42.0.102 'rs-enumerate-devices'
+RS_IS_REMOTE=false
+RS_DEV_IP="10.42.0.102"
+RS_DEV_USER="flightstack"
+
+if [ ${RS_IS_REMOTE} == true ]; then
+  # restart realsense hub
+  # ssh core@10.42.0.102 'sudo uhubctl -a off --delay 2 -e -R -l2 -p1'
+  # command by chris
+  #ssh core@10.42.0.102 'sudo uhubctl --action cycle --location 2'
+  ssh ${RS_DEV_USER}@${RS_DEV_IP} 'sudo uhubctl --action cycle --location 2 -R --delay 5'
+  sleep 5
+  ssh ${RS_DEV_USER}@${RS_DEV_IP} 'rs-enumerate-devices'
+else
+  sudo uhubctl --action cycle --location 2 -R --delay 5
+  sleep 5
+  rs-enumerate-devices
+fi
 
 exit 0
