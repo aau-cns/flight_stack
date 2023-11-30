@@ -8,6 +8,8 @@
 
 A ROS1 workspace to use the CNS Flight Stack: a UAV flight stack to autonomously perform reproducible and customizable missions.
 
+![System Overview](resources/system-block-diagram-system-lowres.png)
+
 Maintainers: [Christian Brommer](mailto:christian.brommer@aau.at), [Alessandro Fornasier](mailto:alessandro.fornasier@aau.at), and [Martin Scheiber](mailto:martin.scheiber@aau.at)
 
 ## Credit
