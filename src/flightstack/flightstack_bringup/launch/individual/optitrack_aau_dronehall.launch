@@ -18,8 +18,10 @@ and <martin.scheiber@ieee.org>.
 
   <!-- throttle options -->
   <arg name="throttle"            default="False" />
-  <arg name="throttle_in_topic"   default="/$(arg object_name)/vrpn_client/raw_pose" />
-  <arg name="throttle_out_topic"  default="/mavros/vision_pose/pose" />
+  <arg name="remap_to_ctrl"       default="$(arg throttle)" />
+  <arg name="throttle_in_topic"   default="/$(arg object_name)/vrpn_client/raw_pose_throttled" />
+  <arg name="throttle_out_topic"  default="/$(arg object_name)/vrpn_client/raw_pose" unless="$(arg remap_to_ctrl)" />
+  <arg name="throttle_out_topic"  default="/mavros/vision_pose/pose" if="$(arg remap_to_ctrl)" />
   <arg name="throttle_rate"       default="30" />
 
   <node ns="$(arg object_name)" name="vrpn_client" type="ros_vrpn_client" pkg="ros_vrpn_client" output="screen">
@@ -42,7 +44,8 @@ and <martin.scheiber@ieee.org>.
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
     <param name="rotational_estimator/output_minimal_quaternions" value="false" />
 
-    <remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose" if="$(arg throttle)"/>
+    <remap from="/$(arg object_name)/vrpn_client/raw_pose" to="$(arg throttle_in_topic)" if="$(arg throttle)" />
+    <remap from="/$(arg object_name)/vrpn_client/raw_pose" to="/mavros/vision_pose/pose" if="$(eval arg('remap_to_ctrl') and not arg('throttle'))" />
   </node>
 
   <node

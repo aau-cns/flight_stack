@@ -14,6 +14,11 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
 <launch>
   <arg name="dev_id"        default="1" />
+  <arg name="ros_ns" default="" />
+
+  <!-- topic prefix for namespace -->
+  <arg name="topic_prefix" value="/$(arg ros_ns)" if="$(eval arg('ros_ns') != '')" />
+  <arg name="topic_prefix" value="" unless="$(eval arg('ros_ns') != '')" />
 
   <!-- system args -->
   <arg name="use_gps"               default="False" /> <!-- INFO(scm): kept for legacy reasons -->
@@ -37,8 +42,21 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
   <!-- odometry in -->
   <arg name="use_odom"                        default="True" />
-  <arg name="topic_odom_in"                   default="/$(env FS_ESTIMATOR_NODE_NAME)/odom_state_out" />
-  <arg name="topic_pose_in"                   default="/$(env FS_ESTIMATOR_NODE_NAME)/pose_state_out" />
+  <arg name="topic_odom_in"                   default="$(arg topic_prefix)/$(env FS_ESTIMATOR_NODE_NAME)/odom_state_out" />
+  <arg name="topic_pose_in"                   default="$(arg topic_prefix)/$(env FS_ESTIMATOR_NODE_NAME)/pose_state_out" />
+
+  <!-- mavros topics and services (for NS remapping) - value-based only -->
+  <arg name="ms_mavros_topic_state_in"          value="$(arg topic_prefix)/mavros/state" />
+  <arg name="ms_mavros_topic_extended_state_in" value="$(arg topic_prefix)/mavros/extended_state" />
+  <arg name="ms_mavros_topic_local_pose_in"     value="$(arg topic_prefix)/mavros/local_position/pose" />
+  <arg name="ms_autonomy_topic_request_in"      value="$(arg topic_prefix)/autonomy/request" />
+  <arg name="ms_mavros_topic_setpoint_out"      value="$(arg topic_prefix)/mavros/setpoint_position/local" />
+  <arg name="ms_autonomy_topic_response_out"    value="$(arg topic_prefix)/autonomy/response" />
+  <arg name="ms_mavros_service_arming_out"      value="$(arg topic_prefix)/mavros/cmd/arming" />
+  <arg name="ms_mavros_service_command_out"     value="$(arg topic_prefix)/mavros/cmd/command" />
+  <arg name="ms_mavros_service_land_out"        value="$(arg topic_prefix)/mavros/cmd/land" />
+  <arg name="ms_mavros_service_set_mode_out"    value="$(arg topic_prefix)/mavros/set_mode" />
+  <!-- TODO(scm): might not be required as PHN/NH difference already sets these values correctly -->
 
   <group if="$(eval arg('dev_id') == 1)">
     <include file="$(find mission_sequencer)/launch/mission_sequencer.launch">

@@ -1,0 +1,26 @@
+{
+  "name": "Development Container",
+  "image": "aaucns/flightstack-vscode:dev",
+  "runArgs": [
+    "--privileged",
+    "--network=host",
+    "--pid=host"
+  ],
+  "containerEnv": {
+    "DISPLAY": "${localEnv:DISPLAY}"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/home/vscode/${localWorkspaceFolderBasename},type=bind",
+  "workspaceFolder": "/home/vscode/${localWorkspaceFolderBasename}",
+  "mounts": [
+    "source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.bash_aliases,target=/home/vscode/.bash_aliases,type=bind",
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind"
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack"
+      ]
+    }
+  }
+}

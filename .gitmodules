@@ -46,3 +46,6 @@
 [submodule "src/mavlink-gbp-release"]
 	path = src/mavlink-gbp-release
 	url = https://github.com/aau-cns/mavlink-gbp-release.git
+[submodule "src/mocap_bridge"]
+	path = src/mocap_bridge
+	url = https://github.com/aau-cns/mocap_bridge.git

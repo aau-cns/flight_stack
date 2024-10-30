@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright (C) 2023 Martin Scheiber,
+  Control of Networked Systems Group, University of Klagenfurt, Austria.
+  
+  All rights reserved.
+  
+  This software is licensed under the terms of the BSD-2-Clause-License with
+  no commercial use allowed, the full terms of which are made available
+  in the LICENSE file. No license in patents is granted.
+  
+  You can contact the author at <martin.scheiber@aau.at>
+-->
+<launch>
+  <arg name="dev_id"          default="1" />
+  <arg name="ros_namespace"   default="cnsuav" />
+
+  <arg name="launch_file"     default="all" />
+  <!-- choose between 'all', 'estimation', 'navigation', 'operator', 'recording', 'saftey', and 'sensors'-->
+
+  <group ns="$(arg ros_namespace)">
+    <include file="$(find template_bringup)/launch/template_estimation.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'estimation')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+    <include file="$(find template_bringup)/launch/template_navigation.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'navigation')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+    <include file="$(find template_bringup)/launch/template_operator.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'operator')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+    <include file="$(find template_bringup)/launch/template_recording.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'recording')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+    <include file="$(find template_bringup)/launch/template_safety.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'safety')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+    <include file="$(find template_bringup)/launch/template_sensors.launch" 
+              if="$(eval arg('launch_file') == 'all' or arg('launch_file') == 'sensors')">
+      <arg name="dev_id"          value="$(arg dev_id)" />
+      <arg name="ros_ns"          value="$(arg ros_namespace)" />
+    </include>
+  </group>
+</launch>

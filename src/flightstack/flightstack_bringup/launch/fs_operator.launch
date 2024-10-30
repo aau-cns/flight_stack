@@ -14,6 +14,11 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
 <launch>
   <arg name="dev_id" default="1" />
+  <arg name="ros_ns" default="" />
+
+  <!-- topic prefix for namespace -->
+  <arg name="topic_prefix" value="/$(arg ros_ns)" if="$(eval arg('ros_ns') != '')" />
+  <arg name="topic_prefix" value="" unless="$(eval arg('ros_ns') != '')" />
 
   <!-- system args -->
   <arg name="use_gps"               default="False" /> <!-- INFO(scm): kept for legacy reasons -->
@@ -22,21 +27,22 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="config_filepath"                         default="$(find flightstack_bringup)/configs/autonomy/config_dh.yaml" />
 
   <!-- autonomy topics -->
-  <arg name="watchdog_heartbeat_topic"                default="/watchdog/status" />
-  <arg name="watchdog_status_topic"                   default="/watchdog/log" />
-  <arg name="watchdog_action_topic"                   default="/watchdog/action" />
-  <arg name="mission_sequencer_request_topic"         default="/autonomy/request" />
-  <arg name="mission_sequencer_response_topic"        default="/autonomy/response" />
-  <arg name="landing_detection_topic"                 default="/toland_detector/is_landed" />
-  <arg name="mission_sequencer_waypoints_topic"       default="/mission_sequencer/waypoint_list" />
+  <arg name="watchdog_heartbeat_topic"                default="$(arg topic_prefix)/watchdog/status" />
+  <arg name="watchdog_status_topic"                   default="$(arg topic_prefix)/watchdog/log" />
+  <arg name="watchdog_action_topic"                   default="$(arg topic_prefix)/watchdog/action" />
+  <arg name="mission_sequencer_request_topic"         default="$(arg topic_prefix)/autonomy/request" />
+  <arg name="mission_sequencer_response_topic"        default="$(arg topic_prefix)/autonomy/response" />
+  <arg name="landing_detection_topic"                 default="$(arg topic_prefix)/toland_detector/is_landed" />
+  <arg name="mission_sequencer_waypoints_topic"       default="$(arg topic_prefix)/mission_sequencer/waypoint_list" />
+  <arg name="mavros_rc_topic"                         default="$(arg topic_prefix)/mavros/rc/in" />
 
   <!-- autonomy services -->
-  <arg name="watchdog_start_service_name"             default="/watchdog/service/start" />
-  <arg name="data_recrding_service_name"              default="/data_recorder/record" />
-  <arg name="takeoff_service_name"                    default="/toland_detector/service/takeoff" />
-  <arg name="estimator_supervisor_service_name"       default="/estimator_supervisor/service/supervision" />
-  <arg name="estimator_init_service_name"             default="/$(env FS_ESTIMATOR_NODE_NAME)/init_service" />
-  <arg name="inflight_sensor_init_services_name"      default="[/sensor/start]" />
+  <arg name="watchdog_start_service_name"             default="$(arg topic_prefix)/watchdog/service/start" />
+  <arg name="data_recrding_service_name"              default="$(arg topic_prefix)/data_recorder/record" />
+  <arg name="takeoff_service_name"                    default="$(arg topic_prefix)/toland_detector/service/takeoff" />
+  <arg name="estimator_supervisor_service_name"       default="$(arg topic_prefix)/estimator_supervisor/service/supervision" />
+  <arg name="estimator_init_service_name"             default="$(arg topic_prefix)/$(env FS_ESTIMATOR_NODE_NAME)/init_service" />
+  <arg name="inflight_sensor_init_services_name"      default="[$(arg topic_prefix)/sensor/start]" />
 
   <!-- other arguments -->
   <arg name="watchdog_rate_Hz"                        default="0.5" />
@@ -45,7 +51,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="maximum_flight_time_min"                 default="5" />
   <arg name="fix_timeout_ms"                          default="25000" />
   <arg name="mission_id_no_ui"                        default="1" />
-  <arg name="logger_filepath"                         default="$(env HOME)/.ros/log/autonomy/" />
+  <arg name="logger_filepath"                         default="$(env HOME)/.ros/log/autonomy$(arg topic_prefix)/" />
   <arg name="trajectory_dir"                          default="$(find flightstack_bringup)/trajectories/" />
   <arg name="landing_aux_channel"                     default="4" />
 
@@ -60,6 +66,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="inflight_sensors_init_service"           default="false" />
   <arg name="hover_after_mission_completion"          default="false" />
   <arg name="sequence_multiple_in_flight"             default="false" />
+  <arg name="register_aux"                            default="false" />
 
   <!-- Raspberry PI 1 launches -->
   <group if="$(eval arg('dev_id') == 1)">
@@ -76,6 +83,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
       <arg name="mission_sequencer_response_topic"        value="$(arg mission_sequencer_response_topic)" />
       <arg name="landing_detection_topic"                 value="$(arg landing_detection_topic)" />
       <arg name="mission_sequencer_waypoints_topic"       value="$(arg mission_sequencer_waypoints_topic)" />
+      <arg name="rc_topic"                                value="$(arg mavros_rc_topic)" />
 
       <!-- arguments services -->
       <arg name="watchdog_start_service_name"             value="$(arg watchdog_start_service_name)" />
@@ -105,6 +113,7 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
       <arg name="activate_landing_detection"              value="$(arg activate_landing_detection)" />
       <arg name="hover_after_mission_completion"          value="$(arg hover_after_mission_completion)" />
       <arg name="sequence_multiple_in_flight"             value="$(arg sequence_multiple_in_flight)" />
+      <arg name="register_aux"                            value="$(arg register_aux)" />
     </include>
   </group>
 </launch>

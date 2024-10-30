@@ -13,27 +13,32 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 -->
 
 <launch>
-    <arg name="dev_id"    default="1" />
+  <arg name="dev_id"    default="1" />
+  <arg name="ros_ns"    default="" />
 
-    <!-- data recorder paramters -->
-    <arg name="rec_script_file"   default="$(find flightstack_scripts)/record_scripts/record_full.sh" />
-    <arg name="rec_cmd"           default="dev1_full" />
+  <!-- topic prefix for namespace -->
+  <arg name="topic_prefix"  value="/$(arg ros_ns)" if="$(eval arg('ros_ns') != '')" />
+  <arg name="topic_prefix"  value="" unless="$(eval arg('ros_ns') != '')" />
 
-    <arg name="store_script_file" default="$(find flightstack_scripts)/store_scripts/safe_merge_data_single_dev.sh" />
-    <arg name="store_cmd"         default="-z" />
-    <!--  for cmdline empty use 
-          https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/?answer=317185#post-id-317185 
-    -->
-    
-    <arg name="rec_verbose"       default="False" />
+  <!-- data recorder paramters -->
+  <arg name="rec_script_file"   default="$(find flightstack_scripts)/record_scripts/record_full.sh" />
+  <arg name="rec_cmd"           default="dev1_full" />
 
-    <group if="$(eval arg('dev_id') == 1)">
-      <include file="$(find data_recorder)/launch/recorder.launch">
-        <arg name="record_script"   value="$(arg rec_script_file)" />
-        <arg name="record_cmd"      value="$(arg rec_cmd)" />
-        <arg name="store_script"    value="$(arg store_script_file)" />
-        <arg name="store_cmd"       value="$(arg store_cmd)" />
-        <arg name="verbose"         value="$(arg rec_verbose)" />
-      </include>
-    </group>
+  <arg name="store_script_file" default="$(find flightstack_scripts)/store_scripts/safe_merge_data_single_dev.sh" />
+  <arg name="store_cmd"         default="-z" />
+  <!--  for cmdline empty use 
+        https://answers.ros.org/question/296116/provide-empty-string-as-roslaunch-argument-substitution/?answer=317185#post-id-317185 
+  -->
+  
+  <arg name="rec_verbose"       default="False" />
+
+  <group if="$(eval arg('dev_id') == 1)">
+    <include file="$(find data_recorder)/launch/recorder.launch">
+      <arg name="record_script"   value="$(arg rec_script_file)" />
+      <arg name="record_cmd"      value="$(arg rec_cmd)" />
+      <arg name="store_script"    value="$(arg store_script_file)" />
+      <arg name="store_cmd"       value="$(arg store_cmd)" />
+      <arg name="verbose"         value="$(arg rec_verbose)" />
+    </include>
+  </group>
 </launch>

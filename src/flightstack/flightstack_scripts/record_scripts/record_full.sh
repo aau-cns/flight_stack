@@ -48,11 +48,12 @@ path_media=""
 
 DEV1_CAM_NODELET_MANAGER="record_dev1_manager"
 DEV2_CAM_NODELET_MANAGER="record_dev2_manager"
-B_CAMS_START_MANAGER=true
+B_CAMS_START_MANAGER=false
 
 # booleans (flags)
 B_USE_ROSBAG_RECORD=false
 B_DEBUG_ON=false
+B_DRY_RUN=false
 
 ################################################################################
 # Help                                                                         #
@@ -75,7 +76,9 @@ print_help(){
     echo ""
     echo "    -b              use 'rosbag record' instead of the flight stack's"
     echo "                      'nodlet recorder'"
-    echo "    -c              use 'nodelet_manager' for standard recording settings"
+    echo "    -c              use 'nodelet_manager' for camera recording settings"
+    echo "    -s              enable starting of camera recording manager"
+    echo "    -n              dry-run"
     echo "    -v              enable detailed debug output"
     echo ""
     echo "    -h          print this help"
@@ -103,7 +106,7 @@ fi
 OPTIND=$((OPTIND+1));
 
 # parse flags
-while getopts hvbcl:m:p: flag
+while getopts hvsnbcl:m:p: flag
 do
   case "${flag}" in
     l) path_local=${OPTARG};;
@@ -111,10 +114,12 @@ do
     p) bag_name=${OPTARG};;
 
     c)  DEV1_CAM_NODELET_MANAGER="nodelet_manager";
-        DEV2_CAM_NODELET_MANAGER="nodelet_manager";
-        B_CAMS_START_MANAGER=false;;
+        DEV2_CAM_NODELET_MANAGER="nodelet_manager";;
+
+    s)  B_CAMS_START_MANAGER=true;;
     
     b) B_USE_ROSBAG_RECORD=true;;
+    n) B_DRY_RUN=true;;
     v) B_DEBUG_ON=true;;
     h) print_help;;
 
@@ -144,6 +149,12 @@ if [ ! -d "${path_media}" ]; then
 fi
 
 ################################################################################
+# GET GLOBAL VARS                                                              #
+################################################################################
+
+source ${FS_VARS_FILE}
+
+################################################################################
 # SETUP TOPIC GROUPS                                                           #
 ################################################################################
 
@@ -154,9 +165,14 @@ px4_topics=(
 "/mavros/global_position/raw/gps_vel"
 "/mavros/global_position/raw/satellites"
 "/mavros/imu/static_pressure"
+"/mavros/imu/diff_pressure"
 "/mavros/imu/temperature_imu"
+"/mavros/imu/temperature_baro"
 "/mavros/motor_speeds/speed"
 "/mavros/battery"
+"/mavros/rc/in"
+"/mavros/rc/out"
+"/mavros/rc/override"
 )
 
 mocap_vehicle_topics=(
@@ -168,10 +184,14 @@ autonomy_topics=(
 "/autonomy/response"
 "/autonomy/logger"
 "/toland/is_landed"
+"/toland_detector/is_landed"
+"/toland_detector/is_takeoff"
 )
 
 ms_topics=(
 "/mission_sequencer/waypoint_list"
+"/mission_sequencer/get_waypoint_list"
+"/mission_sequencer/waypoint_reached"
 "/mavros/setpoint_position/local"
 "/mavros/setpoint_position/global"
 "/mavros/state"
@@ -191,6 +211,8 @@ est_topics=(
 "/mavros/local_position/pose_cov"
 "/mavros/local_position/odom"
 "/mavros/local_position/odom_cov"
+"/mavros/external_state/external_state"
+"/mavros/external_state_lite/external_state_lite"
 )
 
 mars_topics=(
@@ -219,6 +241,13 @@ ${px4_topics[@]}
 ${FS_RECORD_ADD_DEV1_SENSOR[@]}
 )
 
+if [ ${B_DEBUG_ON} == true ]; then
+  echo "sensor additions:  ${#FS_RECORD_ADD_DEV1_SENSOR[@]}"
+  for entry in ${FS_RECORD_ADD_DEV1_SENSOR[@]}; do
+    echo "${entry}"
+  done
+fi
+
 ### Nodes
 group_mod1_nodes=(
 ${autonomy_topics[@]}
@@ -233,6 +262,13 @@ ${FS_RECORD_ADD_DEV1_ESTIMATOR[@]}
 group_mod1_cams=(
 ${FS_RECORD_ADD_DEV1_CAM[@]}
 )
+
+if [ ${B_DEBUG_ON} == true ]; then
+  echo "cam additions: ${#FS_RECORD_ADD_DEV1_CAM[@]}"
+  for entry in ${FS_RECORD_ADD_DEV1_CAM[@]}; do
+    echo "${entry}"
+  done
+fi
 
 
 # generate final list of topics for recording - dev1
@@ -503,7 +539,7 @@ else
       start_manager:=${B_CAMS_START_MANAGER}
       nodelet_manager_name:=${DEV1_CAM_NODELET_MANAGER}
       nodelet_name:=record_dev1_cams
-      rosbag_path:=${path_local} rosbag_prefix:=${bag_name}_mod1_cams
+      rosbag_path:=${path_media} rosbag_prefix:=${bag_name}_mod1_cams
       rosbag_topics:=[${topics_mod1_cams%,}]" )
   fi
 
@@ -528,10 +564,12 @@ echo ""
 
 # execute recording in bkg
 for cmd in "${RECORD_CMD_ARR[@]}"; do
-  if [ ${B_DEBUG_ON} == true ]; then
+  if [ ${B_DEBUG_ON} == true ] || [ ${B_DRY_RUN} == true ]; then
     echo -e "${COL_DEB}executing: ${cmd}${NC}"
   fi
-  ${cmd} &
+  if [ ${B_DRY_RUN} != true ]; then
+    ${cmd} &
+  fi
 done
 
 if [ ${B_DEBUG_ON} = true ]; then

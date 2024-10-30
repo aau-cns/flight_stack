@@ -14,6 +14,11 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 
 <launch>
   <arg name="dev_id"                    default="1" />
+  <arg name="ros_ns"                    default="" />
+
+  <!-- topic prefix for namespace -->
+  <arg name="topic_prefix"              value="/$(arg ros_ns)" if="$(eval arg('ros_ns') != '')" />
+  <arg name="topic_prefix"              value="" unless="$(eval arg('ros_ns') != '')" />
 
   <arg name="optitrack_object_name"     default="$(env FS_OPTITRACK_OBJECT_NAME)" />
 
@@ -22,12 +27,12 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="use_px4_bridge"            default="False" />
 
   <!-- MaRS arguments -->
-  <arg name="mars_imu_in"               default="/mavros/imu/data_raw" />
-  <arg name="mars_transform_in"         default="/$(arg optitrack_object_name)/vrpn_client/raw_transform" />
-  <arg name="mars_pose_out"             default="/mavros/vision_pose/pose" />
-  <arg name="mars_lite_ext_state_out"   default="/mavros/external_state_lite/external_state_estimate_lite" />
-  <arg name="mars_gps_pos_in"           default="/mavros/global_position/raw/fix" />
-  <arg name="mars_gps_vel_in"           default="/mavros/global_position/raw/gps_vel" />
+  <arg name="mars_imu_in"               default="$(arg topic_prefix)/mavros/imu/data_raw" />
+  <arg name="mars_transform_in"         default="$(arg topic_prefix)/$(arg optitrack_object_name)/vrpn_client/raw_transform" />
+  <arg name="mars_pose_out"             default="$(arg topic_prefix)/mavros/vision_pose/pose" />
+  <arg name="mars_lite_ext_state_out"   default="$(arg topic_prefix)/mavros/external_state_lite/external_state_estimate_lite" />
+  <arg name="mars_gps_pos_in"           default="$(arg topic_prefix)/mavros/global_position/raw/fix" />
+  <arg name="mars_gps_vel_in"           default="$(arg topic_prefix)/mavros/global_position/raw/gps_vel" />
 
 
   <arg name="mars_config_in"            default="$(find mars_ros)/launch/config/pose_config.yaml" unless="$(arg use_gps)" />

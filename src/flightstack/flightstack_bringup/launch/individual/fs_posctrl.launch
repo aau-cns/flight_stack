@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022-2024 Martin Scheiber, Christian Brommer,
+and others, Control of Networked Systems, University of Klagenfurt, Austria.
+
+All rights reserved.
+
+This software is licensed under the terms of the BSD-2-Clause-License with
+no commercial use allowed, the full terms of which are made available
+in the LICENSE file. No license in patents is granted.
+
+You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ieee.org>.
+-->
+
+<launch>
+  <arg name="dev_id"                default="1" />
+  <arg name="dev_type"              default="xu4" /> <!-- or "pi" -->
+  <arg name="dev_port"              default="" /> <!--ignored if empty -->
+  <arg name="dev_baud"              default="" /> <!--ignored if empty -->
+  <arg name="px4_config_file"       default="$(find mavros)/launch/px4_config.yaml" />
+  <arg name="px4_pluginlists_file"  default="$(find mavros)/launch/px4_pluginlists.yaml" />
+  <arg name="px4_autorestart"       default="False" />
+  <arg name="ros_ns"                default="" />
+
+  <!-- Optitrack Arguments -->
+  <arg name="use_gps"                 default="False" />
+  <arg name="optitrack_object_name"   default="$(env FS_OPTITRACK_OBJECT_NAME)" />
+  <arg name="optitrack_throttle"      default="False" />
+  <arg name="optitrack_throttle_rate" default="30" />
+
+  <!-- Device 1 -->
+  <group if="$(eval arg('dev_id') == 1)">
+    <include file="$(find flightstack_bringup)/launch/fs_sensors.launch">
+      <arg name="dev_id"                  value="$(arg value)" />
+      <arg name="dev_type"                value="$(arg dev_type)" />
+      <arg name="dev_port"                value="$(arg dev_port)" />
+      <arg name="dev_baud"                value="$(arg dev_baud)" />
+      <arg name="px4_config_file"         value="$(arg px4_config_file)" />
+      <arg name="px4_pluginlists_file"    value="$(arg px4_pluginlists_file)" />
+      <arg name="px4_autorestart"         value="$(arg px4_autorestart)" />
+      <arg name="ros_ns"                  value="$(arg ros_ns)" />
+
+      <arg name="use_gps"                 value="$(arg use_gps)" />
+      <arg name="optitrack_object_name"   value="$(arg optitrack_object_name)" />
+      <arg name="optitrack_throttle"      value="$(arg optitrack_throttle)" />
+      <arg name="optitrack_throttle_rate" value="$(arg optitrack_throttle_rate)" />
+      <arg name="optitrack_remap_to_ctrl" value="True" />
+    </include>
+  </group>
+
+</launch>

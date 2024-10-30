@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright (C) 2022 Martin Scheiber, Christian Brommer,
+Copyright (C) 2022-2023 Martin Scheiber, Christian Brommer,
 and others, Control of Networked Systems, University of Klagenfurt, Austria.
 
 All rights reserved.
@@ -13,10 +13,11 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
 -->
 
 <launch>
-  <arg name="dev_id"    default="1" />
-  <arg name="dev_type"  default="xu4" /> <!-- or "pi", "agx", or "pc" - otherwise set values below manually -->
-  <arg name="dev_port"  default="" /> <!--ignored if empty -->
-  <arg name="dev_baud"  default="" /> <!--ignored if empty -->
+  <arg name="dev_id"          default="1" />
+  <arg name="dev_type"        default="xu4" /> <!-- or "pi", "agx", or "pc" - otherwise set values below manually -->
+  <arg name="dev_port"        default="" /> <!--ignored if empty -->
+  <arg name="dev_baud"        default="" /> <!--ignored if empty -->
+  <arg name="px4_autorestart" default="False" />
 
   <!-- Optitrack Arguments -->
   <arg name="use_gps"               default="False" />
@@ -24,10 +25,11 @@ You can contact the authors at <martin.scheiber@ieee.org>, <christian.brommer@ie
   <arg name="optitrack_throttle"    default="False" />
 
   <include file="$(find flightstack_bringup)/launch/fs_sensors.launch">
-    <arg name="dev_id"    value="$(arg dev_id)" />
-    <arg name="dev_type"  value="$(arg dev_type)" /> <!-- or "pi" -->
-    <arg name="dev_port"  value="$(arg dev_port)" /> <!--ignored if empty -->
-    <arg name="dev_baud"  value="$(arg dev_baud)" /> <!--ignored if empty -->
+    <arg name="dev_id"          value="$(arg dev_id)" />
+    <arg name="dev_type"        value="$(arg dev_type)" /> <!-- or "pi" -->
+    <arg name="dev_port"        value="$(arg dev_port)" /> <!--ignored if empty -->
+    <arg name="dev_baud"        value="$(arg dev_baud)" /> <!--ignored if empty -->
+    <arg name="px4_autorestart" value="$(arg px4_autorestart)" />
 
     <!-- Optitrack Arguments -->
     <arg name="use_gps"               value="$(arg use_gps)" />

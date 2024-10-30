@@ -136,16 +136,19 @@ RSYNC_CMD="rsync -rptgoDL"
 
 # check if rsync is permited with these options to destdir
 echo "testing rsync" >> /tmp/rsync_test.log 
-${RSYNC_CMD} /tmp/rsync_test.log ${DIR_NAME}/
+${RSYNC_CMD} /tmp/rsync_test.log ${DIR_NAME}/ 2> /dev/null
 if [ $? -eq 0 ]; then
-  # rsync succeeded, remove test file
+  # rsync succeeded, remove test file and dir if empty
   rm -rf ${DIR_NAME}/rsync_test.log
+  rmdir ${DIR_NAME} 2> /dev/null
 else
   # failed rsync, change to simpler version, fewer permitions
+  echo -e "${COL_WARN}rsync test failed, changing to simpler version${NC}"
   RSYNC_CMD="rsync -rpDL -A --no-perms"
 
-  # remove test file, if exists
+  # remove test file, if exists and dir if empty
   rm -rf ${DIR_NAME}/rsync_test.log
+  rmdir ${DIR_NAME} 2> /dev/null
 fi
 
 if [ ${B_DEBUG_ON} = true ]; then
